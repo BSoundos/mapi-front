@@ -1,13 +1,20 @@
-import './App.css'
 
-function App() {
+import './styles/Paiement.css';
+// App.tsx
+import SubscriptionPlansPage from '../src/components/SubscriptionPlans';
+import PlanDetailsPage from '../src/components/subscriptionPlanPayment';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
 
-
+const App = () => {
   return (
-    <>
-      <p className='text-xl h-96 w-96 bg-primary-linear'></p>
-    </>
-  )
-}
+    <Router>
+      <Routes>
+        <Route path="/" element={<SubscriptionPlansPage />} />
+        <Route path="/plan/:id" element={<PlanDetailsPage />} />
+      </Routes>
+    </Router>
+  );
+};
 
-export default App
+
+export default App;
