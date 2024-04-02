@@ -1,8 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-// import reducers from './components/slices/'
+import invoicesReducer from './components/slices/invoiceSlice';
 
 export const store = configureStore({
     reducer: {
-        // Reducers here
+        invoice: invoicesReducer,
     },
 })
+
+export type RootState = ReturnType<typeof store.getState>; // Définition de RootState ici
+export default store;

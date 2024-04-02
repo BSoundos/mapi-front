@@ -1,13 +1,17 @@
 import './App.css'
+import './index.css';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'; 
+import Invoice from './components/InvoiceComponent';
 
-function App() {
 
-
+const App = () => {
   return (
-    <>
-      <p className='text-xl h-96 w-96 bg-primary-linear'></p>
-    </>
-  )
-}
+    <Router>
+      <Routes>
+        <Route path="/" element={<Invoice />} />
+      </Routes>
+    </Router>
+  );
+};
 
 export default App
