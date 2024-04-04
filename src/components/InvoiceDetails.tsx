@@ -41,7 +41,7 @@ const InvoiceDetailsPage = () => {
 
             <p className="pt-6 text-xs text-mapi-neutral-5">Transaction Number: FD6567</p>
             <p className=" text-xs text-mapi-neutral-5">Payment Method: CIB</p>
-            <p className=" text-xs text-mapi-neutral-5">Date of Creation: 15-02-23</p>
+            <p className=" text-xs text-mapi-neutral-5">Date of Creation: 15-02-2023</p>
             <p className="pb-6 text-xs text-mapi-neutral-5">Client's Full Name: John Doe</p>
 
 
