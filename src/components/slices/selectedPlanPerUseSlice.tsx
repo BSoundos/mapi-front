@@ -4,21 +4,18 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 interface ObjectItem {
-  object_name: string;
-  id: string;
-  quota_type: string;
-  quota_limit: number;
-  limit_type: string;
-  average_usage: number;
+    id: number;
+    price : string; 
+    name: string;
   }
 
 interface PlanDetails {
-  id: string;
-  name: string;
-  subscription_price: string;
-  objects: ObjectItem[]; 
-  rate_limit :  number;
-  api_version : number ;
+    id: string;
+    name: string;
+    rate_limit: number;
+    objectPrices: ObjectItem[]; 
+    type : string ;
+    api_version : number ;
 }
 
 interface PlanState {
@@ -32,22 +29,28 @@ const initialState: PlanState = {
   loading: false,
   error: null,
 };
-
-export const fetchPlanDetails = createAsyncThunk<PlanDetails, { planId: string }>(
+//recuperer les détails d'un plan selectionné
+export const fetchPlanDetails = createAsyncThunk<PlanDetails, { planId: string , objectPrices: { id: string, name: string, price: number }[]}>(
   'plans/fetchPlanDetails',
-  async ({planId }) => {
+  async ({planId, objectPrices }) => {
     try {
       const response = await axios.get(`http://localhost:8000/payment/subscription-plan/${planId}/`);
       console.log("response.data", response.data);
-      return response.data;
+            const responseDataWithObjectPrices = {
+        ...response.data,
+        objectPrices: objectPrices
+      };
+      
+      return responseDataWithObjectPrices;
     } catch (error) {
       throw new Error('Failed to fetch plan details');
     }
   }
 );
 
-const planSlice = createSlice({
-  name: 'plan',
+
+const planPerUseSlice = createSlice({
+  name: 'plan_peruse',
   initialState,
   reducers: {},
   extraReducers: (builder) => {
@@ -67,4 +70,4 @@ const planSlice = createSlice({
   },
 });
 
-export default planSlice.reducer;
+export default planPerUseSlice.reducer;
