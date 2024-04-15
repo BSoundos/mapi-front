@@ -2,18 +2,14 @@ import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 interface ObjectItem {
-  id: number;
-  quota_type: string;
-  quota_limit: number;
-  limit_type: string;
-  average_usage: number;
+  id: string;
+  price : number ; 
   object_name: string;
 }
 
 interface SubscriptionPlan {
   id: string;
   name: string;
-  subscription_price: number;
   rate_limit: number;
   objects: ObjectItem[]; 
   type : string ;
@@ -28,13 +24,13 @@ interface SubscriptionPlansState {
 export const fetchSubscriptionPlans = createAsyncThunk<SubscriptionPlan[], number>(
   'subscriptionPlans/fetchPlans',
   async (versionApiId: number) => {
-    const response = await axios.get(`http://localhost:8000/payment/payment-per-month/subscription-plans/${versionApiId}/`);
+    const response = await axios.get(`http://localhost:8000/payment/payment-per-use/subscription-plans/${versionApiId}/`);
     console.log("subscription_plans",response.data)
     return response.data; 
   }
 );
 
-const subscriptionPlansSlice = createSlice({
+const subscriptionPlansPerUseSlice = createSlice({
   name: 'subscriptionPlans',
   initialState: {
     plans: [],
@@ -63,6 +59,6 @@ const subscriptionPlansSlice = createSlice({
   },
 });
 
-export const { selectPlan } = subscriptionPlansSlice.actions;
+export const { selectPlan } = subscriptionPlansPerUseSlice.actions;
 
-export default subscriptionPlansSlice.reducer;
+export default subscriptionPlansPerUseSlice.reducer;
