@@ -24,7 +24,10 @@ import Verify from './components/authentication/Verify';
 const App = () => {
   useEffect(() => {
     const token = localStorage.getItem('token');
-    axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+    if (token){
+      axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+    }
+    
   }, []);
   return (
     <Router>

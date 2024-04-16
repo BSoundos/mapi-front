@@ -1,20 +1,25 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-// @ts-ignore                 //to handle the import error
+//@ts-ignore
 import { register } from '../../actions/auth.js';
-import './Register.css';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faUser, faEnvelope, faLock, faPhone,faRocket, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+
 const Register = () => {
-  const [credentials, setCredentials] = useState({ 
-    role:'',
+  const [credentials, setCredentials] = useState({
+    role: 'user',
     email: '',
-    username:'', 
-    password: '',  
-    first_name: '', 
-    last_name: '', 
-    contact_info: '', 
-    confirmPassword:''
+    username: '',
+    password: '',
+    first_name: '',
+    last_name: '',
+    contact_info: '',
+    confirmPassword: '',
   });
   const dispatch = useDispatch();
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [focusedField, setFocusedField] = useState('');
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -26,76 +31,191 @@ const Register = () => {
       console.log("Passwords do not match");
       return;
     }
-    dispatch(register(credentials)); 
+    dispatch(register(credentials));
+  };
+  const togglePasswordVisibility = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    e.preventDefault();
+    setShowPassword(!showPassword);
+  };
+  const toggleConfirmPasswordVisibility = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
+    e.preventDefault();
+    setShowConfirmPassword(!showConfirmPassword);
+  };
+  const handleFocus = (field: string) => {
+    setFocusedField(field);
   };
 
+  const handleBlur = () => {
+    setFocusedField('');
+  };
+
+
   return (
-    <div className='container' >
-      <div className="image-placeholder"></div>
-      <div className='form-container'>
-        <div className="headline-subhead">
-            <div className="headline">Create Account</div>
-            <div className="subhead">Welcome! Enter your details to enjoy the features of the site!</div>
-        </div>
-      
-        <form onSubmit={handleSubmit} className="register-form">
-          <div className="mb-4">
-            <label>
-            User Type
-            </label>
-            <br />
-            <div id="Type-user" onChange={handleChange}>
-              <input type="radio" value="user" name="role" /> User
-              <input type="radio" value="provider" name="role" /> Provider
-            </div>
-            <br />
-            <label htmlFor="firstName">
+    <div className="flex min-h-screen bg-[#0B1739] gap-9">
+      <div className="flex w-[45%] bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(/src/assets/registerBg.png)` }}>
+        <div className="w-full h-full bg-gray-900 opacity-25" />
+      </div>
+      <div className="flex flex-col justify-center items-start w-[55%] px-10 mt-9">
+        <h1 className="text-6xl font-bold text-white mb-2">Create Account</h1>
+        <p className="text-lg text-gray-300 mb-10">
+          Welcome! Enter your details to enjoy the features of the site!
+        </p>
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+          <div className="flex flex-row -space-x-0.5">
+            <button
+              type="button"
+              className={`flex-grow border rounded-l-lg py-2 text-sm focus:outline-none ${credentials.role === 'user' ? '' : 'border-r-red-500'}`}
+              style={{ background: 'transparent', border: credentials.role === 'user' ? '2px solid #2F80ED' : ' 2px solid white'}}
+              onClick={() => setCredentials({...credentials, role: 'user'})}
+            >
+              User
+            </button>
+            <button
+              type="button"
+              className={`flex-grow border rounded-r-lg py-2 text-sm focus:outline-none `}
+              style={{ background:  'transparent', border: credentials.role === 'provider' ? '2px solid #2F80ED' : '2px solid white'}}
+              onClick={() => setCredentials({...credentials, role: 'provider'})}
+            >
+              Provider
+            </button>
+          </div>
+
+          <div className="flex flex-col relative">
+            <label htmlFor="firstName" className="mb-2 text-sm text-[#2F80ED]">
               First Name
             </label>
-            <br />
-            <input id="firstName" name="first_name" type="text" placeholder="First Name" onChange={handleChange} />
-            <br />
-            <label htmlFor="lastName">
+            <FontAwesomeIcon icon={faUser} className={`absolute top-10 left-3 ${focusedField === 'firstName' ? 'text-[#2F80ED]' : 'text-gray-500'}`} />
+            <input
+              id="firstName"
+              name="first_name"
+              type="text"
+              placeholder="First Name"
+              onChange={handleChange}
+              onFocus={() => handleFocus('firstName')}
+              className="rounded-md border border-gray-700 px-10 py-2 pl-12 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:ring-opacity-50"
+              required 
+            />
+          </div>
+          <div className="flex flex-col relative">
+            <label htmlFor="lastName" className="mb-2 text-sm text-[#2F80ED]">
               Last Name
             </label>
-            <br />
-            <input id="lastName" name="last_name" type="text" placeholder="Last Name" onChange={handleChange} />
-            <br />
-            <label htmlFor="username">
+            <FontAwesomeIcon icon={faUser} className={`absolute top-10 left-3 ${focusedField === 'lastName' ? 'text-[#2F80ED]' : 'text-gray-500'}`} />
+            <input
+              id="lastName"
+              name="last_name"
+              type="text"
+              placeholder="Last Name"
+              onChange={handleChange}
+              onFocus={() => handleFocus('lastName')}
+              className="rounded-md border border-gray-700 px-10 py-2 pl-12 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:ring-opacity-50"
+              required 
+            />
+          </div>
+          <div className="flex flex-col relative">
+            <label htmlFor="username" className="mb-2 text-sm text-[#2F80ED]">
               Username
             </label>
-            <br />
-            <input id="username" name="username" type="text" placeholder="Username" onChange={handleChange} />
-            <br />
-            <label htmlFor="email">
+            <FontAwesomeIcon icon={faUser} className={`absolute top-10 left-3 ${focusedField === 'username' ? 'text-[#2F80ED]' : 'text-gray-500'}`} />
+            <input
+              id="username"
+              name="username"
+              type="text"
+              placeholder="Username"
+              onChange={handleChange}
+              onFocus={() => handleFocus('username')}
+              className="rounded-md border border-gray-700 px-10 py-2 pl-12 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:ring-opacity-50"
+              required 
+            />
+          </div>
+          <div className="flex flex-col relative">
+            <label htmlFor="email" className="mb-2 text-sm text-[#2F80ED]">
               Email
             </label>
-            <br />
-            <input id="email" name="email" type="text" placeholder="Email" onChange={handleChange}  required/>
-            <br />
-            <label htmlFor="contact_info">
+            <FontAwesomeIcon icon={faEnvelope} className={`absolute top-10 left-3 ${focusedField === 'email' ? 'text-[#2F80ED]' : 'text-gray-500'}`} />
+            <input
+              id="email"
+              name="email"
+              type="email"
+              placeholder="Email"
+              onChange={handleChange}
+              onFocus={() => handleFocus('email')}
+              className="rounded-md border border-gray-700 px-10 py-2 pl-12 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:ring-opacity-50"
+              required 
+            />
+          </div>
+          <div className="flex flex-col relative">
+            <label htmlFor="contact_info" className="mb-2 text-sm text-[#2F80ED]">
               Phone Number
             </label>
-            <br />
-            <input id="contact_info" name="contact_info" type="text" placeholder="Phone Number" onChange={handleChange} />
-            <br />
-            <label htmlFor="password">
+            <FontAwesomeIcon icon={faPhone} className={`absolute top-10 left-3 ${focusedField === 'contact_info' ? 'text-[#2F80ED]' : 'text-gray-500'}`} />
+            <input
+              id="contact_info"
+              name="contact_info"
+              type="text"
+              placeholder="Phone Number"
+              onChange={handleChange}
+              onFocus={() => handleFocus('contact_info')}
+              className="rounded-md border border-gray-700 px-10 py-2 pl-12 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:ring-opacity-50"
+            />
+            <p className='text-sm mt-2 ml-4 text-[#7E89AC]'>This field is optional.</p>
+          </div>
+          <div className="flex flex-col relative">
+            <label htmlFor="password" className="mb-2 text-sm text-[#2F80ED]">
               Password
             </label>
-            <br />
-            <input id="password" name="password" type="password" placeholder="Password" onChange={handleChange} required />
-            <br />
-            <label htmlFor="confirmPassword">
+            <FontAwesomeIcon icon={faLock} className={`absolute top-10 left-3 ${focusedField === 'password' ? 'text-[#2F80ED]' : 'text-gray-500'}`} />
+            <input
+              id="password"
+              name="password"
+              type={showPassword ? 'text' : 'password'}
+              placeholder="Password"
+              onChange={handleChange}
+              onFocus={() => handleFocus('password')}
+              onBlur={handleBlur}
+              className="rounded-md border border-gray-700 px-10 py-2 pl-12 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:ring-opacity-50"
+              required 
+            />
+            <FontAwesomeIcon
+              icon={showPassword ? faEyeSlash : faEye}
+              className="absolute top-10 right-3 cursor-pointer text-gray-500"
+              onMouseDown={togglePasswordVisibility} 
+            />
+            <p className='text-sm mt-2 ml-4 text-[#7E89AC]'>Must be at least 8 characters.</p>
+          </div>
+          <div className="flex flex-col relative">
+            <label htmlFor="confirmPassword" className="mb-2 text-sm text-[#2F80ED]">
               Confirm Password
             </label>
-            <br />
-            <input id="confirmPassword" name="confirmPassword" type="password" placeholder="Confirm Password" onChange={handleChange} />
+            <FontAwesomeIcon icon={faLock} className={`absolute top-10 left-3 ${focusedField === 'confirmPassword' ? 'text-[#2F80ED]' : 'text-gray-500'}`} />
+            <input
+              id="confirmPassword"
+              name="confirmPassword"
+              type={showConfirmPassword ? 'text' : 'password'}
+              placeholder="Confirm Password"
+              onChange={handleChange}
+              onFocus={() => handleFocus('confirmPassword')}
+              className="rounded-md border border-gray-700 px-10 py-2 pl-12 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:ring-opacity-50"
+              required 
+            />
+            <FontAwesomeIcon
+              icon={showConfirmPassword ? faEyeSlash : faEye}
+              className="absolute top-10 right-3 cursor-pointer text-gray-500"
+              onMouseDown={toggleConfirmPasswordVisibility} 
+            />
           </div>
-          <button type="submit">Sign Up</button>
+          <div className="flex flex-row items-center mt-4">
+            <button
+              type="submit"
+              className="w-full mb-3 rounded-full bg-[#8F00FF] py-2 text-center text-white text-lg font-medium hover:bg-[#a455e1] focus:outline-none focus:ring-2 focus:ring-purpule focus:ring-opacity-50"
+            >
+              <FontAwesomeIcon icon={faRocket} className="mr-2" />Create Account
+            </button>
+          </div>
         </form>
       </div>
     </div>
   );
-}
+};
 
 export default Register;
