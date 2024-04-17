@@ -1,14 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-// @ts-ignore                 //to handle the import error
 import { verify } from '../../actions/auth.js';
-import { useParams } from 'react-router-dom'; // Import useParams
-import './Verify.css';
+import { useParams } from 'react-router-dom';
 
 const Verify = () => {
   const [credentials, setCredentials] = useState({ username: '', verification_code: '' });
   const dispatch = useDispatch();
-  const { username } = useParams(); // Get the 'username' parameter from the URL
+  const { username } = useParams();
 
   useEffect(() => {
     setCredentials((prevCredentials) => ({
@@ -18,7 +16,6 @@ const Verify = () => {
   }, [username]);
 
   const handleChange = (index: number, value: string) => {
-    // Handle input change for each verification code field
     const updatedVerificationCode =
       credentials.verification_code.slice(0, index) + value + credentials.verification_code.slice(index + 1);
     setCredentials((prevCredentials) => ({
@@ -29,37 +26,33 @@ const Verify = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Dispatch the verify action with the credentials
     dispatch(verify(credentials));
   };
 
   return (
-    <div className="create-account-section">
-      <div className="image-placeholder"></div>
-      <div className="create-account-form">
-        <div className="headline-subhead">
-          <div className="headline">Verify Your Email Address</div>
-          <div className="subhead">We sent you a 6 digit code to verify your email address:</div>
-          <div className="subhead">Enter in the field below.</div>
+    <div className="flex min-h-screen bg-[#141943] text-inter">
+      <div className="image-placeholder min-w-[583px] bg-cover bg-no-repeat" style={{ backgroundImage: `url(/src/assets/verifyBg.png)` }}></div>
+      <div className="create-account-form flex flex-col items-start justify-center p-10 gap-2">
+        <div className="headline-subhead text-white">
+          <div className=" text-6xl font-bold mb-6">Verify Your Email Address</div>
+          <div className="mb-9">We sent you a 6 digit code to verify your email address:</div>
+          <div className="">Enter in the field below.</div>
         </div>
-        <form onSubmit={handleSubmit}>
-          <div className="typeforms">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-5 ">
+          <div className="typeforms flex gap-2">
             {[...Array(6)].map((_, index) => (
-              <div className="typeform" key={index}>
+              <div className="typeform border border-gray-700 rounded-md w-12 h-12 flex items-center justify-center" key={index}>
                 <input
                   type="text"
                   maxLength={1}
                   value={credentials.verification_code[index] || ''}
                   onChange={(e) => handleChange(index, e.target.value)}
+                  className="w-full h-full bg-transparent outline-none text-white text-center text-2xl"
                 />
               </div>
             ))}
           </div>
-          <div className="frame-152">
-            <div>Didn’t get the code? Resend</div>
-            <div>Expires in 01:00</div>
-          </div>
-          <button type="submit">Verify</button>
+          <button type="submit" className="bg-[#8F00FF] hover:bg-[#7A00CC] text-white rounded-full py-3 px-6 text-lg font-semibold transition duration-300 ease-in-out">Submit</button>
         </form>
       </div>
     </div>
