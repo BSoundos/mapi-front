@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+//@ts-ignore
 import { verify } from '../../actions/auth.js';
 import { useParams } from 'react-router-dom';
 
