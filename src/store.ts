@@ -12,20 +12,27 @@ import generateAccessKeyReducer from './components/slices/generateAccessKeySlice
 import invoicesReducer from './components/slices/invoiceSlice';
 
 
+import apipopularReducer from './components/slices/ApiSlice';
+import AboutReducer from './components/slices/AboutSlice';
+import { useDispatch } from 'react-redux';
+
 const store = configureStore({
   reducer: {
     subscriptionPlans: subscriptionPlansReducer,
     subscriptionPlansPerUse: subscriptionPlansPerUseReducer,
     navigation: navigationReducer,
     plan: planReducer,
-    plan_peruse: planPerUseReducer, 
+    plan_peruse: planPerUseReducer,
     payment: paymentReducer,
     confirmpPayment: confirmPaymentReducer,
-    accesskey : generateAccessKeyReducer,
+    accesskey: generateAccessKeyReducer,
     invoice: invoicesReducer,
+    apipopular: apipopularReducer,
+    AboutSlice: AboutReducer,
     // Autres reducers...
   },
 });
 
-export type RootState = ReturnType<typeof store.getState>; // Définition de RootState ici
+export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
+export type RootState = ReturnType<typeof store.getState>;
 export default store;

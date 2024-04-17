@@ -13,6 +13,11 @@ import PlanDetailsPerusePage from '../src/components/SubscriptionPlan-peruse-Pay
 import InvoiceHistoryPage from './components/InvoicesHistory';
 import InvoiceDetails from './components/InvoiceDetails';
 
+import MainPage from '../src/components/mainpage';
+import AboutPage from './components/AboutPage';
+import NavBar2 from './components/NavBar2';
+import AjouterReview from './components/AjouterReview';
+
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './components/authentication/Login';
 import ExampleComponent from './components/authentication/test/ExampleComponent';
@@ -34,7 +39,7 @@ const App = () => {
     }
   }, []);
 
-
+  const data = {}
 
 
 
@@ -44,7 +49,10 @@ const App = () => {
     <Router>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path="payment-per-month/subscriptionPlans/:apiVersion" element={<SubscriptionPlansPage />} />
+        <Route path="payment-per-month/subscriptionPlans/:apiVersion" element={<MainPage />} />
+        <Route path='/about/:id' element={<AboutPage />} />
+        <Route path="/plan" element={<SubscriptionPlansPage />} />
+        <Route path="/" element={<NavBar2 data={data} />} />
         <Route path="payment-per-use/subscriptionPlans/:apiVersion" element={<SubscriptionPlansPerUsePage />} />
         <Route path="payment-per-month/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPage />} />
         <Route path="payment-per-use/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPerusePage />} />
@@ -58,6 +66,9 @@ const App = () => {
 
         <Route path="/Transaction_history" element={<InvoiceHistoryPage />} />
         <Route path="/Transaction_details" element={<InvoiceDetails />} />
+
+
+        <Route path="/ajouterreview" element={<AjouterReview />} />
 
 
       </Routes>
