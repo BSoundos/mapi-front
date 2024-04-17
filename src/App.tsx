@@ -52,7 +52,7 @@ const App = () => {
         <Route path="payment-per-month/subscriptionPlans/:apiVersion" element={<MainPage />} />
         <Route path='/about/:id' element={<AboutPage />} />
         <Route path="/plan" element={<SubscriptionPlansPage />} />
-        <Route path="/" element={<NavBar2 data={data} />} />
+        <Route path="/apis" element={<MainPage />} />
         <Route path="payment-per-use/subscriptionPlans/:apiVersion" element={<SubscriptionPlansPerUsePage />} />
         <Route path="payment-per-month/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPage />} />
         <Route path="payment-per-use/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPerusePage />} />

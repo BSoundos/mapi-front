@@ -16,12 +16,12 @@ const Home = () => {
                     <h1 className='pb-4'>APIs</h1>
                 </section>
                 <div className=' font-medium text-white mt-4 mb-6 ml-20 w-1/3 flex gap-6 align-middle justify-center'>
-                    <button className="bg-secondary-blue text-white opacity-75 w-1/3 px-4 py-2 rounded-md border border-corner-1-300 border-0.5 text-sm">
+                    <a href='/apis' className="bg-secondary-blue text-white opacity-75 w-1/3 px-4 py-2 rounded-md border border-corner-1-300 border-0.5 text-sm">
                         Explore
-                    </button>
-                    <button className="bg-mapi-secondary-1 text-white opacity-75 w-1/3 px-4 py-2 rounded-md border border-corner-1-300 border-0.5 text-sm">
+                    </a>
+                    <a className="bg-mapi-secondary-1 text-white opacity-75 w-1/3 px-4 py-2 rounded-md border border-corner-1-300 border-0.5 text-sm">
                         Upload
-                    </button>
+                    </a>
                 </div>
                 {/* Stats + users */}
                 <aside className='text-white ml-24 mb-16 w-1/3 flex justify-center'>
