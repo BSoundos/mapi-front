@@ -17,6 +17,7 @@ export default {
         'dark-text': '#00101E',
         'neutral': '#858C94',
         'neutral-2': '#DDDDDD',
+        'misc-linear': '#7E89AC4D',
         'mapi-primary': '#CB3CFF',
         'mapi-secondary-1': '#0B1739',
         'mapi-secondary-2': '#8951FF',

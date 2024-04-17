@@ -3,8 +3,8 @@ import { faDiscord, faTwitter, faInstagram, faYoutube } from '@fortawesome/free-
 
 const Footer = () => {
   return (
-    <footer className="bg-mapi-neutral-2 text-white py-4 fixed bottom-0 w-full border-t-2 border-corner-1-300">
-      <div className="container mx-auto px-60 flex flex-col md:flex-row items-center justify-between">
+    <footer className="bg-mapi-neutral-2 text-white py-4 bottom-10 w-full border-t-2">
+      <div style={{ margin: '0 60px' }} className="flex items-center justify-between p-4">
 
 
         {/* Left Section */}
@@ -28,24 +28,24 @@ const Footer = () => {
 
         {/* Right Section */}
         <div className="flex space-x-9 ">
-        <div className="flex flex-col">
-            <p className="mr-4  font-bold">Marketplace</p>
+          <div className="flex text-sm flex-col">
+            <p className="mr-4  font-bold my-3">Marketplace</p>
             <p className="mr-4 font-bold">Links</p>
-        </div>
-        <div className="flex flex-col">
-            <ul className="flex  space-x-8">
-            <li><a href="#" className="text-white hover:text-mapi-secondary-3">Explore</a></li>
-            <li><a href="#" className="text-white hover:text-mapi-secondary-3">Articles</a></li>
-            <li><a href="#" className="text-white hover:text-mapi-secondary-3">How it works</a></li>
-            <li><a href="#" className="text-white hover:text-mapi-secondary-3">Help</a></li>
+          </div>
+          <div className="flex flex-col">
+            <ul className="flex  text-sm space-x-8 my-3">
+              <li><a href="#" className="text-white hover:text-mapi-secondary-3">Explore</a></li>
+              <li><a href="#" className="text-white hover:text-mapi-secondary-3">Articles</a></li>
+              <li><a href="#" className="text-white hover:text-mapi-secondary-3">How it works</a></li>
+              <li><a href="#" className="text-white hover:text-mapi-secondary-3">Help</a></li>
             </ul>
-            <ul className="flex space-x-8">
-            <li><a href="#" className="text-white hover:text-mapi-secondary-3">Tokens</a></li>
-            <li><a href="#" className="text-white hover:text-mapi-secondary-3">API</a></li>
-            <li><a href="#" className="text-white hover:text-mapi-secondary-3">BigBounty</a></li>
-            <li><a href="#" className="text-white hover:text-mapi-secondary-3">Become Partners</a></li>
+            <ul className="flex text-sm space-x-8">
+              <li><a href="#" className="text-white hover:text-mapi-secondary-3">Tokens</a></li>
+              <li><a href="#" className="text-white hover:text-mapi-secondary-3">API</a></li>
+              <li><a href="#" className="text-white hover:text-mapi-secondary-3">BigBounty</a></li>
+              <li><a href="#" className="text-white hover:text-mapi-secondary-3">Become Partners</a></li>
             </ul>
-        </div>
+          </div>
         </div>
 
       </div>

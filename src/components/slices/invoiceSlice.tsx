@@ -6,31 +6,31 @@ interface Invoice {
   apiName: string;
   status: 'paid' | 'unpaid';
   totalAmount: number;
-  planName: String;
+  planName: string;
   createdAt: string;
 }
 
 interface InvoiceState {
-    invoices: Invoice[];
-    loading: boolean;
-    error: string | null;
-  }
-  
-  // Define initial state object with default values
-  const initialState: InvoiceState = {
-    invoices: [],
-    loading: false,
-    error: null,
-  };
+  invoices: Invoice[];
+  loading: boolean;
+  error: string | null;
+}
+
+// Define initial state object with default values
+const initialState: InvoiceState = {
+  invoices: [],
+  loading: false,
+  error: null,
+};
 
 export const fetchInvoices = createAsyncThunk<Invoice[]>(
-    'InvoiceHistory',
-    async () => {
-      const response = await axios.get('http://127.0.0.1:8000/invoices/');
-      console.log(response.data.invoices);
-      return response.data.invoices; 
-    }
-  );
+  'InvoiceHistory',
+  async () => {
+    const response = await axios.get('http://127.0.0.1:8000/invoices/');
+    console.log(response.data.invoices);
+    return response.data.invoices;
+  }
+);
 
 
 

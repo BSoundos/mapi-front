@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 // @ts-ignore                 //to handle the import error
 import { login } from '../../actions/auth.js';
-import'./Login.css';
+import './Login.css';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -15,7 +15,7 @@ const Login = () => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(login(credentials)); 
+    dispatch(login(credentials));
   };
 
   return (
@@ -23,8 +23,8 @@ const Login = () => {
       <div className="image-placeholder-login"></div>
       <div className='form-container'>
         <div className="headline-subhead">
-            <div className="headline">Welcome Back!</div>
-            <div className="subhead">Hello again, Login to your account.</div>
+          <div className="headline">Welcome Back!</div>
+          <div className="subhead">Hello again, Login to your account.</div>
         </div>
         <form onSubmit={handleSubmit} className='login-form'>
           <div>
