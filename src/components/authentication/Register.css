@@ -71,5 +71,54 @@ margin-top: 5px;
     height: 15px;
     border-radius: 5px;
     border: none;
+
+    /* Button */
+
+/* Auto layout */
+display: flex;
+flex-direction: row;
+justify-content: center;
+align-items: center;
+padding: 0px 50px;
+gap: 12px;
+
+width: 359px;
+height: 46px;
+
+background: #8F00FF;
+background: #8F00FF;
+border-radius: 20px;
+
+/* Inside auto layout */
+flex: none;
+order: 3;
+flex-grow: 0;
+/* Input Label */
+
+width: 126px;
+height: 24px;
+
+/* Paragraph Base / Heavy */
+font-family: 'Source Sans Pro';
+font-style: normal;
+font-weight: 600;
+font-size: 16px;
+line-height: 24px;
+/* identical to box height, or 150% */
+display: flex;
+align-items: center;
+
+color: #2F80ED;
+
+opacity: 0.8;
+
+/* Inside auto layout */
+flex: none;
+order: 0;
+flex-grow: 0;
+
+
+
     
 }
+
