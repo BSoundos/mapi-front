@@ -9,32 +9,32 @@ interface API {
 export interface Api {
   id: number;
   name: string;
-  description:string;
+  description: string;
   votes: number;
   popularity: number;
   latency: number;
   service_level: number;
-  category_name:string;
+  category_name: string;
   // Autres propriétés...
 }
 export type ValidAttributes = keyof Api;
 
-export interface categorie{
+export interface categorie {
   id: number;
   name: string;
-  description:string;
+  description: string;
 }
-export interface fonctionnalities{
+export interface fonctionnalities {
   id: number;
   name: string;
-  description:string;
+  description: string;
 }
 export const fetchPopularAPIs = createAsyncThunk<
-  Api[], 
-  void,   
+  Api[],
+  void,
   {}
 >('api/fetchPopularAPIs', async (_, thunkAPI) => {
-   const response = await fetch('http://localhost:8000/apis_exploitation/popular/');
+  const response = await fetch('http://localhost:8000/apis_exploitation/popular/');
   const data = await response.json();
   const mappedData = data.map((api: any) => ({
     id: api.api_id,
@@ -51,90 +51,91 @@ export const fetchPopularAPIs = createAsyncThunk<
 });
 
 export const searchAPIs = createAsyncThunk<
-Api[], 
-string,   
-{}
->('api/searchAPIs',async (searchQuery: string, thunkAPI) => {
-    const response = await fetch(`http://localhost:8000/apis_exploitation/rechercheapi/?query=${searchQuery}`);
-    const data = await response.json();
-    const mappedData = data.map((api: any) => ({
-      id: api.api_id,
-      name: api.name,
-      description: api.description,
-      votes: api.votes,
-      popularity: api.popularity,
-      latency: api.latency,
-      service_level: api.service_level,
-      category_name: api.category.name // Assigner le nom de la catégorie
-    }));
-  
-    return mappedData;
-  }
+  Api[],
+  string,
+  {}
+>('api/searchAPIs', async (searchQuery: string, thunkAPI) => {
+  const response = await fetch(`http://localhost:8000/apis_exploitation/rechercheapi/?query=${searchQuery}`);
+  const data = await response.json();
+  const mappedData = data.map((api: any) => ({
+    id: api.api_id,
+    name: api.name,
+    description: api.description,
+    votes: api.votes,
+    popularity: api.popularity,
+    latency: api.latency,
+    service_level: api.service_level,
+    category_name: api.category.name // Assigner le nom de la catégorie
+  }));
+
+  return mappedData;
+}
 );
 export const FilterCategorie = createAsyncThunk<
-Api[], 
-string,   
-{}
->('api/searchAPIs',async (categorie: string, thunkAPI) => {
-    const response = await fetch(`http://localhost:8000/apis_exploitation/category/?query=${categorie}`);
-    const data = await response.json();
-    const mappedData = data.map((api: any) => ({
-      id: api.api_id,
-      name: api.name,
-      description: api.description,
-      votes: api.votes,
-      popularity: api.popularity,
-      latency: api.latency,
-      service_level: api.service_level,
-      category_name: api.category.name // Assigner le nom de la catégorie
-    }));
-  
-    return mappedData;
-  }
+  Api[],
+  string,
+  {}
+>('api/searchAPIs', async (categorie: string, thunkAPI) => {
+  const response = await fetch(`http://localhost:8000/apis_exploitation/category/?query=${categorie}`);
+  const data = await response.json();
+  const mappedData = data.map((api: any) => ({
+    id: api.api_id,
+    name: api.name,
+    description: api.description,
+    votes: api.votes,
+    popularity: api.popularity,
+    latency: api.latency,
+    service_level: api.service_level,
+    category_name: api.category.name // Assigner le nom de la catégorie
+  }));
+
+  return mappedData;
+}
 );
 export const GetCategories = createAsyncThunk<
-Api[], 
-void,   
-{}
->('api/searchAPIs',async (_,thunkAPI ) => {
-    const response = await fetch(`http://localhost:8000/apis_exploitation/categories/`);
-    const data = await response.json();
-    return data;
-  }
+  Api[],
+  void,
+  {}
+>('api/searchAPIs', async (_, thunkAPI) => {
+  const response = await fetch(`http://localhost:8000/apis_exploitation/categories/`);
+  const data = await response.json();
+  console.log(data)
+  return data;
+}
 );
 
 export const GetFonctionnalities = createAsyncThunk<
-Api[], 
-void,   
-{}
->('api/searchAPIs',async (_,thunkAPI ) => {
-    const response = await fetch(`http://localhost:8000/apis_exploitation/fonctionnalities/`);
-    const data = await response.json();
-    console.log(data)
-    return data;
-  }
+  Api[],
+  void,
+  {}
+>('api/searchAPIs', async (_, thunkAPI) => {
+  const response = await fetch(`http://localhost:8000/apis_exploitation/fonctionnalities/`);
+  const data = await response.json();
+  console.log(data)
+  return data;
+}
 );
 export const FilterFonctionnalite = createAsyncThunk<
-Api[], 
-string,   
-{}
->('api/searchAPIs',async (fonctionnaliter: string, thunkAPI) => {
-    const response = await fetch(`http://localhost:8000/apis_exploitation/functionalite/?query=${fonctionnaliter}`);
-    const data = await response.json();
-    console.log(data)
-    const mappedData = data.map((api: any) => ({
-      id: api.api_id,
-      name: api.name,
-      description: api.description,
-      votes: api.votes,
-      popularity: api.popularity,
-      latency: api.latency,
-      service_level: api.service_level,
-      category_name: api.category.name // Assigner le nom de la catégorie
-    }));
-  
-    return mappedData;
-  }
+  Api[],
+  string,
+  {}
+>('api/searchAPIs', async (fonctionnaliter: string, thunkAPI) => {
+  const response = await fetch(`http://localhost:8000/apis_exploitation/functionalite/?query=${fonctionnaliter}`);
+  const data = await response.json();
+  console.log(data)
+  const mappedData = data.map((api: any) => ({
+    id: api.api_id,
+    name: api.name,
+    description: api.description,
+    votes: api.votes,
+    popularity: api.popularity,
+    latency: api.latency,
+    service_level: api.service_level,
+    category_name: api.category.name // Assigner le nom de la catégorie
+  }));
+
+  return mappedData;
+}
 );
 const api = createSlice({
   name: 'api',
@@ -142,7 +143,7 @@ const api = createSlice({
     popularAPIs: [],
     status: 'idle',
     error: null,
-  } as API, 
+  } as API,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchPopularAPIs.pending, (state) => {

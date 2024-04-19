@@ -27,6 +27,7 @@ const MainPage: React.FC = () => {
     const [Fonctionnalities, setFonctionnalities] = useState<fonctionnalities[]>([]);
     const [showAllCategories, setShowAllCategories] = useState(false);
 
+    console.log(Categories)
     const filteredCategories = showAllCategories ? Categories : Categories.slice(0, 2);
 
     const handleSort = (attribute: ValidAttributes) => {
