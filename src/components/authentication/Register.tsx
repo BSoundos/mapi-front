@@ -82,6 +82,7 @@ const Register = () => {
   };
 
   return (
+    localStorage.getItem('token') ? <>{window.location.href="/"}</> :<>
     <div className="flex min-h-screen bg-[#0B1739] gap-9">
       <div className="flex w-[75%] bg-cover bg-no-repeat bg-center m" style={{ backgroundImage: `url(/src/assets/registerBg.png)` }}>
         <div className="w-full h-full  opacity-25" />
@@ -249,6 +250,7 @@ const Register = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 
