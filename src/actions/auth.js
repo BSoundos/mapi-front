@@ -27,6 +27,7 @@ export const register = (credentials) => {
     } catch (error) {
       dispatch({ type: 'REGISTER_FAILURE', payload: error.response.data }); // Dispatch failure action
       console.error('Error registering user:', error.response.data);
+      return error.response.data;
     }
   };
 };
@@ -42,7 +43,7 @@ export const verify = (credentials) => {
 
     } catch (error) {
       dispatch({ type: 'VERIFY_FAILURE', payload: error.response.data }); // Dispatch failure action
-      console.error('Error verifying user:', error.response.data);
+      return error.response.data;
     }
   };
 };
