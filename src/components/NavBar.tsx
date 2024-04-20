@@ -26,7 +26,7 @@ const Navbar = () => {
           <div className="mr-6 text-white font-normal text-xs font-plus-jakarta-sans">Contact</div>
         </div>
         <div className="flex items-center space-x-6">
-          <button className="bg-mapi-neutral-2 text-secondary-blue rounded-xl px-4 py-2 flex items-center border border-corner-1-300 border-0.5 text-sm">
+          {/* <button className="bg-mapi-neutral-2 text-secondary-blue rounded-xl px-4 py-2 flex items-center border border-corner-1-300 border-0.5 text-sm">
             <FontAwesomeIcon icon={faFilter} className="mr-2" />
             Filter
           </button>
@@ -38,7 +38,7 @@ const Navbar = () => {
             />
 
             <FontAwesomeIcon icon={faSearch} className="text-secondary-blue absolute left-3 top-1/2 transform -translate-y-1/2" />
-          </div>
+          </div> */}
           {
             localStorage.getItem('token')
               ?

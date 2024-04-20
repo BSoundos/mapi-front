@@ -105,7 +105,7 @@ const AboutPage: React.FC = () => {
         </div>
         <div className='flex items-center justify-between pl-16 pr-8 py-2'>
           <p className='text-white font-Inter font-semibold text-2xl'>Reviews</p>
-          <button onClick={handleOpenModal} className='text-[#21C3FC] bg-[#081028] w-fits py-1 px-2 border border-[#7E89AC] border-opacity-30 rounded-lg' >+ New Review</button>
+          <button onClick={handleOpenModal} className='text-[#21C3FC] bg-[#081028] w-fit py-1 px-2 border border-[#7E89AC] border-opacity-30 rounded-lg' >+ New Review</button>
           <AjouterReview isOpen={isModalOpen} onClose={handleCloseModal} />
           {/* onClick={openAddReviewWindow} */}
         </div>
