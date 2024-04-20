@@ -39,7 +39,8 @@ export const verify = (credentials) => {
       const response = await axios.post('http://127.0.0.1:8000/authentication/verify/', credentials);
 
       dispatch({ type: 'VERIFY_SUCCESS' }); // Dispatch success action
-      window.location.href = '/login';
+      return response.data;
+      // window.location.href = '/login';
 
     } catch (error) {
       dispatch({ type: 'VERIFY_FAILURE', payload: error.response.data }); // Dispatch failure action
