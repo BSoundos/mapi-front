@@ -9,15 +9,26 @@ const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
   const [showPassword, setShowPassword] = useState(false);
   const [focusedField, setFocusedField] = useState('');
+  const [loginError, setLoginError] = useState('');
   const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    setLoginError('');
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    dispatch(login(credentials));
+    const response = await dispatch(login(credentials));
+    if (response && response.error === 'Invalid email or password.') {
+      setLoginError(response.error);
+    } 
+    if (response && response.detail ==='User is not verified!') {
+      const confirmAlert = window.confirm('User is not verified! Click on OK to verify your account.');
+      if (confirmAlert){
+        window.location.href = '/verify/'+response.username;
+      }
+    }
   };
 
   const togglePasswordVisibility = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
@@ -34,6 +45,7 @@ const Login = () => {
   };
 
   return (
+    localStorage.getItem('token') ? <>{window.location.href="/"}</> :<>
     <div className="flex min-h-screen bg-[#0B1739] relative">
       <div className="flex w-[85%] bg-cover bg-no-repeat relative" style={{ backgroundImage: `url(/src/assets/loginBg.png)`, zIndex: '1' }}>
         <div className="w-full h-full bg-[#0B1739] opacity-25" />
@@ -101,15 +113,17 @@ const Login = () => {
               Forgot Password?
             </a>
           </div>
+          {loginError && <p className="text-red-500 text-sm">{loginError}</p>}
           <button
             type="submit"
-            className="w-full rounded-md bg-blue-600 py-2 text-center text-white text-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
+            className="w-full rounded-full bg-blue-600 py-2 text-center text-white text-lg font-medium hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50"
           >
             Log in
           </button>
         </form>
       </div>
     </div>
+    </>
   );
 };
 
