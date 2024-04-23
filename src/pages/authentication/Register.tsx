@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 //@ts-ignore
 import { register } from '../../actions/auth.js';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faEnvelope, faLock, faPhone,faRocket, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faEnvelope, faLock, faPhone, faRocket, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 
 const Register = () => {
   const [credentials, setCredentials] = useState({
@@ -16,31 +16,63 @@ const Register = () => {
     contact_info: '',
     confirmPassword: '',
   });
-  const dispatch = useDispatch();
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [focusedField, setFocusedField] = useState('');
+  const [passwordMatchError, setPasswordMatchError] = useState(false);
+  const [usernameError, setUsernameError] = useState('');
+  const [emailError, setEmailError] = useState('');
+  const dispatch = useDispatch();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
+    if (e.target.name === 'password' || e.target.name === 'confirmPassword') {
+      setPasswordMatchError(false);
+    }
+    if (e.target.name === 'username') {
+      setUsernameError('');
+    }
+    if (e.target.name === 'email') {
+      setEmailError('');
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     if (credentials.confirmPassword !== credentials.password) {
-      console.log("Passwords do not match");
+      setPasswordMatchError(true);
       return;
     }
-    dispatch(register(credentials));
+    try {
+      const response = await dispatch(register(credentials));
+      console.log('Response:', response);
+      if (response) {
+        if (response.username) {
+          console.log(" Username error:", response.username[0]);
+          setUsernameError(response.username[0]);
+        }
+        if (response.email) {
+          console.log(" Email error:", response.email[0]);
+          setEmailError(response.email[0]);
+        }
+      }
+      
+    } catch (error: any) {
+      console.error('Error registering user in the register page:', error.response);      
+    }
   };
+  
+
   const togglePasswordVisibility = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     e.preventDefault();
     setShowPassword(!showPassword);
   };
+
   const toggleConfirmPasswordVisibility = (e: React.MouseEvent<SVGSVGElement, MouseEvent>) => {
     e.preventDefault();
     setShowConfirmPassword(!showConfirmPassword);
   };
+
   const handleFocus = (field: string) => {
     setFocusedField(field);
   };
@@ -49,22 +81,22 @@ const Register = () => {
     setFocusedField('');
   };
 
-
   return (
+    localStorage.getItem('token') ? <>{window.location.href="/"}</> :<>
     <div className="flex min-h-screen bg-[#0B1739] gap-9">
-      <div className="flex w-[45%] bg-cover bg-no-repeat bg-center" style={{ backgroundImage: `url(/src/assets/registerBg.png)` }}>
-        <div className="w-full h-full bg-gray-900 opacity-25" />
+      <div className="flex w-[75%] bg-cover bg-no-repeat bg-center m" style={{ backgroundImage: `url(/src/assets/registerBg.png)` }}>
+        <div className="w-full h-full  opacity-25" />
       </div>
-      <div className="flex flex-col justify-center items-start w-[55%] px-10 mt-9">
+      <div className="flex flex-col justify-center items-start w-[55%] px-10 mt-9 -ml-40">
         <h1 className="text-6xl font-bold text-white mb-2">Create Account</h1>
-        <p className="text-lg text-gray-300 mb-10">
-          Welcome! Enter your details to enjoy the features of the site!
+        <p className="text-2xl text-gray-300 mb-10">
+          Welcome! Enter Your Details To Enjoy The Features Of The Site!
         </p>
-        <form onSubmit={handleSubmit} className="flex flex-col space-y-4">
+        <form onSubmit={handleSubmit} className="flex flex-col space-y-2">
           <div className="flex flex-row -space-x-0.5">
             <button
               type="button"
-              className={`flex-grow border rounded-l-lg py-2 text-sm focus:outline-none ${credentials.role === 'user' ? '' : 'border-r-red-500'}`}
+              className={`flex-grow border rounded-l-lg py-2 text-sm text-white focus:outline-none `}
               style={{ background: 'transparent', border: credentials.role === 'user' ? '2px solid #2F80ED' : ' 2px solid white'}}
               onClick={() => setCredentials({...credentials, role: 'user'})}
             >
@@ -72,7 +104,7 @@ const Register = () => {
             </button>
             <button
               type="button"
-              className={`flex-grow border rounded-r-lg py-2 text-sm focus:outline-none `}
+              className={`flex-grow border rounded-r-lg py-2 text-sm text-white focus:outline-none `}
               style={{ background:  'transparent', border: credentials.role === 'provider' ? '2px solid #2F80ED' : '2px solid white'}}
               onClick={() => setCredentials({...credentials, role: 'provider'})}
             >
@@ -127,6 +159,7 @@ const Register = () => {
               className="rounded-md border border-gray-700 px-10 py-2 pl-12 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:ring-opacity-50"
               required 
             />
+            {usernameError && <p className="text-red-500 text-xs ml-2">{usernameError}</p>}
           </div>
           <div className="flex flex-col relative">
             <label htmlFor="email" className="mb-2 text-sm text-[#2F80ED]">
@@ -143,6 +176,7 @@ const Register = () => {
               className="rounded-md border border-gray-700 px-10 py-2 pl-12 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:ring-opacity-50"
               required 
             />
+            {emailError && <p className="text-red-500 text-xs ml-2">{emailError}</p>}
           </div>
           <div className="flex flex-col relative">
             <label htmlFor="contact_info" className="mb-2 text-sm text-[#2F80ED]">
@@ -158,7 +192,7 @@ const Register = () => {
               onFocus={() => handleFocus('contact_info')}
               className="rounded-md border border-gray-700 px-10 py-2 pl-12 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:ring-opacity-50"
             />
-            <p className='text-sm mt-2 ml-4 text-[#7E89AC]'>This field is optional.</p>
+            <p className='text-xs mt-2 ml-4 text-[#7E89AC]'>This field is optional.</p>
           </div>
           <div className="flex flex-col relative">
             <label htmlFor="password" className="mb-2 text-sm text-[#2F80ED]">
@@ -174,14 +208,14 @@ const Register = () => {
               onFocus={() => handleFocus('password')}
               onBlur={handleBlur}
               className="rounded-md border border-gray-700 px-10 py-2 pl-12 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:ring-opacity-50"
-              required 
+              required
             />
             <FontAwesomeIcon
               icon={showPassword ? faEyeSlash : faEye}
               className="absolute top-10 right-3 cursor-pointer text-gray-500"
-              onMouseDown={togglePasswordVisibility} 
+              onMouseDown={togglePasswordVisibility}
             />
-            <p className='text-sm mt-2 ml-4 text-[#7E89AC]'>Must be at least 8 characters.</p>
+            <p className='text-xs mt-2 ml-4 text-[#7E89AC]'>Must be at least 8 characters.</p>
           </div>
           <div className="flex flex-col relative">
             <label htmlFor="confirmPassword" className="mb-2 text-sm text-[#2F80ED]">
@@ -196,18 +230,19 @@ const Register = () => {
               onChange={handleChange}
               onFocus={() => handleFocus('confirmPassword')}
               className="rounded-md border border-gray-700 px-10 py-2 pl-12 text-gray-700 focus:outline-none focus:ring-indigo-500 focus:ring-opacity-50"
-              required 
+              required
             />
             <FontAwesomeIcon
               icon={showConfirmPassword ? faEyeSlash : faEye}
               className="absolute top-10 right-3 cursor-pointer text-gray-500"
-              onMouseDown={toggleConfirmPasswordVisibility} 
+              onMouseDown={toggleConfirmPasswordVisibility}
             />
           </div>
+          {passwordMatchError && <p className="text-red-500 text-sm">Passwords do not match</p>}
           <div className="flex flex-row items-center mt-4">
             <button
               type="submit"
-              className="w-full mb-3 rounded-full bg-[#8F00FF] py-2 text-center text-white text-lg font-medium hover:bg-[#a455e1] focus:outline-none focus:ring-2 focus:ring-purpule focus:ring-opacity-50"
+              className="w-full mt-7 mb-20 rounded-full bg-[#8F00FF] py-2 text-center text-white text-lg font-medium hover:bg-[#a455e1] focus:outline-none focus:ring-2 focus:ring-[#a455e1] focus:ring-opacity-50"
             >
               <FontAwesomeIcon icon={faRocket} className="mr-2" />Create Account
             </button>
@@ -215,6 +250,7 @@ const Register = () => {
         </form>
       </div>
     </div>
+    </>
   );
 };
 
