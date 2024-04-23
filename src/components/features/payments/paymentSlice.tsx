@@ -5,27 +5,27 @@ interface PaymentDetails {
   amount: string;
   currency: string;
   payment_method: string;
-  id_plan : number;
-  api_version : number ;
+  id_plan: number;
+  api_version: number;
 }
 
 interface PaymentResponse {
-    checkout_url?: object;
-    error?: string;
-  }
+  checkout_url?: object;
+  error?: string;
+}
 interface PaymentState {
-    loading: boolean;
-    error: string | null;
-    checkoutUrl: string | null;
-  }
-  
-  const initialState: PaymentState = {
-    loading: false,
-    error: null,
-    checkoutUrl: null,
-  };
+  loading: boolean;
+  error: string | null;
+  checkoutUrl: string | null;
+}
 
-  //payment process
+const initialState: PaymentState = {
+  loading: false,
+  error: null,
+  checkoutUrl: null,
+};
+
+//payment process
 export const confirmPayment = createAsyncThunk(
   'payment/confirmPayment',
   async (paymentDetails: PaymentDetails, { rejectWithValue }) => {
@@ -55,13 +55,14 @@ const paymentSlice = createSlice({
       .addCase(confirmPayment.fulfilled, (state, action) => {
         state.loading = false;
         if (action.payload && action.payload.checkout_url) {
+          console.log("")
         } else if (action.payload && action.payload.error) {
           state.error = action.payload.error;
         }
       })
-      .addCase(confirmPayment.rejected, (state, action) => {
+      .addCase(confirmPayment.rejected, (state) => {
         state.loading = false;
-    });
+      });
   },
 });
 

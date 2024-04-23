@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import store, { RootState } from '../../app/store';
-import { setPaymentMethod } from '../../components/slices/paymentMethodSlice';
-import { confirmPayment } from '../../components/slices/paymentSlice';
+import { setPaymentMethod } from '../../components/features/payments/paymentMethodSlice';
+import { confirmPayment } from '../../components/features/payments/paymentSlice';
 import cibImage from '@/assets/cib.png';
 import edahabiyaImage from '@/assets/edahabia.jpg';
 export type AppDispatch = typeof store.dispatch

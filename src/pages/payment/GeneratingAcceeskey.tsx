@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import store, { RootState } from '../../app/store';
-import { generateAccessKey } from '../../components/slices/generateAccessKeySlice';
+import { generateAccessKey } from '../../components/features/subscriptions/generateAccessKeySlice';
 export type AppDispatch = typeof store.dispatch
 import { useParams } from 'react-router-dom'; // Importer useParams
 

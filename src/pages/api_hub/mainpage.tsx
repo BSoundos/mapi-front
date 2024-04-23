@@ -7,9 +7,9 @@ import "@/styles/index.css"
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { fetchPopularAPIs } from '../../components/slices/ApiSlice';
+import { fetchPopularAPIs } from '../../components/features/apis/ApiSlice';
 import { RootState, useAppDispatch } from '../../app/store';
-import { searchAPIs, FilterCategorie, GetCategories, GetFonctionnalities, FilterFonctionnalite } from '../../components/slices/ApiSlice';
+import { searchAPIs, FilterCategorie, GetCategories, GetFonctionnalities, FilterFonctionnalite } from '../../components/features/apis/ApiSlice';
 import { fonctionnalities } from '@/types/fonctionnalities';
 import { categorie } from '@/types/categorie';
 import { ValidAttributes } from '@/types/API';
@@ -102,10 +102,7 @@ const MainPage: React.FC = () => {
 
 
 
-    const handleLinkClick = () => {
-        // Vous pouvez effectuer des opérations supplémentaires ici si nécessaire
-        console.log("Le lien a été cliqué !");
-    };
+
     return (
         <main>
             <Navbar />

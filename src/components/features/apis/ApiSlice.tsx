@@ -1,7 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { API } from '../../types/API';
-import { Api } from '../../types/API';
+import { API } from '../../../types/API';
+import { Api } from '../../../types/API';
 
 
 

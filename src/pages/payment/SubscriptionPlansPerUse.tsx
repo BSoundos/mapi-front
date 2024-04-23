@@ -1,7 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchSubscriptionPlans } from '../../components/slices/subscriptionPlansPerUseSlice';
-import { fetchPlanDetails } from '../../components/slices/selectedPlanPerUseSlice';
+import { fetchSubscriptionPlans } from '../../components/features/subscriptions/subscriptionPlansPerUseSlice';
+import { fetchPlanDetails } from '../../components/features/subscriptions/selectedPlanPerUseSlice';
 import store, { RootState } from '../../app/store';
 import { Link } from 'react-router-dom';
 

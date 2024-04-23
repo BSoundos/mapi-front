@@ -1,19 +1,19 @@
 // store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import subscriptionPlansReducer from '../components/slices/subscriptionPlansSlice';
-import subscriptionPlansPerUseReducer from '../components/slices/subscriptionPlansPerUseSlice';
-import navigationReducer from '../components/slices/selectedPlanSlice';
-import planReducer from '../components/slices/selectedPlanSlice';
-import planPerUseReducer from '../components/slices/selectedPlanPerUseSlice';
+import subscriptionPlansReducer from '../components/features/subscriptions/subscriptionPlansSlice';
+import subscriptionPlansPerUseReducer from '../components/features/subscriptions/subscriptionPlansPerUseSlice';
+import navigationReducer from '../components/features/subscriptions/selectedPlanSlice';
+import planReducer from '../components/features/subscriptions/selectedPlanSlice';
+import planPerUseReducer from '../components/features/subscriptions/selectedPlanPerUseSlice';
 
-import paymentReducer from '../components/slices/paymentMethodSlice';
-import confirmPaymentReducer from '../components/slices/paymentSlice';
-import generateAccessKeyReducer from '../components/slices/generateAccessKeySlice';
-import invoicesReducer from '../components/slices/invoiceSlice';
+import paymentReducer from '../components/features/payments/paymentMethodSlice';
+import confirmPaymentReducer from '../components/features/payments/paymentSlice';
+import generateAccessKeyReducer from '../components/features/subscriptions/generateAccessKeySlice';
+import invoicesReducer from '../components/features/invoices/invoiceSlice';
 
 
-import apipopularReducer from '../components/slices/ApiSlice';
-import AboutReducer from '../components/slices/AboutSlice';
+import apipopularReducer from '../components/features/apis/ApiSlice';
+import AboutReducer from '../components/features/apis/AboutSlice';
 import { useDispatch } from 'react-redux';
 
 const store = configureStore({
