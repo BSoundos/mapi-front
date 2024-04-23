@@ -16,6 +16,8 @@ import apipopularReducer from '../components/features/apis/ApiSlice';
 import AboutReducer from '../components/features/apis/AboutSlice';
 import { useDispatch } from 'react-redux';
 
+import discussionsReducer from '../components/features/discussions/discussionsSlice';
+
 const store = configureStore({
   reducer: {
     subscriptionPlans: subscriptionPlansReducer,
@@ -29,6 +31,8 @@ const store = configureStore({
     invoice: invoicesReducer,
     apipopular: apipopularReducer,
     AboutSlice: AboutReducer,
+    discussions: discussionsReducer, 
+
     // Autres reducers...
   },
 });

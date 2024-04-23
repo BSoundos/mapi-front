@@ -24,6 +24,7 @@ import axios from 'axios';
 import Register from '../pages/authentication/Register';
 import Verify from '../pages/authentication/Verify';
 import Home from '../pages/home/Home';
+import Discussions from '@/pages/discussions/Discussions';
 
 
 
@@ -59,6 +60,8 @@ const App = () => {
 
         <Route path="/Transaction_history" element={<InvoiceHistoryPage />} />
         <Route path="/Transaction_details" element={<InvoiceDetails />} />
+
+        <Route path="/Discussions/:apiId" element={<Discussions />} />
 
 
         {/* <Route path="/ajouterreview" element={<AjouterReview />} /> */}
