@@ -1,31 +1,29 @@
-import './App.css'
-import './index.css';
-import './styles/Paiement.css';
+import '@/styles/App.css'
+import '@/styles/index.css';
+import '@/styles/Paiement.css';
 
 // App.tsx
-import SubscriptionPlansPage from '../src/components/SubscriptionPlans';
-import SubscriptionPlansPerUsePage from '../src/components/SubscriptionPlansPerUse';
+import SubscriptionPlansPage from '../pages/payment/SubscriptionPlans';
+import SubscriptionPlansPerUsePage from '../pages/payment/SubscriptionPlansPerUse';
 
-import PlanDetailsPage from '../src/components/subscriptionPlanPayment';
-import GeneratingAccessKeyPage from '../src/components/GeneratingAcceeskey';
-import PlanDetailsPerusePage from '../src/components/SubscriptionPlan-peruse-Payment';
+import PlanDetailsPage from '../pages/payment/subscriptionPlanPayment';
+import GeneratingAccessKeyPage from '../pages/payment/GeneratingAcceeskey';
+import PlanDetailsPerusePage from '../pages/payment/SubscriptionPlan-peruse-Payment';
 // import Invoices from './components/InvoicesHistory';
-import InvoiceHistoryPage from './components/InvoicesHistory';
-import InvoiceDetails from './components/InvoiceDetails';
+import InvoiceHistoryPage from '../pages/invoices/InvoicesHistory';
+import InvoiceDetails from '../pages/invoices/InvoiceDetails';
 
-import MainPage from '../src/components/mainpage';
-import AboutPage from './components/AboutPage';
-import NavBar2 from './components/NavBar2';
-import AjouterReview from './components/AjouterReview';
+import MainPage from '../pages/api_hub/mainpage';
+import AboutPage from '../pages/api_hub/AboutPage';
+// import AjouterReview from './components/AjouterReview';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from './components/authentication/Login';
-import ExampleComponent from './components/authentication/test/ExampleComponent';
+import Login from '../pages/authentication/Login';
 import { useEffect } from 'react';
 import axios from 'axios';
-import Register from './components/authentication/Register';
-import Verify from './components/authentication/Verify';
-import Home from './components/Home';
+import Register from '../pages/authentication/Register';
+import Verify from '../pages/authentication/Verify';
+import Home from '../pages/home/Home';
 
 
 
@@ -36,13 +34,9 @@ const App = () => {
     const token = localStorage.getItem('token');
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+      console.log(token)
     }
   }, []);
-
-  const data = {}
-
-
-
 
 
   return (
@@ -62,13 +56,12 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify/:username" element={<Verify />} />
-        <Route path="/test" element={<ExampleComponent />} />
 
         <Route path="/Transaction_history" element={<InvoiceHistoryPage />} />
         <Route path="/Transaction_details" element={<InvoiceDetails />} />
 
 
-        <Route path="/ajouterreview" element={<AjouterReview />} />
+        {/* <Route path="/ajouterreview" element={<AjouterReview />} /> */}
 
 
       </Routes>

@@ -1,17 +1,18 @@
 // apiSlice.ts
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { RootState } from '../../store';
+import { RootState } from '../../app/store';
+import axios from 'axios';
 
 export interface ApiData {
   id: number;
   name: string;
-  description:string;
+  description: string;
   votes: number;
   popularity: number;
   latency: number;
   service_level: number;
-  category_name:string;
+  category_name: string;
   // Autres propriétés...
 }
 
@@ -22,15 +23,13 @@ interface ApiState {
 }
 
 export const fetchApiById = createAsyncThunk<
-  ApiData, 
-  number 
+  ApiData,
+  number
 >(
   'api/fetchApiById', // Nom de l'action
   async (apiId: number) => {
-    const response = await fetch(`http://localhost:8000/apis_exploitation/api/${apiId}`);
-    const data = await response.json();
-    console.log("kjernejkrnvekjve")
-    console.log(data)
+    const response = await axios.get(`http://localhost:8000/apis_exploitation/api/${apiId}`);
+    const data = response.data;
     return data;
   }
 );
@@ -52,7 +51,7 @@ const AboutSlice = createSlice({
       state.status = 'succeeded';
       state.data = action.payload;
     });
-    builder.addCase(fetchApiById.rejected, (state, action) => {
+    builder.addCase(fetchApiById.rejected, (state) => {
       state.status = 'failed';
     });
   },

@@ -1,9 +1,9 @@
-import Navbar from './NavBar'
-import loginBgFlipped from '../assets/loginBgFlipped.png'
-import Footer from './Footer'
-import uploadIcon from '../assets/icons/upload.svg'
-import listIcon from '../assets/icons/list.svg'
-import walletIcon from '../assets/icons/wallet.svg'
+import Navbar from '../../components/NavBar'
+import loginBgFlipped from '@/assets/loginBgFlipped.png'
+import Footer from '../../components/Footer'
+import uploadIcon from '@/assets/icons/upload.svg'
+import listIcon from '@/assets/icons/list.svg'
+import walletIcon from '@/assets/icons/wallet.svg'
 const Home = () => {
     return (
         <div className='bg-mapi-neutral-2 min-h-screen font-plus-jakarta-sans' >

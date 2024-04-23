@@ -1,29 +1,23 @@
 import React from 'react';
-import ReactDOM from 'react-dom/client'
 import { useState } from 'react';
-import { Provider } from 'react-redux'
-import store from '../store'
-import "../index.css"
-import NavBar2 from './NavBar2';
-import Review from './Review';
-import PaginationR from './PaginationR';
-import AjouterReview from './AjouterReview';
+import "@/styles/index.css"
+import NavBar2 from '../../components/NavBar2';
+import Review from '../../components/Review';
+import PaginationR from '../../components/PaginationR';
+import AjouterReview from '../../components/AjouterReview';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { RootState, useAppDispatch } from '../store';
-import { fetchApiById } from './slices/AboutSlice';
+import { useSelector } from 'react-redux';
+import { RootState } from '../../app/store';
+import axios from 'axios';
 
 
 
 
 const AboutPage: React.FC = () => {
 
-  const dispatch = useAppDispatch();
   const { id } = useParams();
-  console.log(id)
 
-  const apiData = useSelector((state: RootState) => state.AboutSlice.data);
   const status = useSelector((state: RootState) => state.AboutSlice.status);
   const error = useSelector((state: RootState) => state.AboutSlice.error);
   const [data, setData] = useState<any>(null);
@@ -32,8 +26,8 @@ const AboutPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await fetch(`http://localhost:8000/apis_exploitation/api/${id}`);
-        const data = await response.json();
+        const response = await axios.get(`http://localhost:8000/apis_exploitation/api/${id}`);
+        const data = response.data;
         // Utilisez les données récupérées ici
         setData(data);
       } catch (error) {
@@ -49,13 +43,13 @@ const AboutPage: React.FC = () => {
   //   }
   // }, [dispatch, id]);
 
-  switch (status) {
-    case 'loading':
-      return <div>Chargement en cours...</div>;
-    case 'failed':
-      return <div>Une erreur est survenue : {error}</div>;
-    case 'succeeded':
-  }
+  // switch (status) {
+  //   case 'loading':
+  //     return <div>Chargement en cours...</div>;
+  //   case 'failed':
+  //     return <div>Une erreur est survenue : {error}</div>;
+  //   case 'succeeded':
+  // }
   const totalReviews = 5;
   const reviewsPerPage = 3; // le nmb de review par page 
 

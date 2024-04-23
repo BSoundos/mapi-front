@@ -1,20 +1,20 @@
 import React, { useEffect } from 'react';
-import { useSelector , useDispatch } from 'react-redux';
-import store, { RootState } from '../store';
-import { setPaymentMethod } from './slices/paymentMethodSlice';
-import { confirmPayment} from './slices/paymentSlice';
-import cibImage from '../assets/cib.png';
-import edahabiyaImage from '../assets/edahabia.jpg';
+import { useSelector, useDispatch } from 'react-redux';
+import store, { RootState } from '../../app/store';
+import { setPaymentMethod } from '../../components/slices/paymentMethodSlice';
+import { confirmPayment } from '../../components/slices/paymentSlice';
+import cibImage from '@/assets/cib.png';
+import edahabiyaImage from '@/assets/edahabia.jpg';
 export type AppDispatch = typeof store.dispatch
-import { useParams } from 'react-router-dom'; 
+import { useParams } from 'react-router-dom';
 
 const PlanDetailsPerusePage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const planDetails = useSelector((state: RootState) => state.plan_peruse.details);
     const paymentMethod = useSelector((state: RootState) => state.payment.method);
     const { apiVersion, planId } = useParams(); // Extraire les paramètres dynamiques de l'URL
- 
-    
+
+
     let objectPrices: { id: number, name: string, price: string }[] = [];
     let totalPrice: number = 0;
 
@@ -22,7 +22,7 @@ const PlanDetailsPerusePage = () => {
         objectPrices = planDetails.objectPrices; //les objets avec leurs prix
         totalPrice = objectPrices.reduce((total, obj) => total + parseFloat(obj.price), 0); //calcul du prix prix total
     }
-    
+
 
     const handlePaymentMethodChange = (method: string) => {
         dispatch(setPaymentMethod(method)); //changer la methode de paiement 
@@ -31,30 +31,30 @@ const PlanDetailsPerusePage = () => {
     //confirmation du paiement
     const handleConfirmPayment = () => {
         try {
-          if (planDetails && planId && apiVersion) {
-            dispatch(confirmPayment({
-              amount: String(totalPrice),
-              currency: 'dzd',
-              payment_method: paymentMethod,
-              id_plan : parseInt(planId),
-              api_version : parseInt(apiVersion)
-    
-            })).then((response) => {
-                if (response.payload && response.payload) {
-                    const payloadString = JSON.stringify(response.payload);
-                    const payloadObject = JSON.parse(payloadString);
-                    window.location.href = payloadObject.checkout_url;  //checkoutUrl pour le paiement en utilisant ChargilyAPI
-                       } else  {
-                  console.error('Payment error:');
-                } 
-              })
-          } else {
-            console.error('Plan details or ids not available.');
-          }
+            if (planDetails && planId && apiVersion) {
+                dispatch(confirmPayment({
+                    amount: String(totalPrice),
+                    currency: 'dzd',
+                    payment_method: paymentMethod,
+                    id_plan: parseInt(planId),
+                    api_version: parseInt(apiVersion)
+
+                })).then((response) => {
+                    if (response.payload && response.payload) {
+                        const payloadString = JSON.stringify(response.payload);
+                        const payloadObject = JSON.parse(payloadString);
+                        window.location.href = payloadObject.checkout_url;  //checkoutUrl pour le paiement en utilisant ChargilyAPI
+                    } else {
+                        console.error('Payment error:');
+                    }
+                })
+            } else {
+                console.error('Plan details or ids not available.');
+            }
         } catch (error) {
-          console.error('Error confirming payment:', error);
+            console.error('Error confirming payment:', error);
         }
-      };
+    };
     useEffect(() => {
     }, []);
 
@@ -66,7 +66,7 @@ const PlanDetailsPerusePage = () => {
     return (
         <div className="h-screen flex justify-center items-center bg-mapi-neutral-2 mx-auto  ">
             <div className=" bg-mapi-neutral-2 w-full mx-auto my-8 sm:mx-4 flex flex-col items-center lg:w-3/4 xl:w-3/3 border border-gray-300 border-opacity-30 rounded-lg overflow-hidden shadow-2xl ">
-                <br/><br/><br/><br/><br/>
+                <br /><br /><br /><br /><br />
                 <div className="payment-page-container flex justify-between space-x-8 shadow-xl lg:w-3/4 xl:w-2/3 border border-gray-300 border-opacity-30 rounded-lg overflow-hidden shadow-5xl ">
                     <div className="selected-plan-container bg-primary-secondary-1 p-8 rounded-lg text-white ">
                         <h2 className="text-2xl font-semibold mb-4 text-plus-jakarta-sans text-3xl text-neutral">You Selected The Plan</h2>
@@ -79,10 +79,10 @@ const PlanDetailsPerusePage = () => {
                                     </div>
                                 </div>
                                 <div className="included-details bg-primary-secondary-1 p-4 rounded-lg text-white">
-                                <p className="font-semibold text-plus-jakarta-sans text-lg text-neutral">What's Included?</p>
-                                {objectPrices.map(obj => (                                   
-                                    <p className=" text-plus-jakarta-sans text-sm text-neutral">{obj.name }</p>
-                                ))}
+                                    <p className="font-semibold text-plus-jakarta-sans text-lg text-neutral">What's Included?</p>
+                                    {objectPrices.map(obj => (
+                                        <p className=" text-plus-jakarta-sans text-sm text-neutral">{obj.name}</p>
+                                    ))}
                                 </div></div>
 
                             <hr className="separator border-t-2 border-neutral" />
@@ -102,7 +102,7 @@ const PlanDetailsPerusePage = () => {
                                     onClick={() => handlePaymentMethodChange('edahabia')}
                                 >
                                     <div className="flex flex-col items-center  text-plus-jakarta-sans text-lg text-neutral">
-                                        <img src={edahabiyaImage} alt="Edahabia" className="w-24 h-auto"/>
+                                        <img src={edahabiyaImage} alt="Edahabia" className="w-24 h-auto" />
                                         <span>Edahabia</span>
                                     </div>
                                 </button>
@@ -126,7 +126,7 @@ const PlanDetailsPerusePage = () => {
                         </div>
                     </div>
                 </div>
-                <br/><br/><br/><br/><br/>
+                <br /><br /><br /><br /><br />
             </div>
         </div>
     );

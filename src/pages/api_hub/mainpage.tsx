@@ -1,19 +1,21 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import search from '../assets/search.png';
-import logo1 from '../assets/logo 1.png'
-import img from '../assets/Img.png'
-import Apidescription from "./apidesciption"
-import "../index.css"
+import search from '@/assets/search.png';
+import logo1 from '@/assets/logo 1.png'
+import img from '@/assets/Img.png'
+import Apidescription from "../../components/apidesciption"
+import "@/styles/index.css"
 import { useEffect } from 'react';
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchPopularAPIs } from './slices/ApiSlice';
-import { RootState, useAppDispatch } from '../store';
-import { searchAPIs, FilterCategorie, GetCategories, GetFonctionnalities, FilterFonctionnalite } from './slices/ApiSlice';
-import { Api, categorie, fonctionnalities, ValidAttributes } from './slices/ApiSlice';
-import Navbar from './NavBar';
-import Footer from './Footer';
+import { useSelector } from 'react-redux';
+import { fetchPopularAPIs } from '../../components/slices/ApiSlice';
+import { RootState, useAppDispatch } from '../../app/store';
+import { searchAPIs, FilterCategorie, GetCategories, GetFonctionnalities, FilterFonctionnalite } from '../../components/slices/ApiSlice';
+import { fonctionnalities } from '@/types/fonctionnalities';
+import { categorie } from '@/types/categorie';
+import { ValidAttributes } from '@/types/API';
+import { Api } from '@/types/API';
+import Navbar from '../../components/NavBar';
+import Footer from '../../components/Footer';
 
 const MainPage: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -108,7 +110,7 @@ const MainPage: React.FC = () => {
         <main>
             <Navbar />
             <div>
-                <div className='bg-[#081028] min-h-screen  p-10'>
+                <div className='bg-[#081028] min-h-screen p-10'>
                     <div className='flex flex-col  bg-[#FFFFFF] bg-opacity-5 py-4 items-center justify-center border border-opacity-30 border-[#7E89AC] rounded shadow-md'>
                         <div className='flex'><p className="font-semibold font-inter text-white text-3xl pr-4">Welcome To</p><img className='w-20' src={logo1} /></div>
                         <h4 className='font-inter text-[#BDBDBD] text-opacity-75 pb-4'>Discover and connect to thousands of APIs</h4>

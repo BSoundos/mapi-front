@@ -1,41 +1,19 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { API } from '../../types/API';
+import { Api } from '../../types/API';
 
-interface API {
-  popularAPIs: Api[];
-  status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
-}
 
-export interface Api {
-  id: number;
-  name: string;
-  description: string;
-  votes: number;
-  popularity: number;
-  latency: number;
-  service_level: number;
-  category_name: string;
-  // Autres propriétés...
-}
-export type ValidAttributes = keyof Api;
 
-export interface categorie {
-  id: number;
-  name: string;
-  description: string;
-}
-export interface fonctionnalities {
-  id: number;
-  name: string;
-  description: string;
-}
+
 export const fetchPopularAPIs = createAsyncThunk<
   Api[],
   void,
   {}
 >('api/fetchPopularAPIs', async (_, thunkAPI) => {
-  const response = await fetch('http://localhost:8000/apis_exploitation/popular/');
-  const data = await response.json();
+  // const response = await fetch('http://localhost:8000/apis_exploitation/popular/');
+  const response = await axios.get('http://localhost:8000/apis_exploitation/popular/')
+  const data = response.data;
   const mappedData = data.map((api: any) => ({
     id: api.api_id,
     name: api.name,
@@ -55,8 +33,8 @@ export const searchAPIs = createAsyncThunk<
   string,
   {}
 >('api/searchAPIs', async (searchQuery: string, thunkAPI) => {
-  const response = await fetch(`http://localhost:8000/apis_exploitation/rechercheapi/?query=${searchQuery}`);
-  const data = await response.json();
+  const response = await axios.get(`http://localhost:8000/apis_exploitation/rechercheapi/?query=${searchQuery}`);
+  const data = response.data;
   const mappedData = data.map((api: any) => ({
     id: api.api_id,
     name: api.name,
@@ -71,13 +49,14 @@ export const searchAPIs = createAsyncThunk<
   return mappedData;
 }
 );
+
 export const FilterCategorie = createAsyncThunk<
   Api[],
   string,
   {}
 >('api/searchAPIs', async (categorie: string, thunkAPI) => {
-  const response = await fetch(`http://localhost:8000/apis_exploitation/category/?query=${categorie}`);
-  const data = await response.json();
+  const response = await axios.get(`http://localhost:8000/apis_exploitation/category/?query=${categorie}`);
+  const data = response.data;
   const mappedData = data.map((api: any) => ({
     id: api.api_id,
     name: api.name,
@@ -92,13 +71,14 @@ export const FilterCategorie = createAsyncThunk<
   return mappedData;
 }
 );
+
 export const GetCategories = createAsyncThunk<
   Api[],
   void,
   {}
 >('api/searchAPIs', async (_, thunkAPI) => {
-  const response = await fetch(`http://localhost:8000/apis_exploitation/categories/`);
-  const data = await response.json();
+  const response = await axios.get(`http://localhost:8000/apis_exploitation/categories/`);
+  const data = response.data;
   console.log(data)
   return data;
 }
@@ -109,19 +89,20 @@ export const GetFonctionnalities = createAsyncThunk<
   void,
   {}
 >('api/searchAPIs', async (_, thunkAPI) => {
-  const response = await fetch(`http://localhost:8000/apis_exploitation/fonctionnalities/`);
-  const data = await response.json();
+  const response = await axios.get(`http://localhost:8000/apis_exploitation/fonctionnalities/`);
+  const data = response.data;
   console.log(data)
   return data;
 }
 );
+
 export const FilterFonctionnalite = createAsyncThunk<
   Api[],
   string,
   {}
 >('api/searchAPIs', async (fonctionnaliter: string, thunkAPI) => {
-  const response = await fetch(`http://localhost:8000/apis_exploitation/functionalite/?query=${fonctionnaliter}`);
-  const data = await response.json();
+  const response = await axios.get(`http://localhost:8000/apis_exploitation/functionalite/?query=${fonctionnaliter}`);
+  const data = response.data;
   console.log(data)
   const mappedData = data.map((api: any) => ({
     id: api.api_id,
@@ -137,6 +118,7 @@ export const FilterFonctionnalite = createAsyncThunk<
   return mappedData;
 }
 );
+
 const api = createSlice({
   name: 'api',
   initialState: {
@@ -153,9 +135,8 @@ const api = createSlice({
       state.status = 'succeeded';
       state.popularAPIs = action.payload;
     });
-    builder.addCase(fetchPopularAPIs.rejected, (state, action) => {
+    builder.addCase(fetchPopularAPIs.rejected, (state) => {
       state.status = 'failed';
-      //state.error = action.error.message;
     });
   },
 });
