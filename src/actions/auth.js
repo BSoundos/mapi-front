@@ -4,8 +4,14 @@ export const login = (credentials) => {
   return async (dispatch) => {
     try {
       const response = await axios.post('http://localhost:8000/authentication/login/', credentials);
-      const { token } = response.data;
+      const { token, id, username, email, first_name, last_name, role } = response.data;
       localStorage.setItem('token', token);
+      localStorage.setItem('user_id', id);
+      localStorage.setItem('username', username);
+      localStorage.setItem('email', email);
+      localStorage.setItem('first_name', first_name);
+      localStorage.setItem('last_name', last_name);
+      localStorage.setItem('role', role);
       dispatch({ type: 'LOGIN_SUCCESS' }); // Dispatch success action
       window.location.href = '/';
     } catch (error) {
