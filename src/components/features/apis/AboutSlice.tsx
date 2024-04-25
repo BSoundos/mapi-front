@@ -2,6 +2,7 @@
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { BACKEND_BASE_URL } from '@/data/constants';
 
 export interface ApiData {
   id: number;
@@ -27,7 +28,7 @@ export const fetchApiById = createAsyncThunk<
 >(
   'api/fetchApiById', // Nom de l'action
   async (apiId: number) => {
-    const response = await axios.get(`http://localhost:8000/apis_exploitation/api/${apiId}`);
+    const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/api/${apiId}`);
     const data = response.data;
     return data;
   }

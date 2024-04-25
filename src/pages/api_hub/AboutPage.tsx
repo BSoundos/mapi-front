@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '../../app/store';
 import axios from 'axios';
+import { BACKEND_BASE_URL } from '@/data/constants';
 
 
 
@@ -26,7 +27,7 @@ const AboutPage: React.FC = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const response = await axios.get(`http://localhost:8000/apis_exploitation/api/${id}`);
+        const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/api/${id}`);
         const data = response.data;
         // Utilisez les données récupérées ici
         setData(data);
