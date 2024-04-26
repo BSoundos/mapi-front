@@ -1,10 +1,11 @@
 import { useDispatch } from 'react-redux';
-import { logout } from '../actions/auth'
+import { logout } from '@/components/features/authentication/authActions'
+import { useAppDispatch } from '@/app/store';
 
 
 const Navbar = () => {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const onLogout = () => {
     dispatch(logout());
