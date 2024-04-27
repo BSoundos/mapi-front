@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import img1 from "../../assets/user.png"
-import commentIcon from "../../assets/icons/comment.svg"
 import store, { RootState } from '@/app/store';
 import { useParams } from 'react-router-dom';
 import { fetchDiscussions } from '@/components/features/discussions/discussionsSlice';
@@ -12,56 +11,26 @@ import PaginationR from '@/components/PaginationR';
 import Footer from '@/components/Footer';
 import AddDiscussionModal from './AddDiscussionModal';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
-import { fetchReplies } from '@/components/features/discussions/ReplySlice';
+
+
+interface DiscussionProps {
+    discussionId: number | undefined;
+    
+  }
 
 
 export type AppDispatch = typeof store.dispatch
 
 
 
-const DiscussionsPage = () => {
+const DiscussionsPage = ({ discussionId}: DiscussionProps) => {
 
   const dispatch = useDispatch<AppDispatch>();
-  const discussions = useSelector((state: RootState) => state.discussions.discussions);
+  const replies = useSelector((state: RootState) => state.replies.replies);
   const loading = useSelector((state: RootState) => state.discussions.loading);
   const error = useSelector((state: RootState) => state.discussions.error);
-  const {apiId} = useParams();
-
-  const replies = useSelector((state: RootState) => state.replies.replies);
-
-  const [data, setData] = useState();
 
 
-
-
-  //For the pagination:
-  const discussionsPerPage = 2; 
-
-  const [currentPage, setCurrentPage] = useState(1);
-
-  const startIndex = (currentPage - 1) * discussionsPerPage;
-  const endIndex = Math.min(startIndex + discussionsPerPage, discussions.length);
-
-
-  const currentDiscussions = discussions.slice(startIndex, endIndex);
-
-
-
-
-
-
-  //For the add Discussion modal:
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleOpenModal = () => {
-    setIsModalOpen(true);
-  };
-
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
-  };
 
   const formatDate = (discussionDate: string) => {
     const currentDate = new Date();
@@ -92,32 +61,15 @@ const DiscussionsPage = () => {
   
 
   
+  
 
 
   useEffect(() => {
-    if (apiId) {
-      const parameterNumber = parseInt(apiId, 10);
-      dispatch(fetchDiscussions(parameterNumber));
-  
-      // Fetch replies for each discussion
-      /*
-      discussions.forEach((discussion) => {
-        dispatch(fetchReplies(Number(discussion.discussion_id)));
-      });
-      */
+    if (discussionId) {
+     
+      dispatch(fetchDiscussions(discussionId))
     }
-  }, [dispatch, apiId/*, discussions*/]);
-
-  
-
-/*
-  const getReplyCount = (discussionId: number) => {
-  const filteredReplies = replies.filter((reply) => Number(reply.discussion.discussion_id) === discussionId);
-  return filteredReplies.length;
-};
-*/
-
-
+  }, [dispatch, discussionId]);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -146,33 +98,25 @@ const DiscussionsPage = () => {
             isOpen={isModalOpen}
           /> 
         </div>
-        <div className='pl-16 pr-8 py-2 '>
-        {currentDiscussions.map((discussion) => (
-          <div key={discussion.discussion_id} className='flex items-center w-[97%] my-7 border-b border-white border-opacity-10'>
-            <img src={img1} alt="User Avatar" />
-            <div className='mx-5 flex flex-col flex-grow'>
-              <p key={`${discussion.discussion_id}-name`} className='text-sm text-white opacity-60'>
-                {discussion.user.first_name} {discussion.user.last_name}
-              </p>
-              <p key={`${discussion.discussion_id}-title`} className='text-white'>
-                {discussion.title}
-              </p>
-              <p key={`${discussion.discussion_id}-date`} className='text-sm text-white opacity-80'>
-                {formatDate(discussion.discussion_date)}
-              </p>
-            </div>
-            <div className="flex items-center mt-2">
-              <div className="flex items-center">
-                <img src={commentIcon} alt="Comment Icon" className="w-4 h-4 mr-2" />
-                <p className="text-sm text-white opacity-80">
-                  {/*getReplyCount(Number(discussion.discussion_id))*/} Comments
+        <div className='pl-16 pr-8 py-2'>
+          
+          {currentDiscussions.map(discussion =>(
+            <div key={discussion.discussion_id} className='flex items-center  w-[40%] my-7 border-b border-white border-opacity-10 '>
+              <img src={img1} /> 
+              <div className='mx-5'>
+                <p key={`${discussion.discussion_id}-name`} className='text-sm text-white opacity-60'>{discussion.user.first_name} {discussion.user.last_name}</p>
+                <p key={`${discussion.discussion_id}-title`} className=' text-white'>{discussion.title}</p>
+                <p key={`${discussion.discussion_id}-date`} className='text-sm text-white opacity-80'>
+                  {formatDate(discussion.discussion_date)}
                 </p>
+                <br />
+                
+
               </div>
+
             </div>
-          </div>
-        ))}
-
-
+          ))}
+          
           
           <div className='flex items-center justify-center pt-8 pb-20'>
           <PaginationR

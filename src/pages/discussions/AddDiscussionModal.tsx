@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { RootState } from '@/app/store';
+import store, { RootState } from '@/app/store';
 import { postDiscussion, selectAddDiscussionError, selectAddDiscussionStatus } from '@/components/features/discussions/addDiscussionSlice';
-import { AppDispatch } from './Discussions';
 
 interface AddDiscussionProps {
   apiId: number | undefined;
@@ -10,8 +9,11 @@ interface AddDiscussionProps {
   isOpen: boolean;
 }
 
+export type AppDispatch = typeof store.dispatch
+
+
 const AddDiscussionModal = ({ apiId, onClose, isOpen }: AddDiscussionProps) => {
-    const dispatch = useDispatch<AppDispatch>();
+  const dispatch = useDispatch<AppDispatch>();
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');
 

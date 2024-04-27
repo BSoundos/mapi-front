@@ -16,8 +16,10 @@ import apipopularReducer from '../components/features/apis/ApiSlice';
 import AboutReducer from '../components/features/apis/AboutSlice';
 import { useDispatch } from 'react-redux';
 
-import discussionsReducer from '../components/features/discussions/discussionsSlice';
+import discussionsReducer from '@/components/features/discussions/discussionsSlice';
 import addDiscussionReducer from '@/components/features/discussions/addDiscussionSlice';
+
+import replyReducer from '@/components/features/discussions/ReplySlice';
 
 const store = configureStore({
   reducer: {
@@ -34,6 +36,7 @@ const store = configureStore({
     AboutSlice: AboutReducer,
     discussions: discussionsReducer,
     addDiscussion: addDiscussionReducer,
+    replies: replyReducer,
     // Autres reducers...
   },
 });
