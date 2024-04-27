@@ -1,6 +1,7 @@
 import { logout } from '@/components/features/authentication/authActions'
 import { useAppDispatch } from '@/app/store';
 import logo from '@/assets/logo.png';
+import avatarImg from '@/assets/customer.png';
 
 
 const Navbar = () => {
@@ -44,7 +45,7 @@ const Navbar = () => {
               <>
                 <div className="flex items-center space-x-3">
                   <div className="h-12 w-12 rounded-full bg-gray-400 flex items-center">
-                    <img src="/customer.png" alt="User" className="h-full w-full rounded-full" />
+                    <img src={avatarImg} alt="User" className="h-full w-full rounded-full" />
                   </div>
                   <div>
                     <p className="text-white font-bold ">John Doe</p>
@@ -66,7 +67,6 @@ const Navbar = () => {
                 </div>
               </>
           }
-
         </div>
       </div>
     </div>

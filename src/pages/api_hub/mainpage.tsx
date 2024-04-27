@@ -1,6 +1,6 @@
 import React from 'react';
 import search from '@/assets/search.png';
-import logo1 from '@/assets/logo 1.png'
+import logo1 from '@/assets/logo_1.png'
 import img from '@/assets/Img.png'
 import Apidescription from "../../components/apidesciption"
 import "@/styles/index.css"

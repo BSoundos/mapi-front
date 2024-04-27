@@ -1,5 +1,5 @@
 import React from "react";
-import img2 from "../assets/Development Icon.png"
+import img2 from "@/assets/Development_Icon.png"
 import "@/styles/index.css"
 import { Link } from 'react-router-dom';
 
