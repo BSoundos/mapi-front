@@ -1,10 +1,12 @@
 import { useDispatch } from 'react-redux';
-import { logout } from '../actions/auth'
+import { logout } from '@/components/features/authentication/authActions'
+import { useAppDispatch } from '@/app/store';
+import logo from '@/assets/logo.png';
 
 
 const Navbar = () => {
 
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const onLogout = () => {
     dispatch(logout());
@@ -16,7 +18,7 @@ const Navbar = () => {
       <div style={{ margin: '0 60px' }} className="flex items-center justify-between p-4">
         <div className="flex items-center space-x-4">
           {/* Logo */}
-          <img src="src/assets/logo.png" alt="Logo" className="h-8 w-auto mr-4" />
+          <img src={logo} alt="Logo" className="h-8 w-auto mr-4" />
           {/* Navigation Links */}
           <div className="mr-6 text-white font-normal text-xs font-plus-jakarta-sans">MarketPlace</div>
           <div className="mr-6 text-white font-normal text-xs font-plus-jakarta-sans">Create</div>

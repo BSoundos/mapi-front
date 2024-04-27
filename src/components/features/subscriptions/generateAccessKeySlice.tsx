@@ -1,3 +1,4 @@
+import { BACKEND_BASE_URL } from '@/data/constants';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -13,19 +14,19 @@ const initialState: GenerateAccessKeyState = {
   error: null,
 };
 //générer une clé d'accées 
-export const generateAccessKey = createAsyncThunk<string , {versionApiId: string, planId : string}>(
-    'accessKey/generateAccessKey',
-    async ({versionApiId , planId}) => {
-      try {
-        const response = await axios.post(`http://localhost:8000/payment/generate-accesskey/${versionApiId}/${planId}/`);
-        console.log("response.data", response.data.access_key);
-        return response.data.access_key;
-      } catch (error) {
-        throw new Error('Failed to generate access key');
-      }
+export const generateAccessKey = createAsyncThunk<string, { versionApiId: string, planId: string }>(
+  'accessKey/generateAccessKey',
+  async ({ versionApiId, planId }) => {
+    try {
+      const response = await axios.post(`${BACKEND_BASE_URL}/payment/generate-accesskey/${versionApiId}/${planId}/`);
+      console.log("response.data", response.data.access_key);
+      return response.data.access_key;
+    } catch (error) {
+      throw new Error('Failed to generate access key');
     }
-  );
-  
+  }
+);
+
 
 const generateAccessKeySlice = createSlice({
   name: 'InfosaccessKey',
