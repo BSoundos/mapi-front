@@ -1,4 +1,3 @@
-import { useDispatch } from 'react-redux';
 import { logout } from '@/components/features/authentication/authActions'
 import { useAppDispatch } from '@/app/store';
 import logo from '@/assets/logo.png';

@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from 'react';
 import { useParams } from 'react-router-dom';
 import { verify } from '@/components/features/authentication/authActions';
 import { useAppDispatch } from '@/app/store';
+import verifyBgImg from '@/assets/verifyBg.png';
 
 const Verify = () => {
   const [credentials, setCredentials] = useState({ username: '', verification_code: Array(6).fill('') });
@@ -76,7 +77,7 @@ const Verify = () => {
   return (
     localStorage.getItem('verificationNeeded') ? <>
       <div className="flex min-h-screen bg-[#141943] text-inter">
-        <div className="image-placeholder min-w-[583px] bg-cover bg-no-repeat" style={{ backgroundImage: `url(/assets/verifyBg.png)` }}></div>
+        <div className="image-placeholder min-w-[583px] bg-cover bg-no-repeat" style={{ backgroundImage: `url(${verifyBgImg})` }}></div>
         <div className="create-account-form flex flex-col items-start justify-center p-10 gap-2">
           <div className="headline-subhead text-white">
             <div className=" text-6xl font-bold mb-6">Verify Your Email Address</div>
