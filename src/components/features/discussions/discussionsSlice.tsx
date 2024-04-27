@@ -1,41 +1,32 @@
+
+import { User } from '@/types/User';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-interface User {
-  id: number;
-  first_name: string;
-  last_name: string;
-  email: string;
-  contact_info: string;
-  status: boolean;
-  verification_code: string;
-  is_verified: boolean;
-  role: string;
-}
 
 
-interface Category{
-  category_id:number;
+export interface Category{
+  category_id: number;
   name: string;
   description: string;
+}
 
+export interface Api {
+    api_id: number;
+    name: string;
+    description: string;
+    votes: number;
+    popularity: number;
+    latency: number;
+    service_level: number;
+    health_check: number;
+    category: Category;
+    provider: User;
 }
 
 
-interface Api {
-  api_id: number;
-  name: string;
-  description: string;
-  popularity: Float32Array;
-  votes: number;
-  latency: number;
-  service_level: number;
-  health_check: string;
-  category: Category;
-  provider: User;
-}
 
-interface Discussion {
+export interface Discussion {
   discussion_id: string;
   content: string;
   title: string;
@@ -51,11 +42,19 @@ interface DiscussionState {
   error: string | null;
 }
 
+const getToken = () => {
+  return localStorage.getItem('token'); // Retrieve token from localStorage
+};
+
 export const fetchDiscussions = createAsyncThunk<Discussion[], number>(
   'Discussions',
   async (apiId: number) => {
-    const response = await axios.get(`http://127.0.0.1:8000/support_hub/api/${apiId}/discussion/`);
-    console.log("Discussions: ",response.data)
+    const token = getToken();
+    const response = await axios.get(`http://127.0.0.1:8000/support_hub/api/${apiId}/discussion/`,{
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    });
     return response.data; 
   }
 );

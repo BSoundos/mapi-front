@@ -1,5 +1,6 @@
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDiscord, faTwitter, faInstagram, faYoutube } from '@fortawesome/free-brands-svg-icons';
+import logo from "../assets/logo.png";
 
 const Footer = () => {
   return (
@@ -11,7 +12,7 @@ const Footer = () => {
         <div className="flex flex-col ">
           {/* Logo and All Rights Reserved Text */}
           <div className="flex items-center">
-            <img src="src/assets/logo.png" alt="Logo" className="h-8 w-auto mr-4" />
+            <img src={logo} alt="Logo" className="h-8 w-auto mr-4" />
             <p className="mr-4 text-xs">© 2024 All Rights Reserved</p>
           </div>
 
