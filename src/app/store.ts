@@ -14,6 +14,8 @@ import invoicesReducer from '../components/features/invoices/invoiceSlice';
 
 import apipopularReducer from '../components/features/apis/ApiSlice';
 import AboutReducer from '../components/features/apis/AboutSlice';
+
+import TicketReducer from '../components/features/tickets/TicketSlice';
 import { useDispatch } from 'react-redux';
 
 const store = configureStore({
@@ -29,6 +31,7 @@ const store = configureStore({
     invoice: invoicesReducer,
     apipopular: apipopularReducer,
     AboutSlice: AboutReducer,
+    ticket: TicketReducer,
     // Autres reducers...
   },
 });

@@ -25,6 +25,7 @@ import Register from '../pages/authentication/Register';
 import Verify from '../pages/authentication/Verify';
 import Home from '../pages/home/Home';
 
+import Ticket from '../pages/support_hub/Ticket';
 
 
 
@@ -52,7 +53,6 @@ const App = () => {
         <Route path="payment-per-use/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPerusePage />} />
         <Route path="/accesskey/:apiVersion/:planId" element={<GeneratingAccessKeyPage />} />
 
-
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify/:username" element={<Verify />} />
@@ -60,8 +60,9 @@ const App = () => {
         <Route path="/Transaction_history" element={<InvoiceHistoryPage />} />
         <Route path="/Transaction_details" element={<InvoiceDetails />} />
 
-
         {/* <Route path="/ajouterreview" element={<AjouterReview />} /> */}
+
+        <Route path="/Tickets" element={<Ticket />} />
 
 
       </Routes>
