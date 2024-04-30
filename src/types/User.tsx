@@ -8,4 +8,5 @@ export interface User {
     verification_code: string;
     is_verified: boolean;
     role: string;
+    username: string;
   }

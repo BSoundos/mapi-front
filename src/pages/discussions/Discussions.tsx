@@ -1,5 +1,7 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+
 
 import img1 from "../../assets/user.png"
 import commentIcon from "../../assets/icons/comment.svg"
@@ -14,7 +16,8 @@ import AddDiscussionModal from './AddDiscussionModal';
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faComment } from '@fortawesome/free-solid-svg-icons';
-import { fetchReplies } from '@/components/features/discussions/ReplySlice';
+import { fetchReplies } from '@/components/features/discussions/replySlice';
+import { Discussion } from '@/types/discussion';
 
 
 export type AppDispatch = typeof store.dispatch
@@ -37,7 +40,7 @@ const DiscussionsPage = () => {
 
 
   //For the pagination:
-  const discussionsPerPage = 2; 
+  const discussionsPerPage = 4; 
 
   const [currentPage, setCurrentPage] = useState(1);
 
@@ -88,25 +91,27 @@ const DiscussionsPage = () => {
   };
   
   
-  
-  
-
-  
-
-
   useEffect(() => {
-    if (apiId) {
-      const parameterNumber = parseInt(apiId, 10);
-      dispatch(fetchDiscussions(parameterNumber));
-  
-      // Fetch replies for each discussion
-      /*
-      discussions.forEach((discussion) => {
-        dispatch(fetchReplies(Number(discussion.discussion_id)));
-      });
-      */
-    }
-  }, [dispatch, apiId/*, discussions*/]);
+    const fetchDiscussionsAndReplies = async () => {
+      if (apiId) {
+        const parameterNumber = parseInt(apiId, 10);
+        await dispatch(fetchDiscussions(parameterNumber)); // Fetch discussions
+
+        // After discussions are fetched, fetch replies for each discussion
+        discussions.forEach((discussion: Discussion) => {
+          dispatch(fetchReplies(parseInt(discussion.discussion_id)));
+        });
+      }
+    };
+
+    fetchDiscussionsAndReplies(); // Invoke the async function to fetch discussions and replies
+  }, [dispatch, apiId]);
+
+  const getReplyCount = (discussionId: number) => {
+    const filteredReplies = replies.filter((reply) => parseInt(reply.discussion.discussion_id) === discussionId);
+    return filteredReplies.length;
+  };
+
 
   
 
@@ -134,7 +139,7 @@ const DiscussionsPage = () => {
     <div className="flex-grow bg-mapi-neutral-3 ">
       <div className="mx-auto max-w-7xl mt-4"> 
         <div className="border border-white border-opacity-10 rounded-md">
-          <NavBar2 data={data} api={discussions.length > 0 ? discussions[0].api : undefined} />
+          <NavBar2 api={discussions.length > 0 ? discussions[0].api : undefined} />
 
           <div className='flex items-center justify-between pl-16 pr-8 py-2 mt-10'>
           <p className='text-white font-Inter font-normal text-2xl'>Discussions</p>
@@ -148,7 +153,11 @@ const DiscussionsPage = () => {
         </div>
         <div className='pl-16 pr-8 py-2 '>
         {currentDiscussions.map((discussion) => (
-          <div key={discussion.discussion_id} className='flex items-center w-[97%] my-7 border-b border-white border-opacity-10'>
+          <Link
+            key={discussion.discussion_id}
+            to={`/DiscussionDetails/${discussion.discussion_id}`} // Specify your dynamic URL here
+            className='flex items-center w-[97%] my-7 border-b border-white border-opacity-10'
+          >
             <img src={img1} alt="User Avatar" />
             <div className='mx-5 flex flex-col flex-grow'>
               <p key={`${discussion.discussion_id}-name`} className='text-sm text-white opacity-60'>
@@ -165,12 +174,13 @@ const DiscussionsPage = () => {
               <div className="flex items-center">
                 <img src={commentIcon} alt="Comment Icon" className="w-4 h-4 mr-2" />
                 <p className="text-sm text-white opacity-80">
-                  {/*getReplyCount(Number(discussion.discussion_id))*/} Comments
+                  {getReplyCount(parseInt(discussion.discussion_id))} Comments
                 </p>
               </div>
             </div>
-          </div>
+          </Link>
         ))}
+
 
 
           

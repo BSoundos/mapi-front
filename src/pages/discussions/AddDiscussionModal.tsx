@@ -26,8 +26,14 @@ const AddDiscussionModal = ({ apiId, onClose, isOpen }: AddDiscussionProps) => {
     if (apiId === undefined) {
         console.log("We have a problem in the apiId")
     } else {
-        dispatch(postDiscussion({ apiId, title, content }));
-      }  };
+        dispatch(postDiscussion({ apiId, title, content })).then(() => {
+          // After posting the reply successfully, reload the page
+          history.go(0); // Reload the current page
+        });
+        setContent('');
+        setTitle('');
+      }  
+  };
     
     if (!isOpen) return null;
 

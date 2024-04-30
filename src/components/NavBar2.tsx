@@ -11,11 +11,10 @@ import { Api } from './features/discussions/discussionsSlice';
 
 
 interface NavBar2Props {
-    data: any;
     api?: Api;
 }
 
-const NavBar2: React.FC<NavBar2Props> = ({ data , api}) => {
+const NavBar2: React.FC<NavBar2Props> = ({ api}) => {
     // const category_name = data["category"]["name"]
 
     return (
@@ -77,7 +76,7 @@ const NavBar2: React.FC<NavBar2Props> = ({ data , api}) => {
             </div>
             <div className='border-b border-white border-opacity-10 '>
                 <div className=' flex items-center justify-between w-[40%] font-inter font-normal text-sm text-[#007BFF] pl-16 py-2'>
-                    <a>About</a>
+                    <a href={`/about/${api?.api_id}`}>About</a>
                     <a>Endpoints</a>
                     <a>Documentation</a>
                     <a>Pricing</a>

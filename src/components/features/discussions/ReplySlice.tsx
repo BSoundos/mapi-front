@@ -1,21 +1,15 @@
 
-import { User } from '@/types/User';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { Discussion } from './discussionsSlice';
+import { Reply } from '@/types/Reply';
 
 
 
 
 
 
-export interface Reply {
-    reply_id: number;
-    content: string;
-    reply_date: string; 
-    discussion: Discussion;
-    author: User;
-  }
+
+
 
 interface ReplyState {
   replies: Reply[];
@@ -32,11 +26,12 @@ export const fetchReplies = createAsyncThunk<Reply[], number>(
   'Replies',
   async (discussionId: number) => {
     const token = getToken();
-    const response = await axios.get(`http://127.0.0.1:8000/support_hub/get-reply/${discussionId}/`,{
+    const response = await axios.get(`http://127.0.0.1:8000/support_hub/discussion/${discussionId}/replies/`,{
       headers: {
         Authorization: `Token ${token}`
       }
     });
+    console.log(response.data)
     return response.data; 
   }
 );
@@ -64,6 +59,8 @@ const ReplySlice = createSlice({
           reply_id: reply.reply_id, // Add reply_id property
           reply_date: reply.reply_date, // Add reply_date property
           content: reply.content,
+          author_object_id: reply.author_object_id,
+          author_content_type: reply.author_content_type,
           discussion: {
             discussion_id: reply.discussion.discussion_id,
             content: reply.discussion.content,
@@ -82,6 +79,7 @@ const ReplySlice = createSlice({
             verification_code: reply.author.verification_code,
             is_verified: reply.author.is_verified,
             role: reply.author.role,
+            username: reply.author.username,
           },
         }));
       },

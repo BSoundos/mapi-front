@@ -1,5 +1,6 @@
 
 import { User } from '@/types/User';
+import { Discussion } from '@/types/discussion';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -26,16 +27,9 @@ export interface Api {
 
 
 
-export interface Discussion {
-  discussion_id: string;
-  content: string;
-  title: string;
-  discussion_date: string;
-  user: User;
-  api: Api;
-}
 
-interface DiscussionState {
+
+interface DiscussionsState {
   discussions: Discussion[];
   loading: boolean,
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -55,18 +49,19 @@ export const fetchDiscussions = createAsyncThunk<Discussion[], number>(
         Authorization: `Token ${token}`
       }
     });
+    console.log(response.data)
     return response.data; 
   }
 );
 
-const DiscussionSlice = createSlice({
+const DiscussionsSlice = createSlice({
   name: 'discussions',
   initialState: {
     discussions: [],
     loading: false,
     status: 'idle',
     error: null,
-  } as DiscussionState, 
+  } as DiscussionsState, 
   reducers: {
     // Reducer to handle loading state
     setLoading(state, action: PayloadAction<boolean>) {
@@ -91,6 +86,7 @@ const DiscussionSlice = createSlice({
           verification_code: discussion.user.verification_code,
           is_verified: discussion.user.is_verified,
           role: discussion.user.role,
+          username: discussion.user.username,
         },
       }));
     },
@@ -111,6 +107,6 @@ const DiscussionSlice = createSlice({
   },
 });
 
-export const { setLoading, setError, addDiscussions }  = DiscussionSlice.actions;
+export const { setLoading, setError, addDiscussions }  = DiscussionsSlice.actions;
 
-export default DiscussionSlice.reducer;
+export default DiscussionsSlice.reducer;
