@@ -1,5 +1,5 @@
 import { User } from "./User";
-import { Discussion } from "./discussion";
+import { Discussion } from "./DiscussionType";
 
 export interface Reply {
     reply_id: number;

@@ -1,14 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
-import img1 from "@/assets/user.png"
 import store, { RootState } from '@/app/store';
-import { fetchDiscussions } from '@/components/features/discussions/discussionsSlice';
 import Navbar from '@/components/NavBar';
 import NavBar2 from '@/components/NavBar2';
-import PaginationR from '@/components/PaginationR';
 import Footer from '@/components/Footer';
-import AddDiscussionModal from './AddDiscussionModal';
 import { Link, useParams } from 'react-router-dom';
 import { fetchReplies } from '@/components/features/discussions/replySlice';
 import { fetchDiscussion } from '@/components/features/discussions/discussionSlice';
@@ -31,10 +27,11 @@ const DiscussionDetailsPage = () => {
   const loading = useSelector((state: RootState) => state.discussion.loading);
   const error = useSelector((state: RootState) => state.discussion.error);
 
+  //for the discussion
   const discussion = useSelector((state: RootState) => state.discussion.discussion);
-
   const {discussionId} = useParams();
 
+  //for adding a reply
   const [content, setContent] = useState('');
 
 

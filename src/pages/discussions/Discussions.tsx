@@ -3,8 +3,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 
 
-import img1 from "../../assets/user.png"
-import commentIcon from "../../assets/icons/comment.svg"
+import img1 from "@/assets/user.png"
+import commentIcon from "@/assets/icons/comment.svg"
 import store, { RootState } from '@/app/store';
 import { useParams } from 'react-router-dom';
 import { fetchDiscussions } from '@/components/features/discussions/discussionsSlice';
@@ -12,12 +12,8 @@ import Navbar from '@/components/NavBar';
 import NavBar2 from '@/components/NavBar2';
 import PaginationR from '@/components/PaginationR';
 import Footer from '@/components/Footer';
-import AddDiscussionModal from './AddDiscussionModal';
+import AddDiscussionModal from '@/pages/discussions/AddDiscussionModal';
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faComment } from '@fortawesome/free-solid-svg-icons';
-import { fetchReplies } from '@/components/features/discussions/replySlice';
-import { Discussion } from '@/types/discussion';
 
 
 export type AppDispatch = typeof store.dispatch
@@ -32,9 +28,7 @@ const DiscussionsPage = () => {
   const error = useSelector((state: RootState) => state.discussions.error);
   const {apiId} = useParams();
 
-  const replies = useSelector((state: RootState) => state.replies.replies);
 
-  const [data, setData] = useState();
 
 
 
@@ -66,6 +60,8 @@ const DiscussionsPage = () => {
     setIsModalOpen(false);
   };
 
+
+  //This function is to get a new format for the date (ex: from 'dd/MM/yyyy' to 'n days ago')
   const formatDate = (discussionDate: string) => {
     const currentDate = new Date();
     const discussionDateObj = new Date(discussionDate);
@@ -79,9 +75,9 @@ const DiscussionsPage = () => {
     const differenceInDays = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
   
     if (differenceInDays === 0) {
-      return 'Today';
+      return 'today';
     } else if (differenceInDays === 1) {
-      return 'Yesterday';
+      return 'yesterday';
     } else if (differenceInDays > 365) {
       const differenceInYears = Math.floor(differenceInDays / 365);
       return `${differenceInYears} year${differenceInYears > 1 ? 's' : ''} ago`;
@@ -92,35 +88,18 @@ const DiscussionsPage = () => {
   
   
   useEffect(() => {
-    const fetchDiscussionsAndReplies = async () => {
-      if (apiId) {
-        const parameterNumber = parseInt(apiId, 10);
-        await dispatch(fetchDiscussions(parameterNumber)); // Fetch discussions
+    if (apiId) {
+      const parameterNumber = parseInt(apiId, 10);
+      dispatch(fetchDiscussions(parameterNumber)); // Fetch discussions
 
-        // After discussions are fetched, fetch replies for each discussion
-        discussions.forEach((discussion: Discussion) => {
-          dispatch(fetchReplies(parseInt(discussion.discussion_id)));
-        });
-      }
-    };
-
-    fetchDiscussionsAndReplies(); // Invoke the async function to fetch discussions and replies
+      
+    }
   }, [dispatch, apiId]);
 
-  const getReplyCount = (discussionId: number) => {
-    const filteredReplies = replies.filter((reply) => parseInt(reply.discussion.discussion_id) === discussionId);
-    return filteredReplies.length;
-  };
-
+ 
 
   
 
-/*
-  const getReplyCount = (discussionId: number) => {
-  const filteredReplies = replies.filter((reply) => Number(reply.discussion.discussion_id) === discussionId);
-  return filteredReplies.length;
-};
-*/
 
 
 
@@ -174,7 +153,7 @@ const DiscussionsPage = () => {
               <div className="flex items-center">
                 <img src={commentIcon} alt="Comment Icon" className="w-4 h-4 mr-2" />
                 <p className="text-sm text-white opacity-80">
-                  {getReplyCount(parseInt(discussion.discussion_id))} Comments
+                  Comments
                 </p>
               </div>
             </div>

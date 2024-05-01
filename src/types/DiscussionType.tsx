@@ -1,5 +1,5 @@
 import { Api } from "@/components/features/discussions/discussionsSlice";
-import { User } from "./User";
+import { User } from "@/types/User";
 
 export interface Discussion {
     discussion_id: string;

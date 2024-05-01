@@ -1,13 +1,13 @@
 import React from 'react';
 import "@/styles/index.css"
-import img2 from "../assets/Development Icon.png"
-import img1 from "../assets/popularityimg.png"
-import img3 from "../assets/voteimg.png"
-import img4 from "../assets/latencyimg.png"
-import img5 from "../assets/plusimg.png"
+import img2 from "@/assets/Development Icon.png"
+import img1 from "@/assets/popularityimg.png"
+import img3 from "@/assets/voteimg.png"
+import img4 from "@/assets/latencyimg.png"
+import img5 from "@/assets/plusimg.png"
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
-import { Api } from './features/discussions/discussionsSlice';
+import { Api } from '@/components/features/discussions/discussionsSlice';
 
 
 interface NavBar2Props {
