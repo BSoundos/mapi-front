@@ -76,7 +76,6 @@ const ReplySlice = createSlice({
             email: reply.author.email,
             contact_info: reply.author.contact_info,
             status: reply.author.status,
-            verification_code: reply.author.verification_code,
             is_verified: reply.author.is_verified,
             role: reply.author.role,
             username: reply.author.username,

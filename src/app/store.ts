@@ -23,7 +23,7 @@ import discussionsReducer from '@/components/features/discussions/discussionsSli
 import discussionReducer from '@/components/features/discussions/discussionSlice';
 import addDiscussionReducer from '@/components/features/discussions/addDiscussionSlice';
 
-import repliesReducer from '@/components/features/discussions/replySlice';
+import repliesReducer from '@/components/features/discussions/ReplySlice';
 import addReplyReducer from '@/components/features/discussions/addReplySlice';
 
 

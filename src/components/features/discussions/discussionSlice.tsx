@@ -1,5 +1,5 @@
 
-import { User } from '@/types/User';
+import { User } from '@/types/user';
 import { Discussion } from '@/types/DiscussionType';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';

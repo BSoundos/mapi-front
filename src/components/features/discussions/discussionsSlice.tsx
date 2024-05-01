@@ -1,5 +1,5 @@
 
-import { User } from '@/types/User';
+import { User } from '@/types/user';
 import { Discussion } from '@/types/DiscussionType';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
@@ -83,7 +83,6 @@ const DiscussionsSlice = createSlice({
           email: discussion.user.email,
           contact_info: discussion.user.contact_info,
           status: discussion.user.status,
-          verification_code: discussion.user.verification_code,
           is_verified: discussion.user.is_verified,
           role: discussion.user.role,
           username: discussion.user.username,
