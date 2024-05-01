@@ -1,10 +1,10 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchInvoices } from '../../components/features/invoices/invoiceSlice';
-import store, { RootState } from '../../app/store';
-import Navbar from '../../components/NavBar';
-import HalfNavBar from '../../components/HalfNavBar';
-import Footer from '../../components/Footer';
+import { fetchInvoices } from '@/components/features/invoices/invoiceSlice';
+import store, { RootState } from '@/app/store';
+import Navbar from '@/components/NavBar';
+import HalfNavBar from '@/components/HalfNavBar';
+import Footer from '@/components/Footer';
 
 
 

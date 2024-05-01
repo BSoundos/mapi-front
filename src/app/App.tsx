@@ -3,28 +3,29 @@ import '@/styles/index.css';
 import '@/styles/Paiement.css';
 
 // App.tsx
-import SubscriptionPlansPage from '../pages/payment/SubscriptionPlans';
-import SubscriptionPlansPerUsePage from '../pages/payment/SubscriptionPlansPerUse';
+import SubscriptionPlansPage from '@/pages/payment/SubscriptionPlans';
+import SubscriptionPlansPerUsePage from '@/pages/payment/SubscriptionPlansPerUse';
 
-import PlanDetailsPage from '../pages/payment/subscriptionPlanPayment';
-import GeneratingAccessKeyPage from '../pages/payment/GeneratingAcceeskey';
-import PlanDetailsPerusePage from '../pages/payment/SubscriptionPlan-peruse-Payment';
+import PlanDetailsPage from '@/pages/payment/subscriptionPlanPayment';
+import GeneratingAccessKeyPage from '@/pages/payment/GeneratingAcceeskey';
+import PlanDetailsPerusePage from '@/pages/payment/SubscriptionPlan-peruse-Payment';
 // import Invoices from './components/InvoicesHistory';
-import InvoiceHistoryPage from '../pages/invoices/InvoicesHistory';
-import InvoiceDetails from '../pages/invoices/InvoiceDetails';
+import InvoiceHistoryPage from '@/pages/invoices/InvoicesHistory';
+import InvoiceDetails from '@/pages/invoices/InvoiceDetails';
 
-import MainPage from '../pages/api_hub/mainpage';
-import AboutPage from '../pages/api_hub/AboutPage';
+import MainPage from '@/pages/api_hub/mainpage';
+import AboutPage from '@/pages/api_hub/AboutPage';
 // import AjouterReview from './components/AjouterReview';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from '../pages/authentication/Login';
+import Login from '@/pages/authentication/Login';
 import { useEffect } from 'react';
 import axios from 'axios';
-import Register from '../pages/authentication/Register';
-import Verify from '../pages/authentication/Verify';
-import Home from '../pages/home/Home';
-
+import Register from '@/pages/authentication/Register';
+import Verify from '@/pages/authentication/Verify';
+import Home from '@/pages/home/Home';
+import Discussions from '@/pages/discussions/Discussions';
+import DiscussionDetailsPage from '@/pages/discussions/DiscusionDetails';
 
 
 
@@ -59,6 +60,9 @@ const App = () => {
 
         <Route path="/Transaction_history" element={<InvoiceHistoryPage />} />
         <Route path="/Transaction_details" element={<InvoiceDetails />} />
+
+        <Route path="/Discussions/:apiId" element={<Discussions />} />
+        <Route path="/DiscussionDetails/:discussionId" element={<DiscussionDetailsPage />} />
 
 
         {/* <Route path="/ajouterreview" element={<AjouterReview />} /> */}
