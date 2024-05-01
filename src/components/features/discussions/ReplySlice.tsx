@@ -2,6 +2,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { Reply } from '@/types/Reply';
+import { BACKEND_BASE_URL } from '@/data/constants';
 
 
 
@@ -26,7 +27,7 @@ export const fetchReplies = createAsyncThunk<Reply[], number>(
   'Replies',
   async (discussionId: number) => {
     const token = getToken();
-    const response = await axios.get(`http://127.0.0.1:8000/support_hub/discussion/${discussionId}/replies/`,{
+    const response = await axios.get(`${BACKEND_BASE_URL}/support_hub/discussion/${discussionId}/replies/`,{
       headers: {
         Authorization: `Token ${token}`
       }
