@@ -18,6 +18,7 @@ export default {
         'neutral': '#858C94',
         'neutral-2': '#DDDDDD',
         'custom-color': '#243959',
+        'misc-linear': '#7E89AC4D',
         'mapi-primary': '#CB3CFF',
         'mapi-secondary-1': '#0B1739',
         'mapi-secondary-2': '#8951FF',

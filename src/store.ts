@@ -1,17 +1,16 @@
 // store.ts
 import { configureStore } from '@reduxjs/toolkit';
-import subscriptionPlansReducer from './components/slices/subscriptionPlansSlice';
-import subscriptionPlansPerUseReducer from './components/slices/subscriptionPlansPerUseSlice';
-import navigationReducer from './components/slices/selectedPlanSlice';
-import planReducer from './components/slices/selectedPlanSlice';
-import planPerUseReducer from './components/slices/selectedPlanPerUseSlice';
+import subscriptionPlansReducer from '../src/components/features/payments/subscriptionPlansSlice';
+import subscriptionPlansPerUseReducer from '../src/components/features/payments/subscriptionPlansPerUseSlice';
+import navigationReducer from '../src/components/features/payments/selectedPlanSlice';
+import planReducer from '../src/components/features/payments/selectedPlanSlice';
+import planPerUseReducer from '../src/components/features/payments/selectedPlanPerUseSlice';
 
-import paymentReducer from './components/slices/paymentMethodSlice';
-import confirmPaymentReducer from './components/slices/paymentSlice';
-import generateAccessKeyReducer from './components/slices/generateAccessKeySlice';
-import invoicesReducer from './components/slices/invoiceSlice';
-import invoiceDReducer from './components/slices/invoiceDetailSlice';
-
+import paymentReducer from '../src/components/features/payments/paymentMethodSlice';
+import confirmPaymentReducer from '../src/components/features/payments/paymentSlice';
+import generateAccessKeyReducer from '../src/components/features/payments/generateAccessKeySlice';
+import invoicesReducer from '../src/components/features/invoices/invoiceSlice';
+import invoiceDReducer from '../src/components/features/invoices/invoiceSlice';
 
 const store = configureStore({
   reducer: {
