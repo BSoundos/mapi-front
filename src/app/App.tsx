@@ -28,7 +28,7 @@ import UserProfilSetting from '../pages/UserSettings/UserProfilSetting'
 import UserSecuritySettings from '../pages/UserSettings/UserSecuriteSettings'
 import ProviderProfilSetting from '../pages/UserSettings/ProviderProfilSetting'
 import ProviderSecuritySettings from '../pages/UserSettings/ProviderSecuriteSettings'
-
+import Revenue  from '@/pages/Provider/Revenue';
 
 const App = () => {
 
@@ -67,6 +67,8 @@ const App = () => {
 
         <Route path="/UserProfilSetting" element={<UserProfilSetting />} />
         <Route path="/UserSecuritySettings" element={<UserSecuritySettings />} />
+        <Route path="/Revenue" element={<Revenue />} />
+
         {/* <Route path="/ajouterreview" element={<AjouterReview />} /> */}
 
 

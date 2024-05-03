@@ -9,10 +9,12 @@ import email from '@/assets/email.png'
 import  { useEffect ,useState} from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { updateProviderSettings, setBasicInformation } from '../../components/features/UserSetting/UserSlice';
-import { useAppDispatch,RootState } from '../../app/store'; 
+import { updateProviderSettings, setBasicInformation } from '@/components/features/UserSetting/UserSlice';
+import { useAppDispatch,RootState } from '@/app/store'; 
 
 const ProviderProfilSetting:React.FC  = () => {
+    const username = localStorage.getItem('username');
+
     const dispatch = useAppDispatch();
 
     const [verificationEmailSent, setVerificationEmailSent] = useState(false);
@@ -41,7 +43,7 @@ const ProviderProfilSetting:React.FC  = () => {
           
           if (!verificationChamp) {
             dispatch(updateProviderSettings({
-              oldUsername: "anis",
+              oldUsername: username,
               userData: {
                 firstName: newFirstName,
                 lastName: newLastName,

@@ -13,6 +13,9 @@ import { updateUserSettings, GetInformationUser } from '@/components/features/Us
 import { useAppDispatch,RootState } from '@/app/store'; 
 
 const UserProfilSetting:React.FC  = () => {
+    const username = localStorage.getItem('username');
+
+
     const dispatch = useAppDispatch();
 
     const [verificationEmailSent, setVerificationEmailSent] = useState(false);
@@ -25,20 +28,21 @@ const UserProfilSetting:React.FC  = () => {
     const [newPhoneNumber, setNewPhoneNumber] = useState('');
 
 
-    useEffect(() => {
-        const fetchUserInfo = async () => {
-          try {
-            const username = 'anis'; 
-            const userInfo = await GetInformationUser(username);
-            console.log(userInfo)
-            dispatch({ type: 'USER_INFO_FETCHED', payload: userInfo });
-          } catch (error) {
-            console.error('Error fetching user info:', error);
-          }
-        };
+    //dispatcher les information user
+    // useEffect(() => {
+    //     const fetchUserInfo = async () => {
+    //       try {
+           
+    //         const userInfo = await GetInformationUser(username);
+    //         console.log(userInfo)
+    //         dispatch({ type: 'USER_INFO_FETCHED', payload: userInfo });
+    //       } catch (error) {
+    //         console.error('Error fetching user info:', error);
+    //       }
+    //     };
     
-        fetchUserInfo(); 
-      }, [dispatch]);
+    //     fetchUserInfo(); 
+    //   }, [dispatch]);
 
 
     const handleDiscard = () => {
@@ -58,7 +62,7 @@ const UserProfilSetting:React.FC  = () => {
           
           if (!verificationChamp) {
             dispatch(updateUserSettings({
-              oldUsername: "anis",
+              oldUsername: username,
               userData: {
                 firstName: newFirstName,
                 lastName: newLastName,

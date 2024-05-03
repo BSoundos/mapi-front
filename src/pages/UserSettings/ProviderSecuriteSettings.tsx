@@ -1,12 +1,12 @@
 import React from 'react';
 import  { useEffect ,useState} from 'react';
-import Navbar from '../../components/NavBar';
-import Footer from '../../components/Footer';
-import SideBarUser from '../../components/SideBarUser';
-import close from '../../assets/close.png'
-import securite from '../../assets/lock.png'
-import { UpdateProviderSecurity } from '../../components/features/UserSetting/UserSlice';
-import { useAppDispatch,RootState } from '../../app/store'; 
+import Navbar from '@/components/NavBar';
+import Footer from '@/components/Footer';
+import SideBarUser from '@/components/SideBarUser';
+import close from '@/assets/close.png'
+import securite from '@/assets/lock.png'
+import { UpdateProviderSecurity } from '@/components/features/UserSetting/UserSlice';
+import { useAppDispatch,RootState } from '@/app/store'; 
 
 const ProviderSecuritySettings:React.FC  = () => {
 

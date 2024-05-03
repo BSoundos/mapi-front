@@ -2,6 +2,9 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { log } from 'console';
 
+const backendBaseUrl = import.meta.env.VITE_BACKEND_URL;
+
+
 interface UserSettingsState {
   basicInformation: {
     firstName: string;
@@ -52,7 +55,7 @@ export const UpdateUserSecurity = createAsyncThunk<BasicInformationSecurity, Set
     try {
     
       console.log(userSecurityData)
-      const response = await axios.post(`http://localhost:8000/profile_management/update-user-password/`, userSecurityData);
+      const response = await axios.post(`${backendBaseUrl}/profile_management/update-user-password/`, userSecurityData);
      console.log(response)
       return response.data;
     }  catch (error: any) {
@@ -73,7 +76,7 @@ export const updateUserSettings = createAsyncThunk<BasicInformation, Settings>(
     
       console.log(`/profile_management/update-user/${oldUsername}/`);
       console.log(userData)
-      const response = await axios.patch(`http://localhost:8000/profile_management/update-user/${oldUsername}/`, userData);
+      const response = await axios.patch(`${backendBaseUrl}/profile_management/update-user/${oldUsername}/`, userData);
      console.log(response)
       return response.data;
     }  catch (error: any) {
@@ -88,7 +91,7 @@ export const updateUserSettings = createAsyncThunk<BasicInformation, Settings>(
 
 export const GetInformationUser = async (username: string): Promise<any> => {
   try {
-    const response = await axios.get(`http://localhost:8000/profile_management/userInfo/${username}/`);
+    const response = await axios.get(`${backendBaseUrl}/profile_management/userInfo/${username}/`);
     return response.data;
   } catch (error) {
     throw error;
@@ -96,7 +99,7 @@ export const GetInformationUser = async (username: string): Promise<any> => {
 };
 export const GetInformationProvider = async (username: string): Promise<any> => {
   try {
-    const response = await axios.get(`http://localhost:8000/profile_management/providerInfo/${username}/`);
+    const response = await axios.get(`${backendBaseUrl}/profile_management/providerInfo/${username}/`);
     return response.data;
   } catch (error) {
     throw error;
@@ -109,9 +112,7 @@ export const updateProviderSettings = createAsyncThunk<BasicInformation, Setting
   async ({ oldUsername, userData }, { rejectWithValue }) => {
     try {
     
-      console.log(`/profile_management/update-user/${oldUsername}/`);
-      console.log(userData)
-      const response = await axios.patch(`http://localhost:8000/profile_management/update-provider/${oldUsername}/`, userData);
+      const response = await axios.patch(`${backendBaseUrl}/profile_management/update-provider/${oldUsername}/`, userData);
      console.log(response)
       return response.data;
     }  catch (error: any) {
@@ -130,7 +131,7 @@ export const UpdateProviderSecurity = createAsyncThunk<BasicInformationSecurity,
     try {
     
       console.log(userSecurityData)
-      const response = await axios.post(`http://localhost:8000/profile_management/update-user-provider/`, userSecurityData);
+      const response = await axios.post(`${backendBaseUrl}/profile_management/update-user-provider/`, userSecurityData);
      console.log(response)
       return response.data;
     }  catch (error: any) {
