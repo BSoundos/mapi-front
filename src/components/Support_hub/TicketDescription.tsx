@@ -1,11 +1,13 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import checkIcon from '@/assets/icons/check.svg';
-import '@/styles/index.css';
+//import '@/styles/index.css';
 import { useEffect,useState } from 'react';
-import { useAppDispatch,RootState } from '@/app/store'; 
+import { useAppDispatch } from '@/app/store'; 
 import {updateTicketStatus,updateTicketPriority,deleteTicket} from '@/components/features/tickets/TicketSlice';
-import UpdateTicketForm from '@/components/UpdateTicketForm';
+import UpdateTicketForm from '@/components/Support_hub/UpdateTicketForm';
+import ConfirmationModal from '@/components/Support_hub/ConfirmationModal';
+import { STATUS_CHOICES, PRIORITY_CHOICES } from '@/types/choices';
+import { FaTrash } from 'react-icons/fa';
 
 
 // Priority Mapping 
@@ -28,25 +30,9 @@ const formatDate = (dateString) => {
 };
 
 
-// Define radio button choices
-const STATUS_CHOICES = [
-  { value: 'open', label: 'Open' },
-  { value: 'solved', label: 'Solved' },
-  { value: 'closed', label: 'Closed' },
-  { value: 'in_progress', label: 'In Progress' },
-];
-
-// Define radio button choices
-const PRIORITY_CHOICES = [
-  { value: 1, label: 'High' },
-  { value: 2, label: 'Medium' },
-  { value: 3, label: 'Low' },
-];
-
-
 const TicketDescription = ({ id, title, content, postDate, currentStatus, priority, username, statusHistory,forUser=false, apiName="" }) => {
   const dispatch = useAppDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false); // State to manage modals visibility
+  const [isModalOpen, setIsModalOpen] = useState(false); 
   const [isPriorityModalOpen, setIsPriorityModalOpen] = useState(false);
 
   const [selectedStatus, setSelectedStatus] = useState(currentStatus);
@@ -68,7 +54,7 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
   const handleSubmitStatus = (e) => {
     e.preventDefault();
     dispatch(updateTicketStatus({ ticketId: id, newStatus: selectedStatus, updateMessage }));
-    setIsModalOpen(false); // Close the modal after submitting
+    setIsModalOpen(false); 
   };
 
   const closeModal = () => {
@@ -77,7 +63,7 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
   };
 
   const handlePriorityClick = () => {
-    setIsPriorityModalOpen(true); // Open the modal when priority is clicked
+    setIsPriorityModalOpen(true); 
   };
 
   const handleSubmitPriority = (e) => {
@@ -86,13 +72,24 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
     setIsPriorityModalOpen(false);
   }; 
 
-  const handleDelete = () => {
-    dispatch(deleteTicket(id));
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false); // State for modal visibility
+
+  const handleDeleteClick = () => {
+    setIsDeleteModalOpen(true); // Open the confirmation modal
+  };
+
+  const handleDeleteConfirm = () => {
+    dispatch(deleteTicket(id)); // Delete upon confirmation
+    setIsDeleteModalOpen(false); // Close the modal after deletion
+  };
+
+  const handleDeleteCancel = () => {
+    setIsDeleteModalOpen(false); // Close the modal without deleting
   };
 
 
   return (
-    <div className="bg-mapi-neutral-1 font-inter w-full mb-4 p-6 border border-opacity-50 border-[#343B4F] rounded-[7px]">
+    <div className="bg-mapi-neutral-1 font-inter w-full mb-4 p-6 border border-opacity-50 border-[#343B4F] rounded-md">
       {isPriorityModalOpen && (
       <UpdateTicketForm
         isOpen={isPriorityModalOpen}
@@ -124,8 +121,15 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
       />
       )}
 
-
-
+      {isDeleteModalOpen && (
+      <ConfirmationModal
+              title= {"Confirmation"}
+              isOpen={isDeleteModalOpen}
+              message="Are you sure you want to delete this ticket?"
+              onConfirm={handleDeleteConfirm}
+              onCancel={handleDeleteCancel}
+      />
+      )}
 
 
       {/* Main Content */}
@@ -160,10 +164,10 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
 
             {forUser && (
               <button
-                className="bg-red-500 border font-bold text-base py-2 px-4 rounded-md text-white"
-                onClick={handleDelete}
+                className="bg-red-500 border font-bold text-base py-2 px-3 rounded-md text-white"
+                onClick={handleDeleteClick}
               >
-                Delete
+                <FaTrash /> 
               </button>
             )}
           </div>
@@ -176,31 +180,27 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
                   <p className="text-white">By: <span className="text-secondary-blue">{username}</span></p>  
                 )}
          
-
-
          <div className="pl-2 flex items-center space-x-40 pt-8">
-           {statusHistory.map((status, index) => (
-             <div key={status.id} className="relative flex flex-col items-center">
-               {index < statusHistory.length - 1 && (
-                 <div
-                   className="absolute top-2.5 left-[90%] h-2 border-t border-[#0AB161]"
-                   style={{ width: 'calc(100% + 150px)' }}
-                 ></div>
-               )}
-               <div className="relative group"> 
-               <img src={checkIcon} alt="Check Icon" className="w-5 h-5" />
-               
-               <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 
-                      opacity-0 bg-gray-700 text-white text-sm rounded-md 
-                      py-1 px-4 transition-opacity duration-300 group-hover:opacity-100 
-                      max-w-xs whitespace-nowrap overflow-hidden text-ellipsis">
-                 {status.update_message}
-               </div>
-             </div>
-             </div>
-           ))}
-         </div>
-         <div className="flex items-center pt-3" style={{ gap: '7.4rem' }}>
+          {statusHistory.map((status, index) => (
+            <div key={status.id} className="relative flex flex-col items-center">
+              {index < statusHistory.length - 1 && (
+                <div
+                  className="absolute top-2.5 left-1/2 transform w-44 translate-x-2 h-2 border-t border-[#0AB161]"
+                ></div>
+              )}
+              <div className="relative group">
+                <img src={checkIcon} alt="Check Icon" className="w-5 h-5" />
+                <div
+                  className="absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 bg-gray-700 text-white text-sm rounded-md py-1 px-4 transition-opacity duration-300 group-hover:opacity-100 max-w-xs whitespace-nowrap overflow-hidden text-ellipsis"
+                >
+                  {status.update_message}
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+
+         <div className="flex items-center pt-3 gap-x-28">
            {statusHistory.map((status, index) => (
              <div key={status.id} className="relative flex flex-col items-center">
                <p className="text-white">

@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { TicketReply } from '@/types/TicketReply';
+import { BACKEND_BASE_URL } from '@/data/constants';
 
 interface TicketDiscussionState {
     replies: TicketReply[] ;
@@ -26,7 +27,7 @@ export const FetchTicketReplies = createAsyncThunk<TicketReply[], number>(
   'TicketReplies',
   async (ticketId) => {
     const token = getToken();
-    const response = await axios.get(`http://127.0.0.1:8000/support_hub/ticket/${ticketId}/replies/`, {
+    const response = await axios.get(`${BACKEND_BASE_URL}/support_hub/ticket/${ticketId}/replies/`, {
       headers: {
         Authorization: `Token ${token}`,
       },
@@ -41,7 +42,7 @@ export const AddTicketReply = createAsyncThunk<TicketReply, { ticketId: number; 
   async ({ ticketId, content }) => {
     const token = getToken();
     const response = await axios.post(
-      `http://127.0.0.1:8000/support_hub/add_ticket_reply/${ticketId}/`,
+      `${BACKEND_BASE_URL}/support_hub/add_ticket_reply/${ticketId}/`,
       { content },
       {
         headers: {

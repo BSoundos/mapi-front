@@ -2,6 +2,7 @@ import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { Ticket } from '@/types/Ticket';
 import { StatusHistoryItem } from '@/types/StatusHistory';
+import { BACKEND_BASE_URL } from '@/data/constants';
 
 interface TicketState {
     ticket: Ticket; 
@@ -26,7 +27,7 @@ export const FetchProviderTickets = createAsyncThunk<Ticket[]>(
     'TicketsProvider',
     async () => {
       const token = getToken();
-      const response = await axios.get('http://localhost:8000/support_hub/get_all_providertickets/' ,{
+      const response = await axios.get(`${BACKEND_BASE_URL}/support_hub/get_all_providertickets/` ,{
         headers: {
           Authorization: `Token ${token}`
         }
@@ -39,7 +40,7 @@ export const FetchProviderTickets = createAsyncThunk<Ticket[]>(
     'TicketsUser',
     async () => {
       const token = getToken();
-      const response = await axios.get('http://127.0.0.1:8000/support_hub/get_all_usertickets/' ,{
+      const response = await axios.get(`${BACKEND_BASE_URL}/support_hub/get_all_usertickets/` ,{
         headers: {
           Authorization: `Token ${token}`
         }
@@ -51,7 +52,7 @@ export const FetchProviderTickets = createAsyncThunk<Ticket[]>(
   export const searchTickets = createAsyncThunk<Ticket[], string>(
     'Tickets/searchTickets',
     async (searchQuery: string): Promise<Ticket[]> => {
-      const response = await axios.get(`http://127.0.0.1:8000/support_hub/tickets/search/?q=${searchQuery}`);
+      const response = await axios.get(`${BACKEND_BASE_URL}/support_hub/tickets/search/?q=${searchQuery}`);
       const data = response.data;
   
       const mappedData: Ticket[] = data.map((ticket: any) => ({
@@ -83,7 +84,7 @@ export const FetchProviderTickets = createAsyncThunk<Ticket[]>(
     'Tickets/fetchTicketsByPriority',
     async (priority: number): Promise<Ticket[]> => {
       const response = await axios.get(
-        `http://127.0.0.1:8000/support_hub/tickets/filter-by-priority/?priority=${priority}`
+        `${BACKEND_BASE_URL}/support_hub/tickets/filter-by-priority/?priority=${priority}`
       );
       const data = response.data;
   
@@ -117,7 +118,7 @@ export const FetchProviderTickets = createAsyncThunk<Ticket[]>(
     'Tickets/fetchTicketsByStatus',
     async (status: string): Promise<Ticket[]> => {
       const response = await axios.get(
-        `http://127.0.0.1:8000/support_hub/tickets/filter-by-status/?status=${status}`
+        `${BACKEND_BASE_URL}/support_hub/tickets/filter-by-status/?status=${status}`
       );
       const data = response.data;
   
@@ -151,7 +152,7 @@ export const FetchProviderTickets = createAsyncThunk<Ticket[]>(
     'Tickets/fetchTicketsByNewest',
     async (): Promise<Ticket[]> => {
       const response = await axios.get(
-        `http://127.0.0.1:8000/support_hub/tickets/filter-by-date/`
+        `${BACKEND_BASE_URL}/support_hub/tickets/filter-by-date/`
       );
       const data = response.data;
   
@@ -197,7 +198,7 @@ export const FetchProviderTickets = createAsyncThunk<Ticket[]>(
       }
   
       const response = await axios.post(
-        `http://127.0.0.1:8000/support_hub/update_ticket_state/${ticketId}/`,
+        `${BACKEND_BASE_URL}/support_hub/update_ticket_state/${ticketId}/`,
         requestBody,
         {
           headers: {
@@ -228,7 +229,7 @@ export const FetchProviderTickets = createAsyncThunk<Ticket[]>(
     async ({ ticketId, newPriority }: { ticketId: number; newPriority: number }) => {
       const token = getToken();
       const response = await axios.put(
-        `http://127.0.0.1:8000/support_hub/update_ticket_priority/${ticketId}/`,
+        `${BACKEND_BASE_URL}/support_hub/update_ticket_priority/${ticketId}/`,
         { priority: newPriority },
         {
           headers: {
@@ -246,7 +247,7 @@ export const FetchProviderTickets = createAsyncThunk<Ticket[]>(
     async ({ apiPk, title, content }:{ apiPk: number; title: string; content:string }) => {
       const token = getToken();
       const response = await axios.post(
-        `http://127.0.0.1:8000/support_hub/add_ticket/${apiPk}/`,
+        `${BACKEND_BASE_URL}/support_hub/add_ticket/${apiPk}/`,
         { title:title , content:content },
         {
           headers: {
@@ -265,7 +266,7 @@ export const FetchProviderTickets = createAsyncThunk<Ticket[]>(
     async (ticketId: number) => {
       const token = getToken();
       const response = await axios.delete(
-        `http://127.0.0.1:8000/support_hub/ticket/delete/${ticketId}/`,
+        `${BACKEND_BASE_URL}/support_hub/ticket/delete/${ticketId}/`,
         {
           headers: {
             Authorization: `Token ${token}`,
@@ -282,7 +283,7 @@ export const getTicketById = createAsyncThunk(
   async (ticketId: number) => {
     const token = getToken();  // Get the authentication token
     const response = await axios.get(
-      `http://127.0.0.1:8000/support_hub/ticket/${ticketId}/`,
+      `${BACKEND_BASE_URL}/support_hub/ticket/${ticketId}/`,
       {
         headers: {
           Authorization: `Token ${token}`,  // Set the authorization header
@@ -292,6 +293,7 @@ export const getTicketById = createAsyncThunk(
 
     if (response.status === 200) {
       return response.data;  // Return the ticket data
+      
     } else {
       throw new Error(`Failed to fetch ticket with ID ${ticketId}`);  // Handle errors
     }
@@ -302,7 +304,12 @@ export const getTicketById = createAsyncThunk(
 const TicketSlice = createSlice({
     name: 'ticket',
     initialState,
-    reducers: {},
+    reducers: {
+      // Reducer to clear the error
+      clearError: (state) => {
+        state.error = null;
+      },
+    },
     extraReducers: (builder) => {
       builder
       .addCase(FetchProviderTickets.pending, (state) => {
@@ -329,8 +336,16 @@ const TicketSlice = createSlice({
         state.loading = false;
         state.error = action.error.message ?? 'Failed to get tickets';
       })
+      .addCase(addTicket.pending, (state) => {
+        state.loading = true;
+      })
       .addCase(addTicket.fulfilled, (state, action) => {
-        state.tickets.push(action.payload); // Add the new ticket to the state
+        state.loading = false;
+        state.tickets.push(action.payload);
+      })
+      .addCase(addTicket.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? 'Failed to add ticket';
       })
       .addCase(deleteTicket.pending, (state) => {
         state.loading = true;
@@ -376,23 +391,24 @@ const TicketSlice = createSlice({
         }
       })
       .addCase(updateTicketPriority.rejected, (state, action) => {
-        state.loading = false; // Reset loading state
+        state.loading = false; 
         state.error = action.error.message || 'Failed to update ticket priority';
       })
       .addCase(getTicketById.pending, (state) => {
-        state.loading = true;   // Indicate loading
-        state.error = null;     // Reset errors
+        state.loading = true;  
+        state.error = null;   
       })
       .addCase(getTicketById.fulfilled, (state, action) => {
-        state.loading = false;  // Loading is complete
-        state.ticket = action.payload;  // Store the fetched ticket
+        state.loading = false; 
+        state.ticket = action.payload; 
       })
       .addCase(getTicketById.rejected, (state, action) => {
-        state.loading = false;  // Loading is complete
-        state.error = action.error.message;  // Store the error message
+        state.loading = false; 
+        state.error = action.error.message; 
       });
     },
   });
   
+  export const { clearError } = TicketSlice.actions;
   
   export default TicketSlice.reducer;

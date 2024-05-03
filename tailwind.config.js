@@ -39,9 +39,9 @@ export default {
         'lineartp': '#69EACB',
       },
       backgroundColor: {
-        'custom-opacity-red': 'rgba(216, 114, 125, 0.1)', // Light red
-        'custom-opacity-brown': 'rgba(231, 214, 149, 0.1)', // Light brown
-        'custom-opacity-yellow': 'rgba(239, 245, 205, 0.1)', // Light yellow 
+        'custom-opacity-red': 'rgba(216, 114, 125, 0.1)', 
+        'custom-opacity-brown': 'rgba(231, 214, 149, 0.1)', 
+        'custom-opacity-yellow': 'rgba(239, 245, 205, 0.1)', 
         'custom-opacity-blue': 'rgba(87, 195, 255, 0.2)',
       },
       fontFamily: {

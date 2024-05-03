@@ -1,4 +1,4 @@
-import logo from "../assets/logo 1.png";
+import logo from "@/assets/logo_1.png";
 import { Link,useLocation } from 'react-router-dom';
 import { PiBarcode } from "react-icons/pi";
 import { BiSolidDashboard ,BiDollar } from "react-icons/bi";

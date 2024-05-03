@@ -1,6 +1,6 @@
-import { User } from './user';
-import { StatusHistoryItem } from './StatusHistory';
-import { Api } from './API';
+import { User } from '@/types/user';
+import { StatusHistoryItem } from '@/types/StatusHistory';
+import { Api } from '@/types/API';
 
 
 // Define interface for the Ticket object

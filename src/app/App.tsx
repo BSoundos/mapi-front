@@ -25,10 +25,9 @@ import Register from '../pages/authentication/Register';
 import Verify from '../pages/authentication/Verify';
 import Home from '../pages/home/Home';
 
+
 import Ticket from '../pages/support_hub/Ticket';
 import Discussion from '../pages/support_hub/TicketDiscussionsPage';
-import Chat from '../pages/support_hub/testSocket';
-
 import UserTicketsPage  from '../pages/support_hub/userTickets';
 import UserAddTicket  from '../pages/support_hub/AddTicket';
 import UserTicketDiscussionPage  from '../pages/support_hub/userTicketDiscussion';

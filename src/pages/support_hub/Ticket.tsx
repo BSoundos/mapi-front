@@ -1,14 +1,16 @@
 import { useSelector } from 'react-redux';
 import { useEffect,useState } from 'react';
-import { FetchProviderTickets,searchTickets,fetchTicketsByStatus,fetchTicketsByPriority,fetchTicketsByNewest } from '@/components/features/tickets/TicketSlice';
+import { clearError,FetchProviderTickets,searchTickets,fetchTicketsByStatus,fetchTicketsByPriority,fetchTicketsByNewest } from '@/components/features/tickets/TicketSlice';
 import { useAppDispatch,RootState } from '@/app/store'; 
-import TicketDescription from '@/components/TicketDescription';
-import SupportNav from '@/components/SupportNav';
+import TicketDescription from '@/components/Support_hub/TicketDescription';
+import SupportNav from '@/components/Support_hub/SupportNav';
 import { Ticket } from '@/types/Ticket';
 import PaginationR from '@/components/PaginationR';
-import Sidebar from '@/components/Sidebar';
-import ErrorComponent from '@/components/ErrorComponent';
+import Sidebar from '@/components/Support_hub/Sidebar';
+import ErrorModal from '@/components/Support_hub/ErrorModal';
 import SearchInput from '@/components/searchInput';
+import { STATUS_CHOICES, PRIORITY_CHOICES } from '@/types/choices';
+import CustomSelect from '@/components/Support_hub/CustomSelect'; 
 
 const TicketPage = () => {
     
@@ -18,6 +20,8 @@ const TicketPage = () => {
   const error = useSelector((state: RootState) => state.ticket.error);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState<Ticket[]>(tickets);
+
+  const [showError, setShowError] = useState(false);
   
   // Pagination setup
   const totalTickets = searchResults.length
@@ -31,6 +35,21 @@ const TicketPage = () => {
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
+  };
+
+
+  const [isErrorModalOpen, setIsErrorModalOpen] = useState(false);
+
+  useEffect(() => {
+    if (error) {
+      setIsErrorModalOpen(true); // Open the error modal when there's an error
+    }
+  }, [error]); // Re-run when error state changes
+
+  const handleCloseErrorModal = () => {
+    setIsErrorModalOpen(false); // Close the modal
+    dispatch(clearError()); // Call clearError to reset the error state
+   
   };
 
   const renderTickets = () => {
@@ -107,40 +126,38 @@ const TicketPage = () => {
     return <div>Loading...</div>;
   }
 
-  if (error) {
-    return (
-        <ErrorComponent errorMessage={error} />
-    );
-  }
+  
 
   return (
     <div className='flex'>
     <Sidebar/>
-    <div className='flex-1 bg-mapi-neutral-2 overflow-y-auto max-h-[100vh]  scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52]'>
+    <div className='flex-1 bg-mapi-neutral-2 overflow-y-auto max-h-screen  scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52]'>
+
       <SupportNav />
       <div className='m-12'>
+      {isErrorModalOpen && (
+            <ErrorModal
+              title="Error"
+              isOpen={isErrorModalOpen}
+              message={error}
+              onClose={handleCloseErrorModal}
+            />
+          )}
+      
+
       <div className=''>
         <h4 className="font-inter font-bold text-white text-2xl">Tickets Tracking</h4>
         <div className="font-public-sans flex justify-start space-x-6 text-[#BFBFBF] mt-8">
-        <select
-          className="bg-mapi-neutral-1 rounded-md px-5 py-2 hover:border hover:border-mapi-secondary-3 focus:outline-none focus:border-mapi-secondary-3"
-          onChange={handleFilterByPriority}
-        >
-          <option value="">By Priority</option>
-          <option value="3">Low</option>
-          <option value="2">Medium</option>
-          <option value="1">High</option>
-        </select>
-        <select
-          className="bg-mapi-neutral-1 rounded-md px-5 py-2 hover:border hover:border-mapi-secondary-3 focus:outline-none focus:border-mapi-secondary-3"
-          onChange={handleFilterByStatus}
-        >
-          <option value="">By Status</option>
-          <option value="in_progress">In progress</option>
-          <option value="closed">Closed</option>
-          <option value="solved">Solved</option>
-          <option value="open">Open</option>
-        </select>
+          <CustomSelect
+            options={PRIORITY_CHOICES}
+            onChange={handleFilterByPriority}
+            defaultFirstOption="By Priority" // Customizable default option
+          />
+          <CustomSelect
+            options={STATUS_CHOICES}
+            onChange={handleFilterByStatus}
+            defaultFirstOption="By Status" // Customizable default option
+          />
           <button className="bg-mapi-neutral-1 rounded-md px-5 py-2 hover:border hover:border-mapi-secondary-3"
           onClick={handleFilterByNewest} >Newest</button>
         </div>
@@ -148,7 +165,7 @@ const TicketPage = () => {
 
 
       <div className='mt-9 flex justify-end'> 
-        <div className="w-1/3 rounded-[7px] border border-opacity-50 border-[#343B4F]">
+        <div className="w-1/3 rounded-md border border-opacity-50 border-[#343B4F]">
           <SearchInput
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}

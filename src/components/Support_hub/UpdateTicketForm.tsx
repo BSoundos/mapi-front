@@ -1,6 +1,3 @@
-import React from 'react';
-
- 
 const UpdateTicketForm = ({
   isOpen,
   name,
@@ -18,7 +15,6 @@ const UpdateTicketForm = ({
     return null; // Do not render if the modal is not open
   }
 
-  console.log('Rendering',selectedChoice )
 
   return (
     
@@ -30,7 +26,7 @@ const UpdateTicketForm = ({
 
         <form onSubmit={onSubmit}>
           <div className="flex flex-col gap-6 px-3">
-            {/* Radio Buttons for Status */}
+
             <div className="mb-4 flex flex-col gap-6 items-start">
               {choices.map((choice, index) => (
                 <label key={index} className="flex items-center gap-3 text-white">
@@ -49,7 +45,6 @@ const UpdateTicketForm = ({
               ))}
             </div>
 
-            {/* Text Area for Optional Update Message */}
             {
               hasMessage &&
               (<div className="mb-4 flex gap-6 items-center">
@@ -66,7 +61,6 @@ const UpdateTicketForm = ({
             }
             
 
-            {/* Form Buttons */}
             <div className="flex justify-end gap-4">
               <button type="button" onClick={onClose} className="text-base py-2 px-4 text-white">
                 Cancel
