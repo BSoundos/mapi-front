@@ -1,5 +1,8 @@
 // store.ts
 import { configureStore } from '@reduxjs/toolkit';
+
+import authReducer from '@/components/features/authentication/authSlice';
+
 import subscriptionPlansReducer from '../components/features/subscriptions/subscriptionPlansSlice';
 import subscriptionPlansPerUseReducer from '../components/features/subscriptions/subscriptionPlansPerUseSlice';
 import navigationReducer from '../components/features/subscriptions/selectedPlanSlice';
@@ -20,6 +23,7 @@ import { useDispatch } from 'react-redux';
 
 const store = configureStore({
   reducer: {
+    auth: authReducer,
     subscriptionPlans: subscriptionPlansReducer,
     subscriptionPlansPerUse: subscriptionPlansPerUseReducer,
     navigation: navigationReducer,
@@ -34,6 +38,7 @@ const store = configureStore({
     UserSetttingsSlice:userSettingsReducer,
 
     // Autres reducers...
+    // other reducers...
   },
 });
 
