@@ -24,11 +24,12 @@ import axios from 'axios';
 import Register from '../pages/authentication/Register';
 import Verify from '../pages/authentication/Verify';
 import Home from '../pages/home/Home';
-import UserProfilSetting from '@/pages/UserSettings/UserProfilSetting';
-import UserSecuritySettings from '@/pages/UserSettings/UserSecuriteSettings';
-import ProviderProfilSetting from '@/pages/UserSettings/ProviderProfilSetting';
-import ProviderSecuritySettings from '@/pages/UserSettings/ProviderSecuriteSettings';
-import Revenue from '@/pages/Provider/Revenue';
+
+import UserProfilSetting from '../pages/UserSettings/UserProfilSetting'
+import UserSecuritySettings from '../pages/UserSettings/UserSecuriteSettings'
+import ProviderProfilSetting from '../pages/UserSettings/ProviderProfilSetting'
+import ProviderSecuritySettings from '../pages/UserSettings/ProviderSecuriteSettings'
+import Revenue  from '@/pages/Provider/Revenue';
 
 const App = () => {
 
@@ -64,11 +65,13 @@ const App = () => {
 
         <Route path="/UserProfilSetting" element={<UserProfilSetting />} />
         <Route path="/UserSecuritySettings" element={<UserSecuritySettings />} />
-
         <Route path="/ProviderProfilSetting" element={<ProviderProfilSetting />} />
         <Route path="/ProviderSecuritySettings" element={<ProviderSecuritySettings />} />
 
+     
         <Route path="/Revenue" element={<Revenue />} />
+
+      
 
                 {/* <Route path="/ajouterreview" element={<AjouterReview />} /> */}
 
