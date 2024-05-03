@@ -1,5 +1,6 @@
 // selectedPlanSlice.ts
 
+import { BACKEND_BASE_URL } from '@/data/constants';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -48,7 +49,7 @@ export const fetchPlanDetails = createAsyncThunk<PlanDetails, { planId: string ,
   'plans/fetchPlanDetails',
   async ({planId, objectPrices }) => {
     try {
-      const response = await axios.get(`http://localhost:8000/payment/subscription-plan-per-use/${planId}/`);
+      const response = await axios.get(`${BACKEND_BASE_URL}/payment/subscription-plan-per-use/${planId}/`);
       console.log("response.data", response.data);
             const responseDataWithObjectPrices = {
         ...response.data,
@@ -68,7 +69,7 @@ export const fetchUserPlanDetails = createAsyncThunk<PlanDetails, { planId: numb
   'plans/fetchUserPlanDetails',
   async ({ planId }) => {
     try {
-      const response = await axios.get(`http://localhost:8000/payment/user-plan-per-use/${planId}/`);
+      const response = await axios.get(`${BACKEND_BASE_URL}/payment/user-plan-per-use/${planId}/`);
       console.log("response.data userplan", response.data);
       return { ...response.data, typeplan: 'userplan' };
     } catch (error) {

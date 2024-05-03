@@ -1,3 +1,4 @@
+import { BACKEND_BASE_URL } from '@/data/constants';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -63,7 +64,7 @@ interface SubscriptionPlansState {
 export const fetchSubscriptionPlans = createAsyncThunk<SubscriptionPlan[], number>(
   'subscriptionPlans/fetchPlans',
   async (versionApiId: number) => {
-    const response = await axios.get(`http://localhost:8000/payment/payment-per-month/subscription-plans/${versionApiId}/`);
+    const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-per-month/subscription-plans/${versionApiId}/`);
     console.log("subscription_plans",response.data)
     return response.data; 
   }
@@ -73,7 +74,7 @@ export const fetchUserPlans = createAsyncThunk<UserPlan[], number>(
   'subscriptionPlans/fetchUserPlans',
   async (versionApiId: number) => {
     const userId = 3
-    const response = await axios.get(`http://localhost:8000/payment/payment-per-month/user-plans/${versionApiId}/${userId}/`);
+    const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-per-month/user-plans/${versionApiId}/${userId}/`);
     console.log("user_plans", response.data);
     return response.data; 
   }
