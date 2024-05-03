@@ -1,7 +1,7 @@
 import logo from "@/assets/logo_1.png";
 import { Link,useLocation } from 'react-router-dom';
 import { PiBarcode } from "react-icons/pi";
-import { BiSolidDashboard ,BiDollar } from "react-icons/bi";
+import { BiSolidDashboard ,BiDollar ,BiSupport} from "react-icons/bi";
 import { IoBag } from "react-icons/io5";
 
 
@@ -17,6 +17,7 @@ function Sidebar() {
     { icon:<IoBag size={24} /> ,text: 'My APIs', path: '/my-apis' },
     {icon:<BiDollar size={24} />, text: 'Billing & Incomes', path: '/billing-incomes' },
     {icon:<PiBarcode size={24} />, text: 'Updates & FAQ', path: '/updates-faq' },
+    { icon: <BiSupport size={24} />, text: 'Ticket System', path: '/Tickets' },
   ];
 
 
