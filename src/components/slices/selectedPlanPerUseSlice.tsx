@@ -6,16 +6,30 @@ import axios from 'axios';
 interface ObjectItem {
     id: number;
     price : string; 
-    name: string;
+    object_name: string;
+  }
+
+  interface PromotionItem {
+    id: number;
+    is_active: boolean,
+    subscription_plan: number,
+    name: string,
+    discount_amount : number ,
+    start_date : string , 
+    end_date : string , 
   }
 
 interface PlanDetails {
     id: string;
     name: string;
     rate_limit: number;
-    objectPrices: ObjectItem[]; 
+    objects: ObjectItem[]; 
     type : string ;
     api_version : number ;
+    typeplan : string;
+    promotion : PromotionItem;
+
+
 }
 
 interface PlanState {
@@ -34,7 +48,7 @@ export const fetchPlanDetails = createAsyncThunk<PlanDetails, { planId: string ,
   'plans/fetchPlanDetails',
   async ({planId, objectPrices }) => {
     try {
-      const response = await axios.get(`http://localhost:8000/payment/subscription-plan/${planId}/`);
+      const response = await axios.get(`http://localhost:8000/payment/subscription-plan-per-use/${planId}/`);
       console.log("response.data", response.data);
             const responseDataWithObjectPrices = {
         ...response.data,
@@ -47,6 +61,22 @@ export const fetchPlanDetails = createAsyncThunk<PlanDetails, { planId: string ,
     }
   }
 );
+
+
+
+export const fetchUserPlanDetails = createAsyncThunk<PlanDetails, { planId: number }>(
+  'plans/fetchUserPlanDetails',
+  async ({ planId }) => {
+    try {
+      const response = await axios.get(`http://localhost:8000/payment/user-plan-per-use/${planId}/`);
+      console.log("response.data userplan", response.data);
+      return { ...response.data, typeplan: 'userplan' };
+    } catch (error) {
+      throw new Error('Failed to fetch user plan details');
+    }
+  }
+);
+
 
 
 const planPerUseSlice = createSlice({
@@ -64,6 +94,18 @@ const planPerUseSlice = createSlice({
         state.details = action.payload;
       })
       .addCase(fetchPlanDetails.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message ?? 'Failed to fetch plan details';
+      })
+      .addCase(fetchUserPlanDetails.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUserPlanDetails.fulfilled, (state, action) => {
+        state.loading = false;
+        state.details = action.payload;
+      })
+      .addCase(fetchUserPlanDetails.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? 'Failed to fetch plan details';
       });

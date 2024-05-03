@@ -17,6 +17,7 @@ export default {
         'dark-text': '#00101E',
         'neutral': '#858C94',
         'neutral-2': '#DDDDDD',
+        'custom-color': '#243959',
         'mapi-primary': '#CB3CFF',
         'mapi-secondary-1': '#0B1739',
         'mapi-secondary-2': '#8951FF',
@@ -31,6 +32,7 @@ export default {
         'mapi-neutral-6': '#D1DBF9',
         'mapi-neutral-7': '#D9E1FA',
         'mapi-neutral-8': '#FFFFFF',
+        
         'corner-1': {
           300: '#7E89AC',
         },

@@ -7,6 +7,7 @@ interface PaymentDetails {
   payment_method: string;
   id_plan : number;
   api_version : number ;
+  typeplan : string ; 
 }
 
 interface PaymentResponse {
@@ -30,6 +31,7 @@ export const confirmPayment = createAsyncThunk(
   'payment/confirmPayment',
   async (paymentDetails: PaymentDetails, { rejectWithValue }) => {
     try {
+      console.log("paymentDetails",paymentDetails)
       const response = await axios.post('http://localhost:8000/payment/process-payment/', paymentDetails);
       return response.data as PaymentResponse;
     } catch (error: any) {

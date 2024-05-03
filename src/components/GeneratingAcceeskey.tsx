@@ -10,12 +10,15 @@ import { useParams } from 'react-router-dom'; // Importer useParams
 
 const GeneratingAccessKeyPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const { apiVersion, planId } = useParams(); // Extraire les paramètres dynamiques de l'URL
+    const { apiVersion, planId , typeplan} = useParams(); // Extraire les paramètres dynamiques de l'URL
     const { accessKey, loading, error } = useSelector((state: RootState) => state.accesskey);
 
     useEffect(() => {
-        dispatch(generateAccessKey({ versionApiId: apiVersion || '', planId: planId || '' }));
-      }, [dispatch, apiVersion, planId]);  
+        dispatch(generateAccessKey({
+          versionApiId: apiVersion || '', planId: planId || '',
+          typeplan: typeplan || ''
+        }));
+      }, [dispatch, apiVersion, planId , typeplan]);  
 
   
     return (

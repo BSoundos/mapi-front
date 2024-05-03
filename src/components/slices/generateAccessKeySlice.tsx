@@ -13,11 +13,11 @@ const initialState: GenerateAccessKeyState = {
   error: null,
 };
 //générer une clé d'accées 
-export const generateAccessKey = createAsyncThunk<string , {versionApiId: string, planId : string}>(
+export const generateAccessKey = createAsyncThunk<string , {typeplan :string ,versionApiId: string, planId : string}>(
     'accessKey/generateAccessKey',
-    async ({versionApiId , planId}) => {
+    async ({typeplan ,versionApiId , planId}) => {
       try {
-        const response = await axios.post(`http://localhost:8000/payment/generate-accesskey/${versionApiId}/${planId}/`);
+        const response = await axios.post(`http://localhost:8000/payment/generate-accesskey/${typeplan}/${versionApiId}/${planId}/`);
         console.log("response.data", response.data.access_key);
         return response.data.access_key;
       } catch (error) {

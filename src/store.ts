@@ -9,6 +9,9 @@ import planPerUseReducer from './components/slices/selectedPlanPerUseSlice';
 import paymentReducer from './components/slices/paymentMethodSlice';
 import confirmPaymentReducer from './components/slices/paymentSlice';
 import generateAccessKeyReducer from './components/slices/generateAccessKeySlice';
+import invoicesReducer from './components/slices/invoiceSlice';
+import invoiceDReducer from './components/slices/invoiceDetailSlice';
+
 
 const store = configureStore({
   reducer: {
@@ -19,7 +22,9 @@ const store = configureStore({
     plan_peruse: planPerUseReducer, 
     payment: paymentReducer,
     confirmpPayment: confirmPaymentReducer,
-    accesskey : generateAccessKeyReducer
+    accesskey : generateAccessKeyReducer,
+    invoiceHistory: invoicesReducer,
+    invoiceDetail: invoiceDReducer,
     // Autres reducers...
   },
 });
