@@ -1,3 +1,4 @@
+import { BACKEND_BASE_URL } from '@/data/constants';
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -30,7 +31,7 @@ export const confirmPayment = createAsyncThunk(
   'payment/confirmPayment',
   async (paymentDetails: PaymentDetails, { rejectWithValue }) => {
     try {
-      const response = await axios.post('http://localhost:8000/payment/process-payment/', paymentDetails);
+      const response = await axios.post(`${BACKEND_BASE_URL}/payment/process-payment/`, paymentDetails);
       return response.data as PaymentResponse;
     } catch (error: any) {
       if (axios.isAxiosError(error)) {

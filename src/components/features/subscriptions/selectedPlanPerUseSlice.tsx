@@ -1,21 +1,22 @@
 // selectedPlanSlice.ts
 
+import { BACKEND_BASE_URL } from '@/data/constants';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 interface ObjectItem {
-    id: number;
-    price : string; 
-    name: string;
-  }
+  id: number;
+  price: string;
+  name: string;
+}
 
 interface PlanDetails {
-    id: string;
-    name: string;
-    rate_limit: number;
-    objectPrices: ObjectItem[]; 
-    type : string ;
-    api_version : number ;
+  id: string;
+  name: string;
+  rate_limit: number;
+  objectPrices: ObjectItem[];
+  type: string;
+  api_version: number;
 }
 
 interface PlanState {
@@ -30,17 +31,17 @@ const initialState: PlanState = {
   error: null,
 };
 //recuperer les détails d'un plan selectionné
-export const fetchPlanDetails = createAsyncThunk<PlanDetails, { planId: string , objectPrices: { id: string, name: string, price: number }[]}>(
+export const fetchPlanDetails = createAsyncThunk<PlanDetails, { planId: string, objectPrices: { id: string, name: string, price: number }[] }>(
   'plans/fetchPlanDetails',
-  async ({planId, objectPrices }) => {
+  async ({ planId, objectPrices }) => {
     try {
-      const response = await axios.get(`http://localhost:8000/payment/subscription-plan/${planId}/`);
+      const response = await axios.get(`${BACKEND_BASE_URL}/payment/subscription-plan/${planId}/`);
       console.log("response.data", response.data);
-            const responseDataWithObjectPrices = {
+      const responseDataWithObjectPrices = {
         ...response.data,
         objectPrices: objectPrices
       };
-      
+
       return responseDataWithObjectPrices;
     } catch (error) {
       throw new Error('Failed to fetch plan details');
