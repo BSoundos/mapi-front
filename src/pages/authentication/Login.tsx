@@ -3,6 +3,7 @@ import { useAppDispatch } from '@/app/store';
 import { login } from '@/components/features/authentication/authActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
+import loginBGImg from '@/assets/loginBg.png';
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -46,7 +47,7 @@ const Login = () => {
   return (
     localStorage.getItem('token') ? <>{window.location.href = "/"}</> : <>
       <div className="flex min-h-screen bg-[#0B1739] relative">
-        <div className="flex w-[85%] bg-cover bg-no-repeat relative" style={{ backgroundImage: `url(/assets/loginBg.png)`, zIndex: '1' }}>
+        <div className="flex w-[85%] bg-cover bg-no-repeat relative" style={{ backgroundImage: `url(${loginBGImg})`, zIndex: '1' }}>
           <div className="w-full h-full bg-[#0B1739] opacity-25" />
         </div>
         <div className="flex flex-col justify-center items-start w-full lg:w-[45%] px-10 relative z-10">
