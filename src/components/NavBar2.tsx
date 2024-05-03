@@ -1,89 +1,92 @@
 import React from 'react';
-import "@/styles/index.css"
-import img2 from "@/assets/Development_Icon.png"
-import img1 from "@/assets/popularityimg.png"
-import img3 from "@/assets/voteimg.png"
-import img4 from "@/assets/latencyimg.png"
-import img5 from "@/assets/plusimg.png"
+
+import devIcon from '@/assets/icons/dev.svg';
+import popularityIcon from '@/assets/icons/popularity.svg';
+import voteIcon from '@/assets/icons/vote.svg';
+import latencyIcon from '@/assets/icons/latency.svg';
+import plusIcon from '@/assets/icons/plus.svg';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
+import NavItem from './NavItem';
 
 
-interface NavBar2Props {
-    data: any;
-}
 
-const NavBar2: React.FC<NavBar2Props> = ({ data }) => {
+
+
+const NavBar2: React.FC = () => {
     // const category_name = data["category"]["name"]
 
     return (
 
-        <div className=''>
-            <div className='bg-[#081028] border-b border-white border-opacity-10 pl-16 pr-8  flex items-center justify-between '>
+        <div className='border-b border-white border-opacity-10  font-plus-jakarta-sans'>
+            <div className='bg-[#081028] border-b border-white border-opacity-5 pl-16 pr-8 py-4 flex items-center justify-between '>
                 <div className='mb-4'>
                     <div className='flex '>
                         <p className='text-inter text-white text-xl font-bold mt-5'>Local Business Data</p>
                         <div className="flex items-center justify-between pl-2 ">
                             <div className="flex mt-4 py-0.5 px-1 bg-[#57C3FF] bg-opacity-30  border border-[#57C3FF] border-opacity-30 rounded-sm">
-                                <img className="w-[10px]" src={img2} />
-                                {data && (<p className="text-white text-xs font-semibold pl-2">{data.category.name}</p>)}
+                                <img src={devIcon} />
+                                <p className="text-white text-xs font-semibold pl-2">Entertainment</p>
                             </div>
                         </div>
                     </div>
-                    <div className='flex '><p className='text-white text-opacity-87 text-xs'>By</p><p className='pl-2 text-[#21C3FC] text-xs underline'>Belhadef Mohamed Anis</p></div>
+                    <p>
+                        <span className='text-white text-opacity-87 text-xs'>By</span>
+                        <span className='ml-2 text-[#21C3FC] text-xs underline font-inter'>Zemmouri Fayssal</span>
+                    </p>
 
                 </div>
-                <div className='flex items-center justify-between w-[60%]'>
-                    <div className=' border-r border-[#FFFFFF] border-opacity-30 pr-4 '>
-                        <div className='flex'>
-                            <img className='' width="auto" height="auto" src={img1} />
-                            <p className='text-sm text-white text-opacity-60 pl-2'> Popularity</p>
+                <div className='flex items-center justify-end '>
+                    <div className='border-r-2 border-[#FFFFFF] border-opacity-5 px-12 '>
+                        <div className='flex mb-2'>
+                            <img src={popularityIcon} />
+                            <p className=' text-white text-opacity-60 pl-2 text-[14px]'> Popularity</p>
                         </div>
-                        {data && (<div className='text-white'>{data.Popularity}</div>)}
+                        <div className='text-white text-center text-[24px]'>9.8 / 10</div>
                     </div>
-                    <div className=' border-r border-[#FFFFFF] border-opacity-30 pr-4 '>
-                        <div className='flex'>
-                            <img className='w-[10px]' src={img3} />
-                            <p className='text-sm  text-white text-opacity-60 pl-2'> vote</p>
+                    <div className=' border-r-2 border-[#FFFFFF] border-opacity-5 px-12'>
+                        <div className='flex mb-2 justify-center'>
+                            <img src={voteIcon} />
+                            <p className='  text-white text-opacity-60 pl-2 text-[14px]'> vote</p>
                         </div>
-                        {data && (<Rating name="read-only" icon={<StarIcon style={{ color: '#FFFFFF' }} />} value={data.vote} readOnly />)}
+                        <Rating name="read-only" icon={<StarIcon style={{ color: '#FFFFFF', fontSize: 28, marginTop: 3 }} />} value={4.5} readOnly />
 
                     </div>
-                    <div className=' border-r border-[#FFFFFF] border-opacity-30 pr-4 '>
-                        <div className='flex'>
-                            <img className='w-[10px]' src={img4} />
-                            <p className='text-sm  text-white text-opacity-60 pl-2'> Latency</p>
+                    <div className=' border-r-2 border-[#FFFFFF] border-opacity-5 px-12'>
+                        <div className='flex mb-2'>
+                            <img src={latencyIcon} />
+                            <p className=' text-white text-opacity-60 pl-2 text-[14px]'> Latency</p>
                         </div>
-                        {data && (<div className='text-white'>{data.latency}</div>)}
+                        <div className='text-white text-center text-[24px]'>245ms</div>
                     </div>
-                    <div className=' border-r border-[#FFFFFF] border-opacity-30 pr-4 '>
-                        <div className='flex'>
-                            <img className='w-[10px]' src={img3} />
-                            <p className='text-sm  text-white text-opacity-60 pl-2'> Service Level</p>
+                    <div className=' border-r-2 border-[#FFFFFF] border-opacity-5 px-12'>
+                        <div className='flex mb-2'>
+                            <img src={voteIcon} />
+                            <p className='  text-white text-opacity-60 pl-2 text-[14px]'> Service Level</p>
                         </div>
-                        {data && (<div className='text-white'>{data.service_level}</div>)}
+                        <div className='text-white text-center text-[24px]'>98%</div>
                     </div>
-                    <div className=' '>
-                        <div className='flex'>
-                            <img className='w-[10px]' src={img5} />
-                            <p className='text-sm text-white text-opacity-60 pl-2'> Heath Check</p>
+                    <div className=' px-12'>
+                        <div className='flex mb-2'>
+                            <img src={plusIcon} />
+                            <p className=' text-white text-opacity-60 pl-2 text-[14px]'> Heath Check</p>
                         </div>
-                        {data && (<div className='text-[#1F9E00] '>{data.health_check}</div>)}
+                        <div className='text-[#1F9E00] text-center text-[24px]'>N/A</div>
                     </div>
-
-                </div>
-            </div>
-            <div className='border-b border-white border-opacity-10 '>
-                <div className=' flex items-center justify-between w-[35%] font-inter font-semibold text-sm text-[#007BFF] pl-16 py-2'>
-                    <a>About</a>
-                    <a>Endpoints</a>
-                    <a>Documentation</a>
-                    <a>Pricing</a>
-                    <a>Support</a>
 
                 </div>
             </div>
-        </div>
+            <div className='w-full border-b border-white border-opacity-5 h-full'>
+                <nav className=' flex items-center justify-between w-[40%] font-inter font-normal text-sm text-[#007BFF] pl-16 h-full '>
+                    <NavItem path='about' text='About' />
+                    <NavItem path='endpoints' text='Endpoints' />
+                    <NavItem path='documentation' text='Documentation' />
+                    <NavItem path='pricing' text='Pricing' />
+                    <NavItem path='support' text='Support' />
+                    <NavItem path='discussions' text='Discussions' />
+                </nav>
+            </div>
+        </div >
 
     );
 }

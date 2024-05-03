@@ -40,6 +40,7 @@ export default {
       },
       fontFamily: {
         'plus-jakarta-sans': ['Plus Jakarta Sans', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif'],
       },
       screens: {
         'desktop': '1281px',
