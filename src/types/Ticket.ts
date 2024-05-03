@@ -1,5 +1,6 @@
-import { User } from '../types/User';
-import { StatusHistoryItem } from '../types/StatusHistory';
+import { User } from './user';
+import { StatusHistoryItem } from './StatusHistory';
+import { Api } from './API';
 
 
 // Define interface for the Ticket object
@@ -8,7 +9,7 @@ import { StatusHistoryItem } from '../types/StatusHistory';
     content: string;
     title: string;
     priority: number; 
-    api: number;
+    api: Api;
     user: User; 
     status_history: StatusHistoryItem[]; // Array of status history items
   }

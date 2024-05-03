@@ -97,7 +97,7 @@ const AboutPage: React.FC = () => {
           {data && (<p className='text-[#FFFFFF] opacity-80 pb-4'>{data.description}</p>)}
 
           <p className='text-[#FFFFFF] opacity-80 pb-4'>Chat with us live on Discord: https://discord.gg/wxJxGsZgha</p>
-        </div>
+        </div> 
         <div className='flex items-center justify-between pl-16 pr-8 py-2'>
           <p className='text-white font-Inter font-semibold text-2xl'>Reviews</p>
           <button onClick={handleOpenModal} className='text-[#21C3FC] bg-[#081028] w-fit py-1 px-2 border border-[#7E89AC] border-opacity-30 rounded-lg' >+ New Review</button>

@@ -35,13 +35,14 @@ export default {
         'corner-1': {
           300: '#7E89AC',
         },
-        'c-1': '#634CD7',
+        'c-1': '#634CD7', 
         'lineartp': '#69EACB',
       },
       backgroundColor: {
         'custom-opacity-red': 'rgba(216, 114, 125, 0.1)', // Light red
         'custom-opacity-brown': 'rgba(231, 214, 149, 0.1)', // Light brown
         'custom-opacity-yellow': 'rgba(239, 245, 205, 0.1)', // Light yellow 
+        'custom-opacity-blue': 'rgba(87, 195, 255, 0.2)',
       },
       fontFamily: {
         'plus-jakarta-sans': ['Plus Jakarta Sans', 'sans-serif'],

@@ -19,6 +19,7 @@ import apipopularReducer from '../components/features/apis/ApiSlice';
 import AboutReducer from '../components/features/apis/AboutSlice';
 
 import TicketReducer from '../components/features/tickets/TicketSlice';
+import TicketDiscussionReducer from  '../components/features/tickets/TicketDiscussionSlice';
 import { useDispatch } from 'react-redux';
 
 const store = configureStore({
@@ -36,6 +37,7 @@ const store = configureStore({
     apipopular: apipopularReducer,
     AboutSlice: AboutReducer,
     ticket: TicketReducer,
+    ticketReplies: TicketDiscussionReducer,
     // other reducers...
   },
 });
