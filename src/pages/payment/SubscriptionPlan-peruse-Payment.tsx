@@ -15,7 +15,7 @@ const PlanDetailsPerusePage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const planDetails = useSelector((state: RootState) => state.plan_peruse.details);
     const paymentMethod = useSelector((state: RootState) => state.payment.method);
-    const { apiVersion, planId } = useParams(); // Extraire les paramètres dynamiques de l'URL
+    const { apiVersion, planId } = useParams(); 
 
     
     let objectPrices: { id: number, object_name: string, price: string }[] = [];

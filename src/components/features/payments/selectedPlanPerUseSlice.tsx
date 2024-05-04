@@ -53,7 +53,7 @@ export const fetchPlanDetails = createAsyncThunk<PlanDetails, { planId: string ,
       console.log("response.data", response.data);
             const responseDataWithObjectPrices = {
         ...response.data,
-        objectPrices: objectPrices
+        objectPrices: objectPrices , typeplan: 'subscriptionplan' 
       };
       
       return responseDataWithObjectPrices;

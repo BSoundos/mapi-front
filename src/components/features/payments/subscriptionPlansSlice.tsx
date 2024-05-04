@@ -69,12 +69,20 @@ export const fetchSubscriptionPlans = createAsyncThunk<SubscriptionPlan[], numbe
     return response.data; 
   }
 );
+const getToken = () => {
+
+  return localStorage.getItem('token'); // Retrieve token from localStorage
+};
 
 export const fetchUserPlans = createAsyncThunk<UserPlan[], number>(
   'subscriptionPlans/fetchUserPlans',
   async (versionApiId: number) => {
-    const userId = 3
-    const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-per-month/user-plans/${versionApiId}/${userId}/`);
+    const token = getToken();
+    const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-per-month/user-plans/${versionApiId}/`,{
+      headers: {
+        Authorization: `Token ${token}`
+      }
+    });
     console.log("user_plans", response.data);
     return response.data; 
   }

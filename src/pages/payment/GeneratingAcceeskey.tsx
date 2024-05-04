@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import store, { RootState } from '../../app/store';
 import { generateAccessKey } from '../../components/features/payments/generateAccessKeySlice';
 export type AppDispatch = typeof store.dispatch
-import { useParams } from 'react-router-dom'; // Importer useParams
+import { Link, useParams } from 'react-router-dom'; // Importer useParams
 import Navbar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 
@@ -25,13 +25,13 @@ const GeneratingAccessKeyPage: React.FC = () => {
 
       <Navbar/>
 
-      <div className="flex justify-center items-center bg-mapi-neutral-2">
+      <div className="flex justify-center items-center bg-mapi-neutral-2 ">
       <div className="bg-mapi-neutral-2 w-full mx-auto my-8 sm:mx-4 flex flex-col items-center lg:w-3/4 xl:w-3/3 border border-gray-300 border-opacity-30 rounded-lg overflow-hidden shadow-2xl mb-40 mt-40">
         <br />
 
         <div className="access-key-container">
         {accessKey && (
-            <div className="bg-mapi-neutral-2  w-full mx-auto flex flex-col items-center text-neutral text-plus-jakarta-sans font-plus-jakarta-sans">
+            <div className="bg-mapi-neutral-2  w-full mx-auto flex flex-col items-center text-mapi-neutral-5 text-plus-jakarta-sans font-plus-jakarta-sans">
             <h3 className="access-key-success-title text-plus-jakarta-sans text-3xl font-bold">Access Key Generated Successfully</h3>
             <br/><br/>
             <div className="access-key-info-container">
@@ -51,8 +51,14 @@ const GeneratingAccessKeyPage: React.FC = () => {
                   <span className="flex-grow">{accessKey}</span>
                   <button onClick={() => navigator.clipboard.writeText(accessKey)} className=" py-2 px-4 ml-5 mr-1 text-plus-jakarta-sans text-xs rounded-md font-medium hover:bg-mapi-secondary-5 hover:text-white transition-colors duration-300">Copy</button>
                 </div>
+               
               </div>
             </div>
+            <div className="mt-4 flex justify-end">
+            <Link to="/SubscriptionsList">
+            <button  className="px-12 py-2 bg-primary-dark text-plus-jakarta-sans text-mapi-neutral-5 rounded-md mr-2 cursor-pointer mb-4">Return to my subscriptions</button>
+            </Link>
+          </div>
           </div>
         )}
       </div></div></div><br /><br />

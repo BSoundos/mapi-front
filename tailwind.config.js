@@ -33,7 +33,11 @@ export default {
         'mapi-neutral-6': '#D1DBF9',
         'mapi-neutral-7': '#D9E1FA',
         'mapi-neutral-8': '#FFFFFF',
-        
+        'customGreen': '#145228',
+        'customTextGreen': '#B3E699',
+        'customBackground': '#242424',
+        'customRed': '#521414',
+        'customTextRed': '#E69999',
         'corner-1': {
           300: '#7E89AC',
         },
