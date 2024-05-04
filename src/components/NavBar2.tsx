@@ -18,8 +18,8 @@ const NavBar2: React.FC = () => {
 
     return (
 
-        <div className='border-b border-white border-opacity-10  font-plus-jakarta-sans'>
-            <div className='bg-[#081028] border-b border-white border-opacity-5 pl-16 pr-8 py-4 flex items-center justify-between '>
+        <div className='border-b border-white border-opacity-10 font-plus-jakarta-sans'>
+            <div className='bg-[#081028] border-b border-white border-opacity-5 pl-16 pr-4 py-4 flex items-center justify-between '>
                 <div className='mb-4'>
                     <div className='flex '>
                         <p className='text-inter text-white text-xl font-bold mt-5'>Local Business Data</p>
@@ -34,32 +34,30 @@ const NavBar2: React.FC = () => {
                         <span className='text-white text-opacity-87 text-xs'>By</span>
                         <span className='ml-2 text-[#21C3FC] text-xs underline font-inter'>Zemmouri Fayssal</span>
                     </p>
-
                 </div>
-                <div className='flex items-center justify-end '>
-                    <div className='border-r-2 border-[#FFFFFF] border-opacity-5 px-12 '>
+                <div className='flex items-center justify-end'>
+                    <div className='border-r-2 border-[#FFFFFF] border-opacity-5 px-10 '>
                         <div className='flex mb-2'>
                             <img src={popularityIcon} />
                             <p className=' text-white text-opacity-60 pl-2 text-[14px]'> Popularity</p>
                         </div>
                         <div className='text-white text-center text-[24px]'>9.8 / 10</div>
                     </div>
-                    <div className=' border-r-2 border-[#FFFFFF] border-opacity-5 px-12'>
-                        <div className='flex mb-2 justify-center'>
+                    <div className=' border-r-2 border-[#FFFFFF] border-opacity-5 px-10'>
+                        <div className='flex mb-2 justify-center pb-2'>
                             <img src={voteIcon} />
                             <p className='  text-white text-opacity-60 pl-2 text-[14px]'> vote</p>
                         </div>
-                        <Rating name="read-only" icon={<StarIcon style={{ color: '#FFFFFF', fontSize: 28, marginTop: 3 }} />} value={4.5} readOnly />
-
+                        <Rating name="read-only" icon={<StarIcon style={{ color: '#FFFFFF', fontSize: 24 }} />} value={4.5} readOnly />
                     </div>
-                    <div className=' border-r-2 border-[#FFFFFF] border-opacity-5 px-12'>
+                    <div className=' border-r-2 border-[#FFFFFF] border-opacity-5 px-10'>
                         <div className='flex mb-2'>
                             <img src={latencyIcon} />
                             <p className=' text-white text-opacity-60 pl-2 text-[14px]'> Latency</p>
                         </div>
                         <div className='text-white text-center text-[24px]'>245ms</div>
                     </div>
-                    <div className=' border-r-2 border-[#FFFFFF] border-opacity-5 px-12'>
+                    <div className=' border-r-2 border-[#FFFFFF] border-opacity-5 px-10'>
                         <div className='flex mb-2'>
                             <img src={voteIcon} />
                             <p className='  text-white text-opacity-60 pl-2 text-[14px]'> Service Level</p>
@@ -76,8 +74,8 @@ const NavBar2: React.FC = () => {
 
                 </div>
             </div>
-            <div className='w-full border-b border-white border-opacity-5 h-full'>
-                <nav className=' flex items-center justify-between w-[40%] font-inter font-normal text-sm text-[#007BFF] pl-16 h-full '>
+            <div className='w-full border-b border-white border-opacity-5 bg-mapi-neutral-3 bg-opacity-[90%]'>
+                <nav className='flex items-center gap-4 w-[40%] font-inter font-normal text-sm text-[#007BFF] pl-16 h-full '>
                     <NavItem path='about' text='About' />
                     <NavItem path='endpoints' text='Endpoints' />
                     <NavItem path='documentation' text='Documentation' />

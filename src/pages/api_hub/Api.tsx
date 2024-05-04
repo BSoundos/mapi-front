@@ -54,7 +54,7 @@ const Api: React.FC = () => {
   return (
     <main>
       <Navbar></Navbar>
-      <div className='bg-[#0B1739] px-16 pt-4 pb-16 min-h-screen font-inter'>
+      <div className='bg-mapi-neutral-2 px-16 pt-4 pb-16 min-h-screen font-inter'>
         <div className='border border-opacity-30 border-[#7E89AC] rounded-[9px] shadow-md'>
           <NavBar2 />
           <section className=''>

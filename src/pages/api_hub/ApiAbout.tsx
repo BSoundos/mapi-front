@@ -19,7 +19,7 @@ const ApiAbout = () => {
         return reviews;
     };
     return (
-        <div>
+        <section>
             <div className='pl-16 pr-8 py-4'>
                 <pre className='text-white text-sm font-inter font-normal opacity-[87%] pb-4 whitespace-pre-line'>
                     Extremely Comprehensive Local Business / Place Data from Google Maps - Reviews, Photos, Emails, Social, and 30+ additional data points with the most comprehensive and
@@ -51,7 +51,7 @@ const ApiAbout = () => {
                     />
                 </div>
             </div>
-        </div>
+        </section>
     )
 }
 
