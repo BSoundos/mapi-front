@@ -13,11 +13,12 @@ import paymentReducer from '../components/features/payments/paymentMethodSlice';
 import confirmPaymentReducer from '../components/features/payments/paymentSlice';
 import generateAccessKeyReducer from '../components/features/payments/generateAccessKeySlice';
 import invoicesReducer from '../components/features/invoices/invoiceSlice';
-
-
+import invoicesDReducer from '../components/features/invoices/invoiceDetailSlice';
 import apipopularReducer from '../components/features/apis/ApiSlice';
 import AboutReducer from '../components/features/apis/AboutSlice';
 import { useDispatch } from 'react-redux';
+import subscriptionReducer from '../components/features/subscriptions/SubscriptionsListSlice';
+
 
 const store = configureStore({
   reducer: {
@@ -30,9 +31,13 @@ const store = configureStore({
     payment: paymentReducer,
     confirmpPayment: confirmPaymentReducer,
     accesskey: generateAccessKeyReducer,
-    invoice: invoicesReducer,
+    invoiceHistory: invoicesReducer,
+    invoiceDetail: invoicesDReducer,
     apipopular: apipopularReducer,
     AboutSlice: AboutReducer,
+    subscriptions: subscriptionReducer, 
+    
+
     // other reducers...
   },
 });

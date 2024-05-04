@@ -12,6 +12,7 @@ import PlanDetailsPerusePage from '../pages/payment/SubscriptionPlan-peruse-Paym
 // import Invoices from './components/InvoicesHistory';
 import InvoiceHistoryPage from '../pages/invoices/InvoicesHistory';
 import InvoiceDetails from '../pages/invoices/InvoiceDetails';
+import SubscriptionListPage from '../pages/Subscriptions/SubscriptionList';
 
 import MainPage from '../pages/api_hub/mainpage';
 import AboutPage from '../pages/api_hub/AboutPage';
@@ -47,20 +48,22 @@ const App = () => {
         <Route path="/plan" element={<SubscriptionPlansPage />} />
         <Route path="/apis" element={<MainPage />} />
 
+        
         <Route path="payment-per-month/subscriptionPlans/:apiVersion" element={<SubscriptionPlansPage />} />
         <Route path="payment-per-use/subscriptionPlans/:apiVersion" element={<SubscriptionPlansPerUsePage />} />
         <Route path="payment-per-month/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPage />} />
         <Route path="payment-per-use/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPerusePage />} />
-        <Route path="/accesskey/:apiVersion/:planId" element={<GeneratingAccessKeyPage />} />
+        <Route path="/accesskey/:apiVersion/:planId/:typeplan" element={<GeneratingAccessKeyPage />} />
 
 
-        <Route path="/login" element={<Login />} />
+        <Route path="/login"  element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/verify/:username" element={<Verify />} />
-
-        <Route path="/Transaction_history" element={<InvoiceHistoryPage />} />
+        <Route path="/Transaction_history/:user_id" element={<InvoiceHistoryPage />} />
         <Route path="/Transaction_details" element={<InvoiceDetails />} />
 
+
+        <Route path="/SubscriptionsList" element={<SubscriptionListPage />} />
 
 
 

@@ -4,24 +4,29 @@ import store, { RootState } from '../../app/store';
 import { generateAccessKey } from '../../components/features/payments/generateAccessKeySlice';
 export type AppDispatch = typeof store.dispatch
 import { useParams } from 'react-router-dom'; // Importer useParams
+import Navbar from '@/components/NavBar';
+import Footer from '@/components/Footer';
 
 
 
 
 const GeneratingAccessKeyPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const { apiVersion, planId } = useParams(); // Extraire les paramètres dynamiques de l'URL
+    const {typeplan , apiVersion, planId } = useParams(); // Extraire les paramètres dynamiques de l'URL
     const { accessKey, loading, error } = useSelector((state: RootState) => state.accesskey);
 
     useEffect(() => {
-        dispatch(generateAccessKey({ versionApiId: apiVersion || '', planId: planId || '' }));
+        dispatch(generateAccessKey({ versionApiId: apiVersion || '', planId: planId || '' , typeplan : typeplan}));
       }, [dispatch, apiVersion, planId]);  
 
   
     return (
+      <div className=" bg-mapi-neutral-2">
 
-      <div className="h-screen flex justify-center items-center bg-mapi-neutral-2 mx-auto  ">
-        <div className=" bg-mapi-neutral-2 w-full mx-auto my-8 sm:mx-4 flex flex-col items-center lg:w-3/4 xl:w-3/3 border border-gray-300 border-opacity-30 rounded-lg overflow-hidden shadow-2xl ">
+      <Navbar/>
+
+      <div className="flex justify-center items-center bg-mapi-neutral-2">
+      <div className="bg-mapi-neutral-2 w-full mx-auto my-8 sm:mx-4 flex flex-col items-center lg:w-3/4 xl:w-3/3 border border-gray-300 border-opacity-30 rounded-lg overflow-hidden shadow-2xl mb-40 mt-40">
         <br />
 
         <div className="access-key-container">
@@ -50,7 +55,11 @@ const GeneratingAccessKeyPage: React.FC = () => {
             </div>
           </div>
         )}
-      </div></div></div>
+      </div></div></div><br /><br />
+
+
+      <Footer/>
+      </div>
 
       
       ); 

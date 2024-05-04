@@ -18,6 +18,7 @@ export const generateAccessKey = createAsyncThunk<string , {typeplan :string ,ve
     'accessKey/generateAccessKey',
     async ({typeplan ,versionApiId , planId}) => {
       try {
+        console.log("typeplan", typeplan);
         const response = await axios.post(`${BACKEND_BASE_URL}/payment/generate-accesskey/${typeplan}/${versionApiId}/${planId}/`);
         console.log("response.data", response.data.access_key);
         return response.data.access_key;

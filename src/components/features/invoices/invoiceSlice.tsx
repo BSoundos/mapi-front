@@ -1,38 +1,41 @@
+import { BACKEND_BASE_URL } from '@/data/constants';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 interface Invoice {
   id: number;
   apiName: string;
-  status: 'paid' | 'unpaid';
   totalAmount: number;
-  planName: string;
+  planName: String;
   createdAt: string;
 }
 
 interface InvoiceState {
-  invoices: Invoice[];
-  loading: boolean;
-  error: string | null;
-}
-
-// Define initial state object with default values
-const initialState: InvoiceState = {
-  invoices: [],
-  loading: false,
-  error: null,
-};
-
-export const fetchInvoices = createAsyncThunk<Invoice[]>(
-  'InvoiceHistory',
-  async () => {
-    const response = await axios.get('http://127.0.0.1:8000/invoices/');
-    console.log(response.data.invoices);
-    return response.data.invoices;
+    invoices: Invoice[];
+    loading: boolean;
+    error: string | null;
+    status: 'idle' | 'loading' | 'succeeded' | 'failed';
   }
-);
+  
+  // Define initial state object with default values
+  const initialState: InvoiceState = {
+    invoices: [],
+    loading: false,
+    error: null,
+    status: 'loading' 
+  };
 
-
+export const fetchInvoices = createAsyncThunk<Invoice[], number>(
+    'InvoiceHistory',
+    async (user_id: number) => {
+      console.log(user_id);
+      const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-history/${user_id}`);
+      console.log(response.data);
+      return response.data; 
+    }
+  );
+  
+ 
 
 
 const invoiceSlice = createSlice({
@@ -51,6 +54,20 @@ const invoiceSlice = createSlice({
     addInvoices(state, action: PayloadAction<Invoice[]>) {
       state.invoices = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchInvoices.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchInvoices.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.invoices = action.payload;
+      })
+      .addCase(fetchInvoices.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message || 'An error occurred';
+      });
   },
 });
 

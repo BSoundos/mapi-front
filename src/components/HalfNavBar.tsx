@@ -7,7 +7,7 @@ const HalfNavBar = () => {
             <li><a href="#" className="text-mapi-neutral-5 text-sm hover:text-mapi-secondary-3">Security Settings</a></li>
             <li><a href="#" className="text-mapi-neutral-5 text-sm hover:text-mapi-secondary-3">Support Tickets</a></li>
             <li><a href="/Transaction_history" className="text-mapi-neutral-5 text-sm hover:text-mapi-secondary-3">Transaction History</a></li>
-            <li><a href="#" className="text-mapi-neutral-5 text-sm hover:text-mapi-secondary-3">Subscription & Usage</a></li>
+            <li><a href="/SubscriptionsList" className="text-mapi-neutral-5 text-sm hover:text-mapi-secondary-3">Subscription & Usage</a></li>
         </ul>
 
         </nav>
