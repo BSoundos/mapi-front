@@ -3,33 +3,35 @@ import '@/styles/index.css';
 import '@/styles/Paiement.css';
 
 // App.tsx
-import SubscriptionPlansPage from '../pages/payment/SubscriptionPlans';
-import SubscriptionPlansPerUsePage from '../pages/payment/SubscriptionPlansPerUse';
+import SubscriptionPlansPage from '@/pages/payment/SubscriptionPlans';
+import SubscriptionPlansPerUsePage from '@/pages/payment/SubscriptionPlansPerUse';
 
-import PlanDetailsPage from '../pages/payment/subscriptionPlanPayment';
-import GeneratingAccessKeyPage from '../pages/payment/GeneratingAcceeskey';
-import PlanDetailsPerusePage from '../pages/payment/SubscriptionPlan-peruse-Payment';
-// import Invoices from './components/InvoicesHistory';
-import InvoiceHistoryPage from '../pages/invoices/InvoicesHistory';
-import InvoiceDetails from '../pages/invoices/InvoiceDetails';
+import PlanDetailsPage from '@/pages/payment/subscriptionPlanPayment';
+import GeneratingAccessKeyPage from '@/pages/payment/GeneratingAcceeskey';
+import PlanDetailsPerusePage from '@/pages/payment/SubscriptionPlan-peruse-Payment';
 
-import MainPage from '../pages/api_hub/mainpage';
-import AboutPage from '../pages/api_hub/AboutPage';
-// import AjouterReview from './components/AjouterReview';
+import InvoiceHistoryPage from '@/pages/invoices/InvoicesHistory';
+import InvoiceDetails from '@/pages/invoices/InvoiceDetails';
+
+import MainPage from '@/pages/api_hub/mainpage';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Login from '../pages/authentication/Login';
+import Login from '@/pages/authentication/Login';
 import { useEffect } from 'react';
 import axios from 'axios';
-import Register from '../pages/authentication/Register';
-import Verify from '../pages/authentication/Verify';
-import Home from '../pages/home/Home';
+import Register from '@/pages/authentication/Register';
+import Verify from '@/pages/authentication/Verify';
+import Home from '@/pages/home/Home';
+import Api from '@/pages/api_hub/Api';
+import ApiAbout from '@/pages/api_hub/ApiAbout';
+import Endpoints from '@/pages/api_hub/Endpoints';
+import Documentation from '@/pages/api_hub/Documentation';
+import Pricing from '@/pages/api_hub/Pricing';
+import Support from '@/pages/api_hub/Support';
+import Discussions from '@/pages/discussions/Discussions';
+import DiscussionDetailsPage from '@/pages/discussions/DiscusionDetails';
+import SubscriptionListPage from '@/pages/Subscriptions/SubscriptionList';
 
-import UserProfilSetting from '../pages/UserSettings/UserProfilSetting'
-import UserSecuritySettings from '../pages/UserSettings/UserSecuriteSettings'
-import ProviderProfilSetting from '../pages/UserSettings/ProviderProfilSetting'
-import ProviderSecuritySettings from '../pages/UserSettings/ProviderSecuriteSettings'
-import Revenue  from '@/pages/Provider/Revenue';
 
 const App = () => {
 
@@ -37,7 +39,6 @@ const App = () => {
     const token = localStorage.getItem('token');
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Token ${token}`;
-      // console.log(token)
     }
   }, []);
 
@@ -45,37 +46,36 @@ const App = () => {
   return (
     <Router>
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path="payment-per-month/subscriptionPlans/:apiVersion" element={<MainPage />} />
-        <Route path='/about/:id' element={<AboutPage />} />
-        <Route path="/plan" element={<SubscriptionPlansPage />} />
-        <Route path="/apis" element={<MainPage />} />
-        <Route path="payment-per-use/subscriptionPlans/:apiVersion" element={<SubscriptionPlansPerUsePage />} />
-        <Route path="payment-per-month/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPage />} />
+        <Route index element={<Home />} />
+        <Route path='home' element={<Home />} />
+        {/* Api Hub */}
+        <Route path='api' element={<Api />} >
+          <Route index element={<ApiAbout />} />
+          <Route path='about' element={<ApiAbout />} />
+          <Route path='endpoints' element={<Endpoints />} />
+          <Route path='documentation' element={<Documentation />} />
+          <Route path='pricing' element={<Pricing />} />
+          <Route path='support' element={<Support />} />
+        </Route>
+        <Route path="apis" element={<MainPage />} />
+        {/* Pricing & Payment */}
+        <Route path="plan" element={<SubscriptionPlansPage />} />
         <Route path="payment-per-use/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPerusePage />} />
-        <Route path="/accesskey/:apiVersion/:planId" element={<GeneratingAccessKeyPage />} />
+        <Route path="payment-per-use/subscriptionPlans/:apiVersion" element={<SubscriptionPlansPerUsePage />} />
+        <Route path="payment-per-month/subscriptionPlans/:apiVersion" element={<MainPage />} />
+        <Route path="payment-per-month/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPage />} />
+        <Route path="accesskey/:apiVersion/:planId" element={<GeneratingAccessKeyPage />} />
+        <Route path="/SubscriptionsList" element={<SubscriptionListPage />} />
 
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/verify/:username" element={<Verify />} />
-
-        <Route path="/Transaction_history" element={<InvoiceHistoryPage />} />
-        <Route path="/Transaction_details" element={<InvoiceDetails />} />
-
-        <Route path="/UserProfilSetting" element={<UserProfilSetting />} />
-        <Route path="/UserSecuritySettings" element={<UserSecuritySettings />} />
-        <Route path="/ProviderProfilSetting" element={<ProviderProfilSetting />} />
-        <Route path="/ProviderSecuritySettings" element={<ProviderSecuritySettings />} />
-
-     
-        <Route path="/Revenue" element={<Revenue />} />
-
-      
-
-                {/* <Route path="/ajouterreview" element={<AjouterReview />} /> */}
-
-
+        {/* Authentication */}
+        <Route path="login" element={<Login />} />
+        <Route path="register" element={<Register />} />
+        <Route path="verify/:username" element={<Verify />} />
+        {/* Invoices */}
+        <Route path="Transaction_history" element={<InvoiceHistoryPage />} />
+        <Route path="Transaction_details" element={<InvoiceDetails />} />
+        <Route path="/Discussions/:apiId" element={<Discussions />} />
+        <Route path="/DiscussionDetails/:discussionId" element={<DiscussionDetailsPage />} />
       </Routes>
     </Router>
   );
