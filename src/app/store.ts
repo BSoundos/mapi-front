@@ -19,6 +19,15 @@ import apipopularReducer from '../components/features/apis/ApiSlice';
 import AboutReducer from '../components/features/apis/AboutSlice';
 import { useDispatch } from 'react-redux';
 
+import discussionsReducer from '@/components/features/discussions/discussionsSlice';
+import discussionReducer from '@/components/features/discussions/discussionSlice';
+import addDiscussionReducer from '@/components/features/discussions/addDiscussionSlice';
+
+import repliesReducer from '@/components/features/discussions/replySlice';
+import addReplyReducer from '@/components/features/discussions/addReplySlice';
+
+
+
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -33,6 +42,11 @@ const store = configureStore({
     invoice: invoicesReducer,
     apipopular: apipopularReducer,
     AboutSlice: AboutReducer,
+    discussions: discussionsReducer,
+    discussion: discussionReducer,
+    addDiscussion: addDiscussionReducer,
+    replies: repliesReducer,
+    addReply: addReplyReducer,
     // other reducers...
   },
 });
@@ -40,3 +54,5 @@ const store = configureStore({
 export const useAppDispatch = () => useDispatch<typeof store.dispatch>();
 export type RootState = ReturnType<typeof store.getState>;
 export default store;
+
+
