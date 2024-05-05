@@ -6,7 +6,7 @@ import Navbar from '@/components/NavBar';
 import NavBar2 from '@/components/NavBar2';
 import Footer from '@/components/Footer';
 import { Link, useParams } from 'react-router-dom';
-import { fetchReplies } from '@/components/features/discussions/ReplySlice';
+import { fetchReplies } from '@/components/features/discussions/replySlice';
 import { fetchDiscussion } from '@/components/features/discussions/discussionSlice';
 import { postReply } from '@/components/features/discussions/addReplySlice';
 
