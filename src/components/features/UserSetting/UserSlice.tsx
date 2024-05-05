@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { log } from 'console';
+import {User} from '@/types/user';
 
 const backendBaseUrl = import.meta.env.VITE_BACKEND_URL;
 
@@ -49,6 +50,8 @@ interface SettingsSecurity {
   userSecurityData: BasicInformationSecurity;
 }
 
+
+
 export const UpdateUserSecurity = createAsyncThunk<BasicInformationSecurity, SettingsSecurity>(
   'UpdateUserSecurity/update',
   async ({  userSecurityData }, { rejectWithValue }) => {
@@ -89,7 +92,7 @@ export const updateUserSettings = createAsyncThunk<BasicInformation, Settings>(
   }
 );
 
-export const GetInformationUser = async (username: string): Promise<any> => {
+export const GetInformationUser = async (username: string): Promise<User> => {
   try {
     const response = await axios.get(`${backendBaseUrl}/profile_management/userInfo/${username}/`);
     return response.data;
@@ -97,7 +100,7 @@ export const GetInformationUser = async (username: string): Promise<any> => {
     throw error;
   }
 };
-export const GetInformationProvider = async (username: string): Promise<any> => {
+export const GetInformationProvider = async (username: string): Promise<User> => {
   try {
     const response = await axios.get(`${backendBaseUrl}/profile_management/providerInfo/${username}/`);
     return response.data;
