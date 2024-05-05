@@ -24,6 +24,7 @@ import axios from 'axios';
 import Register from '../pages/authentication/Register';
 import Verify from '../pages/authentication/Verify';
 import Home from '../pages/home/Home';
+import UsersTable from "@/pages/admin/UsersTable.tsx";
 
 
 
@@ -40,6 +41,7 @@ const App = () => {
 
 
   return (
+
     <Router>
       <Routes>
         <Route path='/' element={<Home />} />
@@ -62,6 +64,11 @@ const App = () => {
 
 
         {/* <Route path="/ajouterreview" element={<AjouterReview />} /> */}
+
+
+
+        <Route path="/admin/users" element={<UsersTable />} />
+
 
 
       </Routes>
