@@ -1,8 +1,9 @@
 
-import { User } from '@/types/User';
+import { User } from '@/types/user';
 import { Discussion } from '@/types/DiscussionType';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { BACKEND_BASE_URL } from '@/data/constants';
 
 
 
@@ -44,7 +45,7 @@ export const fetchDiscussions = createAsyncThunk<Discussion[], number>(
   'Discussions',
   async (apiId: number) => {
     const token = getToken();
-    const response = await axios.get(`http://127.0.0.1:8000/support_hub/api/${apiId}/discussion/`,{
+    const response = await axios.get(`${BACKEND_BASE_URL}/support_hub/api/${apiId}/discussion/`,{
       headers: {
         Authorization: `Token ${token}`
       }
@@ -83,7 +84,6 @@ const DiscussionsSlice = createSlice({
           email: discussion.user.email,
           contact_info: discussion.user.contact_info,
           status: discussion.user.status,
-          verification_code: discussion.user.verification_code,
           is_verified: discussion.user.is_verified,
           role: discussion.user.role,
           username: discussion.user.username,

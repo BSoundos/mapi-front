@@ -7,13 +7,17 @@ import latencyIcon from '@/assets/icons/latency.svg';
 import plusIcon from '@/assets/icons/plus.svg';
 import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
+import { Api } from '@/components/features/discussions/discussionsSlice';
 import NavItem from './NavItem';
 
 
 
 
+interface NavBar2Props {
+    api?: Api;
+}
 
-const NavBar2: React.FC = () => {
+const NavBar2: React.FC<NavBar2Props> = ({ api}) => {
     // const category_name = data["category"]["name"]
 
     return (
@@ -26,13 +30,13 @@ const NavBar2: React.FC = () => {
                         <div className="flex items-center justify-between pl-2 ">
                             <div className="flex mt-4 py-0.5 px-1 bg-[#57C3FF] bg-opacity-30  border border-[#57C3FF] border-opacity-30 rounded-sm">
                                 <img src={devIcon} />
-                                <p className="text-white text-xs font-semibold pl-2">Entertainment</p>
+                                {api && (<p className="text-white text-xs font-semibold pl-2">{api?.category.name}</p>)}
                             </div>
                         </div>
                     </div>
                     <p>
                         <span className='text-white text-opacity-87 text-xs'>By</span>
-                        <span className='ml-2 text-[#21C3FC] text-xs underline font-inter'>Zemmouri Fayssal</span>
+                        <span className='ml-2 text-[#21C3FC] text-xs underline font-inter'>{api?.provider.last_name} {api?.provider.first_name}</span>
                     </p>
                 </div>
                 <div className='flex items-center justify-end'>
@@ -41,35 +45,35 @@ const NavBar2: React.FC = () => {
                             <img src={popularityIcon} />
                             <p className=' text-white text-opacity-60 pl-2 text-[14px]'> Popularity</p>
                         </div>
-                        <div className='text-white text-center text-[24px]'>9.8 / 10</div>
+                        {api && (<div className='text-white text-center text-[24px]'>{api?.popularity}</div>)}
                     </div>
                     <div className=' border-r-2 border-[#FFFFFF] border-opacity-5 px-10'>
                         <div className='flex mb-2 justify-center pb-2'>
                             <img src={voteIcon} />
                             <p className='  text-white text-opacity-60 pl-2 text-[14px]'> vote</p>
                         </div>
-                        <Rating name="read-only" icon={<StarIcon style={{ color: '#FFFFFF', fontSize: 24 }} />} value={4.5} readOnly />
+                        {api && (<Rating name="read-only" icon={<StarIcon style={{ color: '#FFFFFF', fontSize: 24 }} />} value={api?.votes} readOnly />)}
                     </div>
                     <div className=' border-r-2 border-[#FFFFFF] border-opacity-5 px-10'>
                         <div className='flex mb-2'>
                             <img src={latencyIcon} />
                             <p className=' text-white text-opacity-60 pl-2 text-[14px]'> Latency</p>
                         </div>
-                        <div className='text-white text-center text-[24px]'>245ms</div>
+                        {api && (<div className='text-white text-center text-[24px]'>{api?.latency}</div>)}
                     </div>
                     <div className=' border-r-2 border-[#FFFFFF] border-opacity-5 px-10'>
                         <div className='flex mb-2'>
                             <img src={voteIcon} />
                             <p className='  text-white text-opacity-60 pl-2 text-[14px]'> Service Level</p>
                         </div>
-                        <div className='text-white text-center text-[24px]'>98%</div>
+                        {api && (<div className='text-white text-center text-[24px]'>{api?.service_level}%</div>)}
                     </div>
                     <div className=' px-12'>
                         <div className='flex mb-2'>
                             <img src={plusIcon} />
                             <p className=' text-white text-opacity-60 pl-2 text-[14px]'> Heath Check</p>
                         </div>
-                        <div className='text-[#1F9E00] text-center text-[24px]'>N/A</div>
+                        {api && (<div className='text-[#1F9E00] text-center text-[24px]'>{api?.health_check}</div>)}
                     </div>
 
                 </div>
@@ -81,7 +85,7 @@ const NavBar2: React.FC = () => {
                     <NavItem path='documentation' text='Documentation' />
                     <NavItem path='pricing' text='Pricing' />
                     <NavItem path='support' text='Support' />
-                    <NavItem path='discussions' text='Discussions' />
+                    <NavItem path={`/Discussions/${api?.api_id}`} text='Discussions' />
                 </nav>
             </div>
         </div >
