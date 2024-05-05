@@ -7,8 +7,8 @@ import StarIcon from '@mui/icons-material/Star';
 const Review: React.FC = () => {
 
   return (
-    <div className='flex items-center justify-between border-b border-opacity-30 border-[#7E89AC] py-2'>
-      <div className='flex items-center justify-between w-[15%]'>
+    <div className='flex items-center justify-between border-b border-opacity-[6%] border-[#7E89AC] py-2'>
+      <div className='flex items-center gap-6 w-[15%]'>
         <img src={img1} />
         <div>
           <p className='text-sm text-white opacity-60'>belhadef  anis</p>

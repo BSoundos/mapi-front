@@ -1,6 +1,8 @@
 import { BACKEND_BASE_URL } from '@/data/constants';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { BACKEND_BASE_URL } from '@/data/constants';
+
 
 interface Invoice {
   id: number;
@@ -11,10 +13,31 @@ interface Invoice {
 }
 
 interface InvoiceState {
+<<<<<<< HEAD
     invoices: Invoice[];
     loading: boolean;
     error: string | null;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
+=======
+  invoices: Invoice[];
+  loading: boolean;
+  error: string | null;
+}
+
+// Define initial state object with default values
+const initialState: InvoiceState = {
+  invoices: [],
+  loading: false,
+  error: null,
+};
+
+export const fetchInvoices = createAsyncThunk<Invoice[]>(
+  'InvoiceHistory',
+  async () => {
+    const response = await axios.get(`${BACKEND_BASE_URL}/invoices/`);
+    console.log(response.data.invoices);
+    return response.data.invoices;
+>>>>>>> 4590a452e85fc1e3f03d0e389c0df7b6eb844c7e
   }
   
   // Define initial state object with default values

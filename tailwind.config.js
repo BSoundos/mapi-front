@@ -20,12 +20,11 @@ export default {
         'custom-color': '#243959',
         'misc-linear': '#7E89AC4D',
         'mapi-primary': '#CB3CFF',
-        'mapi-secondary-1': '#0B1739',
         'mapi-secondary-2': '#8951FF',
         'mapi-secondary-3': '#21C3FC',
         'mapi-secondary-4': '#0E43FB',
         'mapi-secondary-5': '#FDB52A',
-        'mapi-neutral-1': '#FDB52A',
+        'mapi-neutral-1': '#081028',
         'mapi-neutral-2': '#0A1330',
         'mapi-neutral-3': '#0B1739',
         'mapi-neutral-4': '#7E89AC',
@@ -46,6 +45,8 @@ export default {
       },
       fontFamily: {
         'plus-jakarta-sans': ['Plus Jakarta Sans', 'sans-serif'],
+        'inter': ['Inter', 'sans-serif'],
+        'lato': ['Lato', 'sans-serif'],
       },
       screens: {
         'desktop': '1281px',

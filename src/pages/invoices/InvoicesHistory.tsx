@@ -1,11 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchInvoices } from '../../components/features/invoices/invoiceSlice';
-import store, { RootState } from '../../app/store';
-import Navbar from '../../components/NavBar';
-import HalfNavBar from '../../components/HalfNavBar';
-import Footer from '../../components/Footer';
-import { Link, useParams } from 'react-router-dom';
+import { fetchInvoices } from '@/components/features/invoices/invoiceSlice';
+import store, { RootState } from '@/app/store';
+import Navbar from '@/components/NavBar';
+import HalfNavBar from '@/components/HalfNavBar';
+import Footer from '@/components/Footer';
+import { Link } from 'react-router-dom';
 
 
 export type AppDispatch = typeof store.dispatch
@@ -28,7 +28,7 @@ const InvoiceHistoryPage = () => {
   }, [invoices]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div>Loading@.</div>;
   }
 
   if (error) {

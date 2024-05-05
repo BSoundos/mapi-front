@@ -15,7 +15,7 @@ export const fetchPopularAPIs = createAsyncThunk<
   const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/popular/`)
   const data = response.data;
   const mappedData = data.map((api: any) => ({
-    id: api.api_id,
+    api_id: api.api_id,
     name: api.name,
     description: api.description,
     votes: api.votes,
@@ -36,7 +36,7 @@ export const searchAPIs = createAsyncThunk<
   const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/rechercheapi/?query=${searchQuery}`);
   const data = response.data;
   const mappedData = data.map((api: any) => ({
-    id: api.api_id,
+    api_id: api.api_id,
     name: api.name,
     description: api.description,
     votes: api.votes,
@@ -58,7 +58,7 @@ export const FilterCategorie = createAsyncThunk<
   const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/category/?query=${categorie}`);
   const data = response.data;
   const mappedData = data.map((api: any) => ({
-    id: api.api_id,
+    api_id: api.api_id,
     name: api.name,
     description: api.description,
     votes: api.votes,
@@ -105,7 +105,7 @@ export const FilterFonctionnalite = createAsyncThunk<
   const data = response.data;
   console.log(data)
   const mappedData = data.map((api: any) => ({
-    id: api.api_id,
+    api_id: api.api_id,
     name: api.name,
     description: api.description,
     votes: api.votes,

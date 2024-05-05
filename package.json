@@ -19,7 +19,9 @@
     "@fortawesome/free-solid-svg-icons": "^6.5.2",
     "@fortawesome/react-fontawesome": "^0.2.0",
     "@mui/icons-material": "^5.15.15",
-    "@mui/material": "^5.15.16",
+    "@mui/material": "^5.15.15",
+    "@radix-ui/react-accordion": "^1.1.2",
+    "@radix-ui/react-select": "^2.0.0",
     "@radix-ui/react-slot": "^1.0.2",
     "@reduxjs/toolkit": "^2.2.2",
     "@types/tailwindcss": "^3.1.0",
@@ -50,6 +52,6 @@
     "eslint-plugin-react-refresh": "^0.4.5",
     "postcss": "^8.4.38",
     "typescript": "^5.2.2",
-    "vite": "^5.1.6"
+    "vite": "^5.2.10"
   }
 }
