@@ -23,6 +23,8 @@ const Popup = ({ keyInfo, onClose }) => {
     const handleDeleteKey = async () => {
       dispatch(deleteAccessKey(accessKeyId));
       await dispatch(fetchSubscriptions());
+      window.location.reload(); 
+
     };
   
     return (
@@ -81,10 +83,10 @@ const Popup = ({ keyInfo, onClose }) => {
               )}
             </span>
           </p>
-          {/* Ajoutez d'autres informations sur la clé ici selon vos besoins */}
+          {}
           <div className="mt-4 flex justify-end">
             <button onClick={onClose} className="px-12 py-2 bg-primary-dark text-plus-jakarta-sans text-mapi-neutral-5 rounded-md mr-2 cursor-pointer">Close</button>
-            {/* Ajoutez des boutons supplémentaires pour d'autres actions si nécessaire */}
+            {}
           </div>
         </div>
       </div>

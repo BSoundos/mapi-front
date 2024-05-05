@@ -138,9 +138,7 @@ const SubscriptionListPage = () => {
                           <Link to={`/about/${subscription.api_version}`}>
                             <button className='text-mapi-neutral-5 text-base underline'>Go to API</button>
                           </Link>
-                          <Link to={`/Transaction_details/${subscription.access_key.access_key_id}`}>
-                            <button className='text-mapi-neutral-5 text-base underline'>Unsubscribe</button>
-                          </Link>
+                          
                           <button onClick={() => handleManageKey(subscription.access_key)} className="text-mapi-neutral-5 text-base underline">Manage key</button>
                         </div>
                       </td>
