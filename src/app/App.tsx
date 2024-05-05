@@ -17,7 +17,6 @@ import MainPage from '@/pages/api_hub/mainpage';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from '@/pages/authentication/Login';
-import Login from '@/pages/authentication/Login';
 import { useEffect } from 'react';
 import axios from 'axios';
 import Register from '@/pages/authentication/Register';
@@ -31,6 +30,7 @@ import Pricing from '@/pages/api_hub/Pricing';
 import Support from '@/pages/api_hub/Support';
 import Discussions from '@/pages/discussions/Discussions';
 import DiscussionDetailsPage from '@/pages/discussions/DiscusionDetails';
+import SubscriptionListPage from '@/pages/Subscriptions/SubscriptionList';
 
 
 const App = () => {
@@ -65,6 +65,8 @@ const App = () => {
         <Route path="payment-per-month/subscriptionPlans/:apiVersion" element={<MainPage />} />
         <Route path="payment-per-month/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPage />} />
         <Route path="accesskey/:apiVersion/:planId" element={<GeneratingAccessKeyPage />} />
+        <Route path="/SubscriptionsList" element={<SubscriptionListPage />} />
+
         {/* Authentication */}
         <Route path="login" element={<Login />} />
         <Route path="register" element={<Register />} />

@@ -13,20 +13,31 @@ const initialState: GenerateAccessKeyState = {
   loading: false,
   error: null,
 };
-//générer une clé d'accées 
-export const generateAccessKey = createAsyncThunk<string, { versionApiId: string, planId: string }>(
-  'accessKey/generateAccessKey',
-  async ({ versionApiId, planId }) => {
-    try {
-      const response = await axios.post(`${BACKEND_BASE_URL}/payment/generate-accesskey/${versionApiId}/${planId}/`);
-      console.log("response.data", response.data.access_key);
-      return response.data.access_key;
-    } catch (error) {
-      throw new Error('Failed to generate access key');
-    }
-  }
-);
+const getToken = () => {
 
+  return localStorage.getItem('token'); // Retrieve token from localStorage
+};
+//générer une clé d'accées 
+export const generateAccessKey = createAsyncThunk<string , {typeplan :string ,versionApiId: string, planId : string}>(
+    'accessKey/generateAccessKey',
+    async ({typeplan ,versionApiId , planId}) => {
+      try {
+        console.log("typeplan", typeplan);
+
+        const token = getToken();
+        const response = await axios.post(`${BACKEND_BASE_URL}/payment/generate-accesskey/${typeplan}/${versionApiId}/${planId}/`,{
+          headers: {
+            Authorization: `Token ${token}`
+          }
+        });
+        console.log("response.data", response.data.access_key);
+        return response.data.access_key;
+      } catch (error) {
+        throw new Error('Failed to generate access key');
+      }
+    }
+  );
+  
 
 const generateAccessKeySlice = createSlice({
   name: 'InfosaccessKey',
