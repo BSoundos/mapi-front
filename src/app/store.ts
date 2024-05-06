@@ -16,6 +16,8 @@ import invoicesReducer from '../components/features/invoices/invoiceSlice';
 import invoicesDReducer from '../components/features/invoices/invoiceDetailSlice';
 import apipopularReducer from '../components/features/apis/ApiSlice';
 import AboutReducer from '../components/features/apis/AboutSlice';
+import userSettingsReducer from '../components/features/UserSetting/UserSlice'
+
 import { useDispatch } from 'react-redux';
 import subscriptionReducer from '../components/features/subscriptions/SubscriptionsListSlice';
 
@@ -24,7 +26,7 @@ import discussionsReducer from '@/components/features/discussions/discussionsSli
 import discussionReducer from '@/components/features/discussions/discussionSlice';
 import addDiscussionReducer from '@/components/features/discussions/addDiscussionSlice';
 
-import repliesReducer from '@/components/features/discussions/replySlice';
+import repliesReducer from '@/components/features/discussions/ReplySlice';
 import addReplyReducer from '@/components/features/discussions/addReplySlice';
 
 
