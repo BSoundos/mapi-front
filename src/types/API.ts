@@ -8,7 +8,7 @@ export interface API {
 
 
 export interface Api {
-    id: number;
+    api_id: number;
     name: string;
     description: string;
     votes: number;
