@@ -156,7 +156,7 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
                       <h2 className="font-semibold text-base text-white mb-2">{title}</h2>
                     </Link>    
                 ) : (
-                  <Link to={`/Discussions/${id}`}>
+                  <Link to={`/TicketsDiscussions/${id}`}>
                     <h2 className="font-semibold text-base text-white mb-2">{title}</h2>
                   </Link>
                 )}

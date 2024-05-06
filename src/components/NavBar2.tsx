@@ -84,7 +84,7 @@ const NavBar2: React.FC<NavBar2Props> = ({ api}) => {
                     <NavItem path='endpoints' text='Endpoints' />
                     <NavItem path='documentation' text='Documentation' />
                     <NavItem path='pricing' text='Pricing' />
-                    <NavItem path='support' text='Support' />
+                    <NavItem path={`/userAddTicket/${api?.api_id}`} text='Support' />
                     <NavItem path={`/Discussions/${api?.api_id}`} text='Discussions' />
                 </nav>
             </div>

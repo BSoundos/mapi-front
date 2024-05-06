@@ -5,7 +5,7 @@ import { useAppDispatch,RootState } from '@/app/store';
 import TicketDescription from '@/components/Support_hub/TicketDescription';
 import Navbar from '@/components/NavBar';
 import Footer from '@/components/Footer';
-
+import NavBar2 from '@/components/NavBar2';
 
 const UserTicketsPage  = () => {
     

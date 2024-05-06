@@ -4,6 +4,7 @@ import { addTicket } from '@/components/features/tickets/TicketSlice';
 import { useNavigate,useParams } from 'react-router-dom';
 import Navbar from '@/components/NavBar';
 import Footer from '@/components/Footer';
+import NavBar2 from '@/components/NavBar2';
 
 const UserAddTicket = () => {
     const [title, setTitle] = useState('');
@@ -57,7 +58,7 @@ const UserAddTicket = () => {
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
                         required
-                        className="text-white bg-mapi-neutral-3 px-3 py-2 border border-opacity-50 border-[#343B4F] rounded w-5/6" 
+                        className="text-white bg-mapi-neutral-3 px-3 py-2 border border-opacity-50 border-[#BFBFBF] rounded w-5/6" 
                       />
                     </div>
 
@@ -68,7 +69,7 @@ const UserAddTicket = () => {
                         value={content}
                         onChange={(e) => setContent(e.target.value)}
                         required
-                        className="text-white bg-mapi-neutral-3 px-3 py-2 border border-opacity-50 border-[#343B4F] rounded w-5/6"
+                        className="text-white bg-mapi-neutral-3 px-3 py-2 border border-opacity-50 border-[#BFBFBF] rounded w-5/6"
                         rows={10} 
                       />
                     </div>

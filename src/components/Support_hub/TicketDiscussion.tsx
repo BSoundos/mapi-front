@@ -75,7 +75,7 @@ const TicketDiscussion: React.FC<TicketDiscussionProps> = ({
     e.preventDefault();
     dispatch(updateTicketStatus({ ticketId: id, newStatus: selectedStatus, updateMessage }));
     setIsModalOpen(false); // Close the modal after submitting
-    navigate(`/Discussions/${id}`);
+    navigate(`/TicketsDiscussions/${id}`);
   };
 
   const closeModal = () => {
@@ -91,7 +91,7 @@ const TicketDiscussion: React.FC<TicketDiscussionProps> = ({
     e.preventDefault();
     dispatch(updateTicketPriority({ ticketId: id, newPriority: selectedPriority }));
     setIsPriorityModalOpen(false);
-    navigate(`/Discussions/${id}`);
+    navigate(`/TicketsDiscussions/${id}`);
   }; 
 
   // Update priorityDetails when selectedPriority changes

@@ -7,6 +7,7 @@ import { useParams,Link } from 'react-router-dom';
 import { getTicketById } from '@/components/features/tickets/TicketSlice';
 import Navbar from '@/components/NavBar';
 import Footer from '@/components/Footer';
+import NavBar2 from '@/components/NavBar2';
 
 const UserTicketDiscussionPage = () => {
   const dispatch = useAppDispatch();
