@@ -17,7 +17,6 @@ import MainPage from '@/pages/api_hub/mainpage';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from '@/pages/authentication/Login';
-import Login from '@/pages/authentication/Login';
 import { useEffect } from 'react';
 import axios from 'axios';
 import Register from '@/pages/authentication/Register';
@@ -56,6 +55,8 @@ const App = () => {
           <Route path='documentation' element={<Documentation />} />
           <Route path='pricing' element={<Pricing />} />
           <Route path='support' element={<Support />} />
+          <Route path="Discussions/:apiId" element={<Discussions />} />
+          <Route path="DiscussionDetails/:discussionId" element={<DiscussionDetailsPage />} />
         </Route>
         <Route path="apis" element={<MainPage />} />
         {/* Pricing & Payment */}
@@ -72,8 +73,7 @@ const App = () => {
         {/* Invoices */}
         <Route path="Transaction_history" element={<InvoiceHistoryPage />} />
         <Route path="Transaction_details" element={<InvoiceDetails />} />
-        <Route path="/Discussions/:apiId" element={<Discussions />} />
-        <Route path="/DiscussionDetails/:discussionId" element={<DiscussionDetailsPage />} />
+
       </Routes>
     </Router>
   );

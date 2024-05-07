@@ -1,8 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchSubscriptionPlans } from '../../components/features/subscriptions/subscriptionPlansSlice';
-import { fetchPlanDetails } from '../../components/features/subscriptions/selectedPlanSlice';
-import store, { RootState } from '../../app/store';
+import { fetchSubscriptionPlans } from '@/components/features/subscriptions/subscriptionPlansSlice';
+import { fetchPlanDetails } from '@/components/features/subscriptions/selectedPlanSlice';
+import store, { RootState } from '@/app/store';
 import { Link } from 'react-router-dom';
 
 export type AppDispatch = typeof store.dispatch
