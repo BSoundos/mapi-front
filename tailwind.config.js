@@ -40,11 +40,18 @@ export default {
         'corner-1': {
           300: '#7E89AC',
         },
-        'c-1': '#634CD7',
+        'c-1': '#634CD7', 
         'lineartp': '#69EACB',
+      },
+      backgroundColor: {
+        'custom-opacity-red': 'rgba(216, 114, 125, 0.1)', 
+        'custom-opacity-brown': 'rgba(231, 214, 149, 0.1)', 
+        'custom-opacity-yellow': 'rgba(239, 245, 205, 0.1)', 
+        'custom-opacity-blue': 'rgba(87, 195, 255, 0.2)',
       },
       fontFamily: {
         'plus-jakarta-sans': ['Plus Jakarta Sans', 'sans-serif'],
+        'public-sans': ['Public Sans', 'sans-serif'],
         'inter': ['Inter', 'sans-serif'],
         'lato': ['Lato', 'sans-serif'],
       },

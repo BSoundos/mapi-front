@@ -16,6 +16,9 @@ import invoicesReducer from '../components/features/invoices/invoiceSlice';
 import invoicesDReducer from '../components/features/invoices/invoiceDetailSlice';
 import apipopularReducer from '../components/features/apis/ApiSlice';
 import AboutReducer from '../components/features/apis/AboutSlice';
+
+import TicketReducer from '../components/features/tickets/TicketSlice';
+import TicketDiscussionReducer from  '../components/features/tickets/TicketDiscussionSlice';
 import userSettingsReducer from '../components/features/UserSetting/UserSlice'
 
 import { useDispatch } from 'react-redux';
@@ -46,6 +49,8 @@ const store = configureStore({
     invoiceDetail: invoicesDReducer,
     apipopular: apipopularReducer,
     AboutSlice: AboutReducer,
+    ticket: TicketReducer,
+    ticketReplies: TicketDiscussionReducer,
     subscriptions: subscriptionReducer, 
     
 

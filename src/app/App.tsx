@@ -32,6 +32,11 @@ import Discussions from '@/pages/discussions/Discussions';
 import DiscussionDetailsPage from '@/pages/discussions/DiscusionDetails';
 import SubscriptionListPage from '@/pages/Subscriptions/SubscriptionList';
 
+import Ticket from '@/pages/support_hub/Ticket';
+import Discussion from '@/pages/support_hub/TicketDiscussionsPage';
+import UserTicketsPage  from '@/pages/support_hub/userTickets';
+import UserAddTicket  from '@/pages/support_hub/AddTicket';
+import UserTicketDiscussionPage  from '@/pages/support_hub/userTicketDiscussion';
 
 const App = () => {
 
@@ -76,6 +81,15 @@ const App = () => {
         <Route path="Transaction_details" element={<InvoiceDetails />} />
         <Route path="/Discussions/:apiId" element={<Discussions />} />
         <Route path="/DiscussionDetails/:discussionId" element={<DiscussionDetailsPage />} />
+
+        {/* Ticket system */}
+        <Route path="/Tickets" element={<Ticket />} />
+        <Route path="/Discussions" element={<Discussion />} />
+        <Route path="/TicketsDiscussions/:ticketId" element={<Discussion />} />
+        <Route path="/userTickets" element={<UserTicketsPage />} />
+        <Route path="/userAddTicket/:pk" element={<UserAddTicket />} />
+        <Route path="/userDiscussions/:ticketId" element={<UserTicketDiscussionPage />} />
+
       </Routes>
     </Router>
   );
