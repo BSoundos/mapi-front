@@ -8,12 +8,12 @@ import ErrorLoading from "@/components/ErrorLoading";
 import { RootState, useAppDispatch } from "@/app/store";
 import { fetchCategories } from "@/components/features/apis/categoriesSlice";
 import { getApi, removeApi, updateApi } from "@/components/features/apis_management/apiSlice";
-import SidebarProvider from "@/components/SidebarProvider";
 import Navbar from "@/components/NavbarProvider";
 import CategorySelect from "@/components/CategorySelect";
 import CheckedBox from "@/components/ui/CheckedBox";
 import FunctionalitiesApi from "@/components/apis_management/FunctionalitiesApi";
-import CheckboxInput from "../ui/CheckBoxInput";
+import CheckboxInput from "@/components/ui/CheckBoxInput";
+import SideBarPro from "./SideBarPro";
 
 export default function GeneralApi() {
   const dispatch = useAppDispatch();
@@ -105,7 +105,7 @@ export default function GeneralApi() {
 
   return (
     <div className="flex ">
-      <SidebarProvider />
+      <SideBarPro />
       <div className="bg-mapi-neutral-2 flex-1 ">
         <Navbar id={id} />
         {!api.loading ? (

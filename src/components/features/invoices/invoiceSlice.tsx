@@ -2,6 +2,7 @@ import { BACKEND_BASE_URL } from '@/data/constants';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
+
 interface Invoice {
   id: number;
   apiName: string;
@@ -28,6 +29,7 @@ export const fetchInvoices = createAsyncThunk<Invoice[]>(
   'InvoiceHistory',
   async () => {
     const response = await axios.get(`${BACKEND_BASE_URL}/invoices/`);
+    console.log(response.data.invoices);
     return response.data.invoices;
   }
 );

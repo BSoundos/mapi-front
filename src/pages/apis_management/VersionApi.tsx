@@ -1,6 +1,5 @@
 import { IoIosArrowDown } from "react-icons/io";
 import Navbar from "@/components/NavbarProvider";
-import SidebarProvider from "@/components/SidebarProvider";
 import { useState, useEffect } from "react";
 import { useSelector} from "react-redux";
 import { getAllVersions,updateExistingVersion } from "@/components/features/apis_management/versionSlice";
@@ -9,6 +8,7 @@ import { useParams } from "react-router-dom";
 import CheckBoxInput from "@/components/ui/CheckBoxInput";
 import AddVersionModal from "@/components/apis_management/AddVersionModal";
 import VersionListItem from "@/components/apis_management/VersionListItem";
+import SideBarPro from "@/components/apis_management/SideBarPro";
 
 export default function VersionsApi() {
   const [selectedVersion, setSelectedVersion] = useState(null);
@@ -63,7 +63,7 @@ export default function VersionsApi() {
 
   return (
     <div className="flex ">
-      <SidebarProvider />
+      <SideBarPro />
       <div className="bg-mapi-neutral-2 flex-1 ">
         <Navbar id={id} />
         <div className="container px-5 flex-1 mt-8 pl-14 ">

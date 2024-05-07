@@ -1,4 +1,3 @@
-import SidebarProvider from "@/components/SidebarProvider";
 import Navbar from "@/components/NavbarProvider";
 import { useState,useEffect } from "react";
 import { useParams } from "react-router-dom";
@@ -19,6 +18,7 @@ import ErrorLoading from "@/components/ErrorLoading";
 import { fetchObjectPerMonthData } from "@/components/features/apis_management/objectPerMonthSlice";
 import { fetchObjectPerUseData } from "@/components/features/apis_management/objectPerUseSlice";
 import { fetchAllFeaturesStatusForSub } from "@/components/features/apis_management/featureStatusSlice";
+import SideBarPro from "@/components/apis_management/SideBarPro";
 export default function PricingPublicApi() {
 
     const dispatch=useAppDispatch();
@@ -88,7 +88,7 @@ export default function PricingPublicApi() {
   
   return (
     <div className="flex ">
-    <SidebarProvider/>
+    <SideBarPro/>
     <div className="bg-mapi-neutral-2 flex-1 ">
     <Navbar id={id}/>
    <div className="overflow-y-auto max-h-[90vh] scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52]">

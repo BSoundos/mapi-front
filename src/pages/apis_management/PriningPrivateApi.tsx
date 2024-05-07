@@ -1,4 +1,3 @@
-import SidebarProvider from "@/components/SidebarProvider";
 import Navbar from "@/components/NavbarProvider";
 import { useState, useEffect,useRef } from "react";
 import { useParams } from "react-router-dom";
@@ -19,6 +18,7 @@ import { fetchAllPrivatePlansByVersion, removePrivatePlan } from "@/components/f
 import { fetchObjectPerUseUser } from "@/components/features/apis_management/objectPerUseSlice";
 import { fetchObjectPerMonthUser } from "@/components/features/apis_management/objectPerMonthSlice";
 import { fetchAllFeaturesStatusForUser } from "@/components/features/apis_management/featureStatusSlice";
+import SideBarPro from "@/components/apis_management/SideBarPro";
 
 export default function PricingPrivateApi() {
   const dispatch = useAppDispatch();
@@ -47,7 +47,6 @@ export default function PricingPrivateApi() {
       dispatch(fetchObjectPerUseUser(fetchVersionId));
       dispatch(fetchAllFeaturesStatusForUser(fetchVersionId));
     }
-    console.log(selectedPlan);
     const handleOutsideClick = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         const dropdownMenus = document.querySelectorAll('.dropdown-menu:not(.hidden)');
@@ -91,7 +90,7 @@ export default function PricingPrivateApi() {
 
   return (
     <div className="flex">
-      <SidebarProvider />
+      <SideBarPro/>
       <div className="bg-mapi-neutral-2 flex-1">
         <Navbar id={id} />
         <div className="overflow-y-auto max-h-[90vh] scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52]">
