@@ -1,6 +1,8 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { RootState } from '@/app/store';
 import axios from 'axios';
+import { BACKEND_BASE_URL } from '@/data/constants';
+
 
 interface AddDiscussionState {
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -16,7 +18,7 @@ export const postDiscussion = createAsyncThunk(
   'addDiscussion/postDiscussion',
   async ({ apiId, title, content }: { apiId: number; title: string; content: string }) => {
     try {
-      const response = await axios.post(`http://127.0.0.1:8000/support_hub/add-discussion/${apiId}/`, { title, content });
+      const response = await axios.post(`${BACKEND_BASE_URL}/support_hub/add-discussion/${apiId}/`, { title, content });
       console.log(response.data)
       return response.data;
 
