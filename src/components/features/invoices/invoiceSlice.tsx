@@ -1,3 +1,4 @@
+import { BACKEND_BASE_URL } from '@/data/constants';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
@@ -26,8 +27,7 @@ const initialState: InvoiceState = {
 export const fetchInvoices = createAsyncThunk<Invoice[]>(
   'InvoiceHistory',
   async () => {
-    const response = await axios.get('http://127.0.0.1:8000/invoices/');
-    console.log(response.data.invoices);
+    const response = await axios.get(`${BACKEND_BASE_URL}/invoices/`);
     return response.data.invoices;
   }
 );

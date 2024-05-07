@@ -24,6 +24,11 @@ import axios from 'axios';
 import Register from '../pages/authentication/Register';
 import Verify from '../pages/authentication/Verify';
 import Home from '../pages/home/Home';
+import MyApis from '@/pages/apis_management/MyApis';
+import VersionsApi from '@/pages/apis_management/VersionApi';
+import GeneralApi from '@/components/apis_management/GeneralApi';
+import PricingPublicApi from '@/pages/apis_management/PricingPublicApi';
+import PricingPrivateApi from '@/pages/apis_management/PriningPrivateApi';
 
 
 
@@ -62,6 +67,14 @@ const App = () => {
 
 
         {/* <Route path="/ajouterreview" element={<AjouterReview />} /> */}
+        {/* Provider Pages  */}
+        
+        <Route path="/my-apis" element={<MyApis />} />
+        <Route path="/version-api/:id" element={<VersionsApi/>}/>
+        <Route path="/general-api/:id" element={<GeneralApi/>}/>
+        <Route path="/pricing-api/public/:id" element={<PricingPublicApi/>}/>
+        <Route path="/pricing-api/private/:id" element={<PricingPrivateApi/>}/>
+
 
 
       </Routes>

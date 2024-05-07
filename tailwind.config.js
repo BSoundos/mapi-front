@@ -24,7 +24,7 @@ export default {
         'mapi-secondary-3': '#21C3FC',
         'mapi-secondary-4': '#0E43FB',
         'mapi-secondary-5': '#FDB52A',
-        'mapi-neutral-1': '#FDB52A',
+        'mapi-neutral-1': '#081028',
         'mapi-neutral-2': '#0A1330',
         'mapi-neutral-3': '#0B1739',
         'mapi-neutral-4': '#7E89AC',
@@ -32,6 +32,7 @@ export default {
         'mapi-neutral-6': '#D1DBF9',
         'mapi-neutral-7': '#D9E1FA',
         'mapi-neutral-8': '#FFFFFF',
+        'mapi-text':'#BFBFBF',
         'corner-1': {
           300: '#7E89AC',
         },

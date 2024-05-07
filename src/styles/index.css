@@ -3,3 +3,38 @@
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
+
+
+
+
+@layer components {
+
+  
+
+
+    .add-api-input {
+      @apply border border-[#858C94] rounded-lg px-2 py-2 outline-none;
+    }
+    
+    .add-api-input:hover,
+    .add-api-input:focus {
+      @apply border border-[#004AD7];
+    }
+    .add-api-input::placeholder {
+      @apply text-[#858C94] font-bold text-sm;
+    }
+    
+    .update-api-input {
+      @apply border-2 border-[#3E3C52] bg-[#081028] text-sm font-normal rounded-md p-1.5 text-[#BFBFBF] outline-none;
+    }
+    .add-plan {
+      @apply border border-[#404040] rounded-lg p-2 outline-none bg-[#081028] text-[#BFBFBF];
+    }
+    .add-plan:hover,
+    .add-plan:focus {
+      @apply border border-[#404040];
+    }
+    .add-plan::placeholder {
+      @apply text-[#858C94] font-bold text-sm;
+    }
+   }
