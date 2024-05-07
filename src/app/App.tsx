@@ -31,12 +31,16 @@ import Support from '@/pages/api_hub/Support';
 import Discussions from '@/pages/discussions/Discussions';
 import DiscussionDetailsPage from '@/pages/discussions/DiscusionDetails';
 import SubscriptionListPage from '@/pages/Subscriptions/SubscriptionList';
-
+import MyApis from '@/pages/apis_management/MyApis';
+import VersionsApi from '@/pages/apis_management/VersionApi';
+import GeneralApi from '@/components/apis_management/GeneralApi';
+import PricingPublicApi from '@/pages/apis_management/PricingPublicApi';
+import PricingPrivateApi from '@/pages/apis_management/PriningPrivateApi';
 import Ticket from '@/pages/support_hub/Ticket';
 import Discussion from '@/pages/support_hub/TicketDiscussionsPage';
-import UserTicketsPage  from '@/pages/support_hub/userTickets';
-import UserAddTicket  from '@/pages/support_hub/AddTicket';
-import UserTicketDiscussionPage  from '@/pages/support_hub/userTicketDiscussion';
+import UserTicketsPage from '@/pages/support_hub/userTickets';
+import UserAddTicket from '@/pages/support_hub/AddTicket';
+import UserTicketDiscussionPage from '@/pages/support_hub/userTicketDiscussion';
 
 const App = () => {
 
@@ -61,6 +65,8 @@ const App = () => {
           <Route path='documentation' element={<Documentation />} />
           <Route path='pricing' element={<Pricing />} />
           <Route path='support' element={<Support />} />
+          <Route path="Discussions/:apiId" element={<Discussions />} />
+          <Route path="DiscussionDetails/:discussionId" element={<DiscussionDetailsPage />} />
         </Route>
         <Route path="apis" element={<MainPage />} />
         {/* Pricing & Payment */}
@@ -89,6 +95,16 @@ const App = () => {
         <Route path="/userTickets" element={<UserTicketsPage />} />
         <Route path="/userAddTicket/:pk" element={<UserAddTicket />} />
         <Route path="/userDiscussions/:ticketId" element={<UserTicketDiscussionPage />} />
+
+
+         {/* Provider Pages  */}
+        
+         <Route path="/my-apis" element={<MyApis />} />
+        <Route path="/version-api/:id" element={<VersionsApi/>}/>
+        <Route path="/general-api/:id" element={<GeneralApi/>}/>
+        <Route path="/pricing-api/public/:id" element={<PricingPublicApi/>}/>
+        <Route path="/pricing-api/private/:id" element={<PricingPrivateApi/>}/>
+
 
       </Routes>
     </Router>

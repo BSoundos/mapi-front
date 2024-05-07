@@ -28,7 +28,6 @@ const Api: React.FC = () => {
   //     try {
   //       const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/api/${id}`);
   //       const data = response.data;
-  //       // Utilisez les données récupérées ici
   //       setData(data);
   //     } catch (error) {
   //       console.error('Une erreur s\'est produite lors de la récupération des données:', error);
