@@ -1,24 +1,18 @@
 // store.ts
 import { configureStore } from '@reduxjs/toolkit';
-
 import authReducer from '@/components/features/authentication/authSlice';
-
-
 import subscriptionPlansReducer from '@/components/features/payments/subscriptionPlansSlice';
 import subscriptionPlansPerUseReducer from '@/components/features/payments/subscriptionPlansPerUseSlice';
 import navigationReducer from '@/components/features/payments/selectedPlanSlice';
 import planReducer from '@/components/features/payments/selectedPlanSlice';
 import planPerUseReducer from '@/components/features/payments/selectedPlanPerUseSlice';
-
-
-
 import paymentReducer from '@/components/features/payments/paymentMethodSlice';
 import confirmPaymentReducer from '@/components/features/payments/paymentSlice';
 import invoicesReducer from '@/components/features/invoices/invoiceSlice';
 import apiProviderReducer from '@/components/features/apis_management/apiSlice';
 import versionReducer from '@/components/features/apis_management/versionSlice';
 import categoriesReducer from '@/components/features/apis/categoriesSlice';
-import apipopularReducer from '@/components/features/apis/ApiSlice';
+import apiReducer from '@/components/features/apis/ApiSlice';
 import AboutReducer from '@/components/features/apis/AboutSlice';
 import functionalitiesReducer from '@/components/features/apis/functionalitiesSlice';
 import subscriptionplanReducer from '@/components/features/apis_management/subPlanSlice';
@@ -44,12 +38,13 @@ import generateAccessKeyReducer from '@/components/features/payments/generateAcc
 import TicketReducer from '@/components/features/tickets/TicketSlice';
 import TicketDiscussionReducer from  '@/components/features/tickets/TicketDiscussionSlice';
 import invoicesDReducer from '@/components/features/invoices/invoiceDetailSlice';
-
-
+import endpointReducer from '@/components/features/apis/endpointSlice';
+import reviewsReducer from '@/components/features/apis/ReviewSlice';
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
+    review:reviewsReducer,
     subscriptionPlans: subscriptionPlansReducer,
     subscriptionPlansPerUse: subscriptionPlansPerUseReducer,
     navigation: navigationReducer,
@@ -60,7 +55,7 @@ const store = configureStore({
     accesskey: generateAccessKeyReducer,
     invoiceHistory: invoicesReducer,
     invoiceDetail: invoicesDReducer,
-    apipopular: apipopularReducer,
+    api: apiReducer,
     AboutSlice: AboutReducer,
     apiProvider:apiProviderReducer,
     versions:versionReducer,
@@ -83,6 +78,7 @@ const store = configureStore({
     addDiscussion: addDiscussionReducer,
     replies: repliesReducer,
     addReply: addReplyReducer,
+    endpoints:endpointReducer,
     // other reducers...
   },
 });

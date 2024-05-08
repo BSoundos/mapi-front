@@ -129,7 +129,7 @@ const TicketDiscussion: React.FC<TicketDiscussionProps> = ({
 
   return (
      
-    <div className="flex flex-col h-full mb-2 p-4" >
+    <div className="flex flex-col h-full mb-2 p-4 " >
       <div className="border-b font-inter border-[#343B4F] pb-3">
         <div className="flex justify-between ">
          {!forUser ? (
@@ -166,7 +166,7 @@ const TicketDiscussion: React.FC<TicketDiscussionProps> = ({
           )}
         </div>
       </div>
-      <div className="font-public-sans pt-4 text-white">
+      <div className="font-public-sans pt-4 text-white ">
         {!forUser && <h2 className="font-semibold text-16px mb-2">{title}</h2>}
         <p className=''>
             {content}
@@ -207,7 +207,7 @@ const TicketDiscussion: React.FC<TicketDiscussionProps> = ({
 
       
 
-        <div className=" flex-1 pt-4 font-public-sans overflow-y-auto " >
+        <div className=" flex-1 pt-4 font-public-sans  overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52]" >
           {replies.map((reply) => (
              <div
              key={reply.id}

@@ -6,37 +6,44 @@ import axios from 'axios';
 interface Invoice {
   id: number;
   apiName: string;
-  status: 'paid' | 'unpaid';
   totalAmount: number;
-  planName: string;
+  planName: String;
   createdAt: string;
 }
 
 interface InvoiceState {
-  invoices: Invoice[];
-  loading: boolean;
-  error: string | null;
+    invoices: Invoice[];
+    loading: boolean;
+    error: string | null;
+    status: 'idle' | 'loading' | 'succeeded' | 'failed';
+ 
 }
 
-// Define initial state object with default values
-const initialState: InvoiceState = {
-  invoices: [],
-  loading: false,
-  error: null,
-};
-
-export const fetchInvoices = createAsyncThunk<Invoice[]>(
-  'InvoiceHistory',
-  async () => {
-    const response = await axios.get(`${BACKEND_BASE_URL}/invoices/`);
-    console.log(response.data.invoices);
-    return response.data.invoices;
-  }
-);
-
-
-
-
+  // Define initial state object with default values
+  const initialState: InvoiceState = {
+    invoices: [],
+    loading: false,
+    error: null,
+    status: 'loading' 
+  };
+  const getToken = () => {
+    return localStorage.getItem('token'); // Retrieve token from localStorage
+  };
+export const fetchInvoices = createAsyncThunk<Invoice[], number>(
+    'InvoiceHistory',
+    async (user_id: number) => {
+      const token = getToken();
+      const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-history/`,{
+        headers: {
+          Authorization: `Token ${token}`
+        }
+      });
+      console.log(response.data);
+      return response.data; 
+    }
+  );
+  
+ 
 const invoiceSlice = createSlice({
   name: 'invoice',
   initialState,
@@ -53,6 +60,20 @@ const invoiceSlice = createSlice({
     addInvoices(state, action: PayloadAction<Invoice[]>) {
       state.invoices = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchInvoices.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(fetchInvoices.fulfilled, (state, action) => {
+        state.status = 'succeeded';
+        state.invoices = action.payload;
+      })
+      .addCase(fetchInvoices.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message || 'An error occurred';
+      });
   },
 });
 

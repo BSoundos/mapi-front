@@ -36,8 +36,9 @@ export const fetchApiById = createAsyncThunk<
 
 // Création d'un slice pour gérer l'état de l'API dans le store Redux
 const AboutSlice = createSlice({
-  name: 'api',
+  name: 'AboutSlice',
   initialState: {
+    api:null,
     data: null,
     status: 'idle',
     error: null,

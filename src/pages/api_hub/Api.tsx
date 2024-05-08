@@ -10,9 +10,10 @@ import { Outlet, useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { RootState } from '@/app/store';
-import { BACKEND_BASE_URL } from '@/data/constants';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-
+import { useAppDispatch } from '@/app/store';
+import { fetchAPIById } from '@/components/features/apis/ApiSlice';
+import { getAllVersions } from '@/components/features/apis_management/versionSlice';
 
 
 const Api: React.FC = () => {
@@ -50,13 +51,21 @@ const Api: React.FC = () => {
   //     return <div>Une erreur est survenue : {error}</div>;
   //   case 'succeeded':
   // }
+  const dispatch = useAppDispatch();
+  
+  useEffect(() => {
+    dispatch(fetchAPIById(id));
+  }, [dispatch,id]);
+  useEffect(()=>{
+    dispatch(getAllVersions(id))
+  })
 
   return (
     <main>
       <Navbar></Navbar>
       <div className='bg-mapi-neutral-2 px-16 pt-4 pb-16 min-h-screen font-inter'>
         <div className='border border-opacity-30 border-[#7E89AC] rounded-[9px] shadow-md'>
-          <NavBar2 />
+          <NavBar2 id={id} />
           <section className=''>
             <Outlet />
           </section>

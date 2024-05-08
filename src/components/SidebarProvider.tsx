@@ -1,6 +1,6 @@
-import logo from "@/assets/logo.png"
+import logo from "../assets/logo.png";
 import { Link,useLocation } from 'react-router-dom';
-
+import { useDispatch } from "react-redux";
 
 
 function SideBarProvider() {
@@ -21,7 +21,7 @@ function SideBarProvider() {
   return (
     <div className="w-[25%] pb-40">
         <div className="bg-[#FFFFFF] bg-opacity-10 flex-1  ml-10  border border-opacity-30 border-[#7E89AC] rounded shadow-md">
-            <div className="pt-20  pb-36">
+            <div className="   pt-20  pb-36">
             <div className=" border-solid border-r-[#343B4F] border-r  overflow-hidden flex flex-col justify-between pb-3 text-sm">
                 <div>
                 

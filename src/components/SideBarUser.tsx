@@ -10,18 +10,18 @@ function SideBarUser() {
  
 
   const items = [
-    {text: 'Profile Settings', path: '/UserProfilSetting' },
-    { text: 'Security Settings', path: '/UserSecuritySettings' },
-    {text: 'Support Tickets', path: '/Support-Tickets' },
+    {text: 'Profile Settings', path: '/userProfileSettings' },
+    { text: 'Security Settings', path: '/userSecuritySettings' },
+    {text: 'Support Tickets', path: '/userTickets' },
     {text: 'Transaction History', path: '/Transaction-History' },
-    {text: 'Subscription & Usage', path: '/Subscription-Usage' },
+    {text: 'Subscription & Usage', path: '/SubscriptionsList' },
 
   ];
  
 
 
   return (
-    <div className="w-[25%] pb-40">
+    <div className="w-[25%]">
         <div className="bg-[#FFFFFF] bg-opacity-10 flex-1  ml-10  border border-opacity-30 border-[#7E89AC] rounded shadow-md">
             <div className="   pt-20  pb-36">
             <div className=" border-solid border-r-[#343B4F] border-r  overflow-hidden flex flex-col justify-between pb-3 text-sm">

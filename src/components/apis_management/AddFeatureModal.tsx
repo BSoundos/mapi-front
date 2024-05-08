@@ -1,8 +1,9 @@
 import { useState } from "react";
 import { addFeature } from "@/components/features/apis_management/featureSlice";
 import { fetchAllFeaturesStatusForSub } from "@/components/features/apis_management/featureStatusSlice";
-import { useAppDispatch } from "@/app/store";
+import { RootState, useAppDispatch } from "@/app/store";
 import { AddFeatureProps } from "@/types/AddFeatureProps";
+import { useSelector } from "react-redux";
 
 const AddFeatureModal: React.FC<AddFeatureProps> = ({
   showModal,
@@ -16,6 +17,7 @@ const AddFeatureModal: React.FC<AddFeatureProps> = ({
     endpoints: [],
   });
   const [isLoading, setIsLoading] = useState(false);
+  const endpoints = useSelector((state:RootState)=>state.endpoints.endpoints);
 
   const toggleAddFeatureModal = () => {
     setShowModal(!showModal);
@@ -110,9 +112,12 @@ const AddFeatureModal: React.FC<AddFeatureProps> = ({
                   onChange={handleAddFeatureInputChange}
                   className="add-plan w-4/5 multiselect"
                 >
-                  <option value="">Select Endpoints</option>
-                  <option value="1">zouj</option>
-                  <option value="2">tlata</option>
+                  <option value="" disabled>Select Endpoints</option>
+                  {endpoints.map((endpoint) => (
+                    <option key={endpoint.endpoint_id} value={endpoint.endpoint_id}>
+                      {endpoint.title}
+                     </option>
+                 ))}
                 </select>
               </div>
               <div className="flex gap-2 justify-end mt-5">

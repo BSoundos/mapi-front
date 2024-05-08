@@ -11,8 +11,9 @@ interface ApidescriptionProps {
 }
 const Apidescription: React.FC<ApidescriptionProps> = ({ id, name, description, category_name }) => {
       return (
-            <div className="bg-[#0B1739] m-2 p-4 border border-opacity-30 border-[#343B4F] rounded-xl shadow-md w-[30%] ">
-                  <Link to={`/about/${id}`}><h2 className="font-semibold text-sm text-white py-3">{name}</h2></Link>
+            <Link to={`/api/about/${id}`} className="bg-[#0B1739] m-2 p-4 border border-opacity-30 border-[#343B4F] rounded-xl shadow-md w-[30%]">
+            <div >
+                  <h2 className="font-semibold text-sm text-white py-3">{name}</h2>
                   <p className="text-[#AEB9E1] text-xs pb-2 overflow-y-auto min-h-[50px] max-h-[50px] ">{description}</p>
                   <div className="flex items-center justify-between">
                         <div className="flex mt-4 py-0.5 px-1 bg-[#57C3FF] bg-opacity-30  border border-[#57C3FF] border-opacity-30 rounded-sm">
@@ -22,6 +23,7 @@ const Apidescription: React.FC<ApidescriptionProps> = ({ id, name, description, 
 
                   </div>
             </div>
+            </Link>
       );
 };
 

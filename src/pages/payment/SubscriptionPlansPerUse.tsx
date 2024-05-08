@@ -1,13 +1,11 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchSubscriptionPlans, fetchUserPlans} from '../../components/features/payments/subscriptionPlansPerUseSlice';
-import { fetchPlanDetails} from '../../components/features/payments/selectedPlanPerUseSlice';
 import store, { RootState } from '../../app/store';
 import { Link } from 'react-router-dom'; 
 import Navbar from '../../components/NavBar';
 import HalfNavBar from '../../components/HalfNavBar';
 import Footer from '../../components/Footer';
-import { fetchUserPlanDetails } from '../../components/features/payments/selectedPlanPerUseSlice';
+import { fetchUserPlanDetailsPerUse } from '../../components/features/payments/selectedPlanPerUseSlice';
 import { FaCheck, FaTimes } from 'react-icons/fa';
 
 export type AppDispatch = typeof store.dispatch
@@ -31,32 +29,18 @@ const SubscriptionPlansPerUsePage = () => {
   });
   
   
-
-  useEffect(() => {
-    dispatch(fetchSubscriptionPlans(1));
-    dispatch(fetchUserPlans(1));
   
-  }, [dispatch]);
+ 
 
-  const handleSubscribe = (planId: string, objectPrices: { id: string, name: string, price: number }[]) => {
-    // Filtrer objectPrices par id_plan
-    const filteredObjectPrices = objectPrices.filter(obj => obj.id === planId);
-    // Dispatch fetchPlanDetails avec le planId filtré et objectPrices filtré
-    dispatch(fetchPlanDetails({ planId , objectPrices: filteredObjectPrices }));
-};
-
-const handleSubscribeUserPlan = (planId: number) => {
-  dispatch(fetchUserPlanDetails({ planId }));
-};
 
    return (
-    <div className="h-screen bg-mapi-neutral-2">
+    <div className=" bg-mapi-neutral-2">
 
     <Navbar/>
     <div className=" flex justify-center items-center bg-mapi-neutral-2">
-    <div className="subscription-plans-container bg-mapi-neutral-2 w-full mx-6 my-8 sm:mx-4 flex flex-col items-center   border border-gray-300 border-opacity-30 rounded-lg overflow-hidden shadow-2xl ">
+    <div className="subscription-plans-container bg-mapi-neutral-2 w-full mx-6 my-3 sm:mx-4 flex flex-col items-center   border border-gray-300 border-opacity-30 rounded-lg overflow-hidden shadow-2xl ">
   
-        <div className="plan-heading font-medium  leading-8 text-center text-mapi-neutral-5 w-11/12  mb-8 mt-8 text-3xl ">
+        <div className="plan-heading font-medium  leading-8 text-center text-mapi-neutral-5 w-11/12  mb-2 mt-2 text-xl ">
           Choose the Right Plan For You
         </div>
         
@@ -68,25 +52,25 @@ const handleSubscribeUserPlan = (planId: number) => {
            
             {uniqueObjectNames.map((objectName, index) => (
               <div key={index} className="object-item ">
-                <p className="object_title text-center text-plus-jakarta-sans  font-medium text-lg mr-8 ml-2 text-mapi-neutral-5 pb-8">{objectName}</p>
+                <p className="object_title text-center text-plus-jakarta-sans  font-medium text-lg mr-3 ml-2 text-mapi-neutral-5 pb-8">{objectName}</p>
               </div>
             ))}
            {uniqueFeatureNames.map((objectName, index) => (
               <div key={index} className="object-item ">
-                <p className="object_title text-center text-plus-jakarta-sans  font-medium text-lg mr-8 ml-2 text-mapi-neutral-5">{objectName}</p>
+                <p className="object_title text-center text-plus-jakarta-sans  font-medium text-lg mr-4 ml-2 text-mapi-neutral-5">{objectName}</p>
               </div>
               
             ))}
             
           
-            <p className="object_title text-center text-plus-jakarta-sans  font-medium text-lg mr-8 ml-2 text-mapi-neutral-5 pt-4">Rate limit</p>
+            <p className="object_title text-center text-plus-jakarta-sans  font-medium text-lg mr-4 ml-2 text-mapi-neutral-5 pt-4">Rate limit</p>
           </div>
-          <p className="object_title font-semibold text-base mt-8 mr-4 ml-2 mb-2 text-mapi-neutral-8 text-mapi-neutral-5"></p>
+          <p className="object_title font-semibold text-base mt-4 mr-2 ml-1 mb-1  text-mapi-neutral-5"></p>
           <div className="flex flex-wrap justify-center">
           {subscriptionPlans
               .filter(plan => plan.type === 'pay_per_use')
               .map(plan => (
-                <div key={plan.id} className="plan-item mb-12 relative mr-4 bg-mapi-neutral-3">
+                <div key={plan.id} className="plan-item mb-6 relative mr-4 bg-mapi-neutral-3">
                   <div className="plan-container rounded-lg p-5 bg-primary-secondary-1 min-w-[250px] max-w-[400px] cursor-pointer flex flex-col justify-center items-center relative shadow-xl group">
                     {/* Bulle d'information pour la promotion */}
                     {plan.promotion && plan.promotion.is_active && (
@@ -101,15 +85,15 @@ const handleSubscribeUserPlan = (planId: number) => {
                    </div>
                     )}
 
-                  <h2 className="plan-title text-3xl font-bold text-mapi-secondary-3 mb-2 pt-4">{plan.name}</h2>
+                  <h2 className="plan-title text-xl font-bold text-mapi-secondary-3 mb-2 pt-4">{plan.name}</h2>
                   
                   {plan.objects.map(obj => (
-                  <p  key={obj.id} className="subscription-price text-2xl font-medium text-mapi-neutral-5  pb-4">
+                  <p  key={obj.id} className="subscription-price text-xl font-medium text-mapi-neutral-5  pb-4">
                     { obj.price} DA <sup className="text-sm text-mapi-neutral-5">per use</sup>
                   </p> ))}       
                   {uniqueFeatureNames.map(featureName => (
           <div key={featureName} className="object-item flex flex-col items-center ">
-            <div className="rate-limit mb-3 text-base font-inter text-gray-300 flex justify-center items-center font-medium text-mapi-neutral-5">
+            <div className="rate-limit mb-3 text-base font-inter  flex justify-center items-center font-medium text-mapi-neutral-5">
               {plan.features.some(feature => feature.feature_name === featureName) ? (
                 <FaCheck style={{ color: 'green' }} />
               ) : (
@@ -119,10 +103,10 @@ const handleSubscribeUserPlan = (planId: number) => {
           </div>
         ))}
                  
-                  <p className="rate-limit mb-3 text-base font-inter text-gray-300 flex justify-center items-center text-mapi-neutral-5 pt-4 pb-4">{plan.rate_limit} requests per hour</p>
+                  <p className="rate-limit mb-3 text-base font-inter  flex justify-center items-center text-mapi-neutral-5 pt-4 pb-4">{plan.rate_limit} requests per hour</p>
                   <Link to={`plan/${plan.id}`}>
                  
-                    <button onClick={() => handleSubscribe(plan.id , objectPrices)} className="bg-white w-36 h-12 rounded-lg text-lg text-mapi-neutral-5flex font-medium items-center justify-center hover:bg-mapi-secondary-5 transition-colors duration-300">
+                    <button  className="bg-white w-36 h-12 rounded-lg text-lg text-mapi-neutral-5flex font-medium items-center justify-center hover:bg-mapi-secondary-5 transition-colors duration-300">
                       Subscribe
                     </button>
                   </Link>
@@ -151,7 +135,7 @@ const handleSubscribeUserPlan = (planId: number) => {
 
 {uniqueFeatureNames.map(featureName => (
           <div key={featureName} className="object-item flex flex-col items-center ">
-            <div className="rate-limit mb-3 text-base font-inter text-gray-300 flex justify-center items-center font-medium text-mapi-neutral-5">
+            <div className="rate-limit mb-3 text-base font-inter  flex justify-center items-center font-medium text-mapi-neutral-5">
               {plan.features.some(feature => feature.feature_name === featureName) ? (
                 <FaCheck style={{ color: 'green' }} />
               ) : (
@@ -161,10 +145,10 @@ const handleSubscribeUserPlan = (planId: number) => {
           </div>
         ))}
                   
-                  <p className="rate-limit mb-3 text-base font-inter text-gray-300 flex justify-center items-center text-mapi-neutral-5 pt-4 pb-4">{plan.rate_limit} requests per hour</p>
+                  <p className="rate-limit mb-3 text-base font-inter  flex justify-center items-center text-mapi-neutral-5 pt-4 pb-4">{plan.rate_limit} requests per hour</p>
                   <Link to={`plan/${plan.id}`}>
               
-                    <button onClick={() => handleSubscribeUserPlan(plan.id)} className="bg-white w-36 h-12 rounded-lg text-lg text-mapi-neutral-5flex font-medium items-center justify-center hover:bg-mapi-secondary-5 transition-colors duration-300">
+                    <button  className="bg-white w-36 h-12 rounded-lg text-lg text-mapi-neutral-5 flex font-medium items-center justify-center hover:bg-mapi-secondary-5 transition-colors duration-300">
                       Subscribe
                     </button>
                   </Link>

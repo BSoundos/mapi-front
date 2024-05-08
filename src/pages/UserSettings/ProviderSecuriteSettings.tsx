@@ -1,12 +1,14 @@
 import React from 'react';
-import  { useEffect ,useState} from 'react';
+import  {useState} from 'react';
 import Navbar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import SideBarUser from '@/components/SideBarUser';
 import close from '@/assets/close.png'
 import securite from '@/assets/lock.png'
 import { UpdateProviderSecurity } from '@/components/features/UserSetting/UserSlice';
-import { useAppDispatch,RootState } from '@/app/store'; 
+import { useAppDispatch } from '@/app/store'; 
+import SideBarPro from '@/components/apis_management/SideBarPro';
+import SideBarProvider from '@/components/SideBarProvider';
 
 const ProviderSecuritySettings:React.FC  = () => {
 
@@ -63,7 +65,7 @@ const ProviderSecuritySettings:React.FC  = () => {
   <div className='bg-[#0B1739] '>
        <Navbar />
        <div className='flex mt-4'>
-       <SideBarUser />
+       <SideBarProvider />
        <div className='mb-20 pt-4 pl-8 ml-2 mr-8 border border-opacity-30 border-[#7E89AC] w-[75%] rounded'> 
             <p className='text-white font-semibold'>Security Settings</p>
             {verificationEmailSent && <p className="text-[#25E130]">Your password has been successfully updated.</p>}

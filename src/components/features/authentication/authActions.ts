@@ -19,7 +19,11 @@ export const login = (credentials: LoginCredentails) => async (dispatch: LoginDi
         localStorage.setItem('last_name', last_name);
         localStorage.setItem('role', role);
         // redirect to the HomePage
-        window.location.href = '/';
+        if(role==="user"){
+        window.location.href = '/';}
+        else{
+            window.location.href = '/my-apis';
+        }
         return response.data;
     } catch (error) {
         dispatch(loginFailure(error.response.data));
@@ -43,9 +47,9 @@ export const register = (credentials) => async (dispatch: RegisterDispatchFuncti
 
 export const verify = (credentials) => async (dispatch: VerifyDispatchFunction) => {
     try {
-        await axios.post(`${BACKEND_BASE_URL}/authentication/verify/`, credentials);
+       const response= await axios.post(`${BACKEND_BASE_URL}/authentication/verify/`, credentials);
         dispatch(verifySuccess());
-        localStorage.removeItem('verificationNeeded');
+        return response.data
     } catch (error) {
         dispatch(verifyFailure(error.response.data));
         return error.response.data;

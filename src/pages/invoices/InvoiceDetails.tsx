@@ -5,6 +5,8 @@ import store, { RootState } from '@/app/store';
 import Navbar from '@/components/NavBar';
 import HalfNavBar from '@/components/HalfNavBar';
 import Footer from '@/components/Footer';
+import { useParams } from 'react-router-dom';
+import { fetchInvoiceDetail } from '@/components/features/invoices/invoiceDetailSlice';
 
 
 
@@ -16,9 +18,10 @@ const InvoiceDetailsPage = () => {
   const invoiceDetail = useSelector((state: RootState) => state.invoiceDetail.invoiceD);
   const loading = useSelector((state: RootState) => state.invoiceDetail.loading);
   const error = useSelector((state: RootState) => state.invoiceDetail.error);
+  const {id} = useParams(); // Extraire les paramètres dynamiques de l'URL
 
   useEffect(() => {
-    dispatch(fetchInvoiceDetail(5));
+    dispatch(fetchInvoiceDetail(parseInt(id)));
   }, [dispatch]);
 
   if (loading) {
@@ -96,16 +99,5 @@ const InvoiceDetailsPage = () => {
 export default InvoiceDetailsPage;
 
 
-/*
-<div className="flex flex-col min-h-screen">
-      <Navbar/>
 
-      <div className="flex-grow bg-mapi-neutral-3 ">
-        <div className="mt-3">
-          <HalfNavBar/>
-        </div>
-      </div>
-      
-      <Footer/>
-    </div>
-*/
+

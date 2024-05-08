@@ -12,10 +12,11 @@ import { ObjectProps } from "@/types/ObjectProps";
 const Object: React.FC<ObjectProps> = ({object}) => {
   const subscriptionPlan = useSelector((state: RootState) => state.subscriptionplan);
   const [showModal, setShowModal] = useState(false);
+
   const [editObjectFormData, setEditObjectFormData] = useState({
     name:object.name,
     description:object.description,
-    endpoints:object.endpoint,
+    endpoints:object.endpoints,
     });
 
   return (

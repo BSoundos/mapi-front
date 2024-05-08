@@ -45,14 +45,11 @@ const Register = () => {
     }
     try {
       const response = await dispatch(register(credentials));
-      console.log('Response:', response);
       if (response) {
         if (response.username) {
-          console.log(" Username error:", response.username[0]);
           setUsernameError(response.username[0]);
         }
         if (response.email) {
-          console.log(" Email error:", response.email[0]);
           setEmailError(response.email[0]);
         }
       }

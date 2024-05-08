@@ -9,6 +9,8 @@ import HalfNavBar from '../../components/HalfNavBar';
 import Footer from '../../components/Footer';
 import { Link } from 'react-router-dom';
 import Popup from '../../components/AccessKeyPopup';
+import Loading from '@/components/ui/Loading';
+import SideBarUser from '@/components/SideBarUser';
 export type AppDispatch = typeof store.dispatch
 
 const SubscriptionListPage = () => {
@@ -70,7 +72,7 @@ const SubscriptionListPage = () => {
 
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   if (error) {
@@ -81,7 +83,7 @@ const SubscriptionListPage = () => {
       <Navbar />
       <div className="flex-grow bg-mapi-neutral-3 ">
         <div className="mt-3 flex space-x-2">
-          <HalfNavBar />
+          <SideBarUser />
           <div className="p-8 w-11/12 space-y-4 flex flex-col bg-[#FFFFFF] bg-opacity-5 py-4 border border-opacity-30 border-[#7E89AC] rounded shadow-md pl-4 " style={{ height: '500px', marginRight: '60px' }}>
             <h1 className="font-inter font-bold text-secondary-gray text-xl text-plus-jakarta-sans">Subscription & Usage</h1>
             <p className="text-mapi-neutral-5 text-opacity-85 text-base">Monitor API subscription and team usage of your subscribed APIs.</p>

@@ -19,6 +19,7 @@ import { fetchObjectPerMonthData } from "@/components/features/apis_management/o
 import { fetchObjectPerUseData } from "@/components/features/apis_management/objectPerUseSlice";
 import { fetchAllFeaturesStatusForSub } from "@/components/features/apis_management/featureStatusSlice";
 import SideBarPro from "@/components/apis_management/SideBarPro";
+import { fetchEndpoints } from "@/components/features/apis/endpointSlice";
 export default function PricingPublicApi() {
 
     const dispatch=useAppDispatch();
@@ -41,6 +42,7 @@ export default function PricingPublicApi() {
         dispatch(fetchAllFeaturesStatusForSub(fetchVersionId));
         dispatch(fetchObjectPerMonthData(fetchVersionId));
         dispatch(fetchObjectPerUseData(fetchVersionId));
+        dispatch(fetchEndpoints(fetchVersionId));
       }
     }, [dispatch, fetchVersionId]);
 

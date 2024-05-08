@@ -35,7 +35,8 @@ const AddObjectModal: React.FC<AddObjectProps> = ({
         }
     };
         
-        
+    const endpoints = useSelector((state:RootState)=>state.endpoints.endpoints);
+
     const handleAddObject=(e:React.FormEvent)=>{
         e.preventDefault();
         dispatch(AddObject({id:versionId,data:addObjectFormData}))
@@ -60,9 +61,12 @@ const AddObjectModal: React.FC<AddObjectProps> = ({
             <div className="mb-2 flex gap-6 items-center">
               <label htmlFor="endpoint" className="text-sm font-semibold text-mapi-text flex-1">Associated Endpoints</label>
               <select id="endpoint" multiple multiselect-search="true" multiselect-select-all="true"  name="endpoints"  onChange={handleAddObjectInputChange} className="add-plan w-4/5 multiselect">
-                <option value="">Select Endpoints</option>
-                <option value="1">zouj</option>
-                <option value="2">tlata</option>
+                <option value="" disabled>Select Endpoints</option>
+                {endpoints.map((endpoint) => (
+                    <option key={endpoint.endpoint_id} value={endpoint.endpoint_id}>
+                      {endpoint.title}
+                     </option>
+                 ))}
               </select>
             </div>
             <div className="flex gap-2 justify-end mt-5">

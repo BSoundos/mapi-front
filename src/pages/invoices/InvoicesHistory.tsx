@@ -16,7 +16,6 @@ const InvoiceHistoryPage = () => {
   const invoices = useSelector((state: RootState) => state.invoiceHistory.invoices);
   const loading = useSelector((state: RootState) => state.invoiceHistory.loading);
   const error = useSelector((state: RootState) => state.invoiceHistory.error);
-  const { user_id } = useParams();
 
   useEffect(() => {
     dispatch(fetchInvoices(3));

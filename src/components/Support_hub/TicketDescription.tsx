@@ -89,7 +89,7 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
 
 
   return (
-    <div className="bg-mapi-neutral-1 font-inter w-full mb-4 p-6 border border-opacity-50 border-[#343B4F] rounded-md">
+    <div className="bg-mapi-neutral-1 font-inter w-full mb-2 px-6 py-2 border border-opacity-50 border-[#343B4F] rounded-md">
       {isPriorityModalOpen && (
       <UpdateTicketForm
         isOpen={isPriorityModalOpen}
@@ -135,8 +135,8 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
       {/* Main Content */}
       
         {!forUser && (
-          <div className="flex justify-between mb-4">
-            <div className="flex space-x-4">
+          <div className="flex justify-between ">
+            <div className="flex ">
               <p className={`${priorityDetails.bgcolor} rounded-md px-2 py-1 cursor-pointer ${priorityDetails.color}`} onClick={handlePriorityClick}>
                 {priorityDetails.text}
               </p>
@@ -148,8 +148,8 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
           </div>
           )
         }
-       <div className="pb-4">
-       <div className="flex justify-between items-center pb-4">
+       <div className="pb-2">
+       <div className="flex justify-between items-center pb-2">
             <div>
                 {forUser ? (
                     <Link to={`/userDiscussions/${id}`}>
@@ -173,14 +173,14 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
           </div>
          <p className="text-[#787486]">{content}</p>
        </div>
-       <div className="border-t border-gray-400 pt-5">
+       <div className="border-t border-gray-400 pt-2">
           {forUser ? (
               <p className="text-white">For the API : <span className="text-secondary-blue">{apiName}</span></p>
                 ) : (
                   <p className="text-white">By: <span className="text-secondary-blue">{username}</span></p>  
                 )}
          
-         <div className="pl-2 flex items-center space-x-40 pt-8">
+         <div className="pl-2 flex items-center space-x-40 pt-4">
           {statusHistory.map((status, index) => (
             <div key={status.id} className="relative flex flex-col items-center">
               {index < statusHistory.length - 1 && (

@@ -26,7 +26,7 @@ const DiscussionsPage = () => {
   const discussions = useSelector((state: RootState) => state.discussions.discussions);
   const loading = useSelector((state: RootState) => state.discussions.loading);
   const error = useSelector((state: RootState) => state.discussions.error);
-  const {apiId} = useParams();
+  const {id} = useParams();
 
 
 
@@ -88,13 +88,13 @@ const DiscussionsPage = () => {
   
   
   useEffect(() => {
-    if (apiId) {
-      const parameterNumber = parseInt(apiId, 10);
+    if (id) {
+      const parameterNumber = parseInt(id, 10);
       dispatch(fetchDiscussions(parameterNumber)); // Fetch discussions
 
       
     }
-  }, [dispatch, apiId]);
+  }, [dispatch, id]);
 
  
 
@@ -113,13 +113,10 @@ const DiscussionsPage = () => {
 
   return (
     <div className="flex flex-col min-h-screen">
-    <Navbar />
 
     <div className="flex-grow bg-mapi-neutral-3 ">
       <div className="mx-auto max-w-7xl mt-4"> 
         <div className="border border-white border-opacity-10 rounded-md">
-          <NavBar2 api={discussions.length > 0 ? discussions[0].api : undefined} />
-
           <div className='flex items-center justify-between pl-16 pr-8 py-2 mt-10'>
           <p className='text-white font-Inter font-normal text-2xl'>Discussions</p>
           <button onClick={handleOpenModal} className='text-[#21C3FC] bg-[#081028] w-fit py-1 px-2 border border-[#7E89AC] border-opacity-30 rounded-lg' >+ New Discussion</button>
@@ -134,7 +131,7 @@ const DiscussionsPage = () => {
         {currentDiscussions.map((discussion) => (
           <Link
             key={discussion.discussion_id}
-            to={`/DiscussionDetails/${discussion.discussion_id}`} // Specify your dynamic URL here
+            to={`${discussion.discussion_id}`} // Specify your dynamic URL here
             className='flex items-center w-[97%] my-7 border-b border-white border-opacity-10'
           >
             <img src={img1} alt="User Avatar" />

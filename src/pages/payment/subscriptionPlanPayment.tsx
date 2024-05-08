@@ -6,9 +6,7 @@ import { setPaymentMethod } from '../../components/features/payments/paymentMeth
 import { confirmPayment} from '../../components/features/payments/paymentSlice';
 import cibImage from '../../assets/cib.png';
 import edahabiyaImage from '../../assets/edahabia.jpg';
-import Navbar from '../../components/NavBar';
-import HalfNavBar from '../../components/HalfNavBar';
-import Footer from '../../components/Footer';
+
 export type AppDispatch = typeof store.dispatch
 
 const PlanDetailsPage = () => {
@@ -25,8 +23,9 @@ const PlanDetailsPage = () => {
   const handlePaymentMethodChange = (method: string) => {
     dispatch(setPaymentMethod(method));
   };
-  const handleConfirmPayment = (price: string) => {
-    
+  const handleConfirmPayment = (price: string,event) => {
+    event.preventDefault();
+    console.log(planDetails);
     try {
       if (planDetails) {
        
@@ -37,12 +36,13 @@ const PlanDetailsPage = () => {
           payment_method: paymentMethod,
           id_plan : parseInt(planDetails.id),
           api_version : planDetails.api_version,
-          typeplan : planDetails.typeplan 
+          typeplan : planDetails.type
 
         })).then((response) => {
             if (response.payload && response.payload) {
                 const payloadString = JSON.stringify(response.payload);
                 const payloadObject = JSON.parse(payloadString);
+                console.log(payloadObject.checkout_url);
                 window.location.href = payloadObject.checkout_url;  //checkoutUrl pour le paiement en utilisant ChargilyAPI
                    } else  {
               console.error('Payment error:');
@@ -65,14 +65,11 @@ const PlanDetailsPage = () => {
     
   }
   return (
-    <div className=" bg-mapi-neutral-2">
-
-    <Navbar/>
-    <div className="h-screen flex justify-center items-center bg-mapi-neutral-2 mx-auto  pb-20">
-<div className=" bg-mapi-neutral-2 w-full mx-auto my-8 sm:mx-4 flex flex-col items-center lg:w-3/4 xl:w-3/3 border border-gray-300 border-opacity-30 rounded-lg overflow-hidden shadow-2xl ">
-      <div className="payment-page-container flex justify-between space-x-8 shadow-xl lg:w-3/4 xl:w-2/3 border border-gray-300 border-opacity-30 rounded-lg overflow-hidden shadow-5xl mb-8 mt-8">
+    <div className=" bg-mapi-neutral-2 w-full h-full">
+    <div className=" flex justify-center items-center bg-mapi-neutral-2 mx-auto  pb-20 ">
+            <div className="payment-page-container flex justify-between space-x-8 shadow-xl  border border-gray-300 border-opacity-30 rounded-lg overflow-hidden shadow-5xl mb-8 mt-8">
         <div className="selected-plan-container bg-primary-secondary-1 p-8 rounded-lg text-white ">
-          <h2 className="text-2xl font-semibold mb-4 text-plus-jakarta-sans text-3xl text-mapi-neutral-5">You Selected The Plan</h2>
+          <h2 className="text-2xl font-semibold mb-4 text-plus-jakarta-sans text-xl text-mapi-neutral-5">You Selected The Plan</h2>
           <div className="flex flex-col space-y-4">
             <div className="plan-details-container-principal flex justify-between">
               <div className="plan-details-container bg-primary-secondary-1 p-4 rounded-lg text-mapi-neutral-5">
@@ -170,7 +167,7 @@ const PlanDetailsPage = () => {
       <span className="font-semibold text-plus-jakarta-sans text-base ml-14 text-mapi-neutral-5">
         {planDetails.subscription_price} DA
       </span>
-      <button className="w-full py-2 px-4 bg-gray-200 text-gray-800 rounded-md font-medium hover:bg-mapi-secondary-5 hover:text-white transition-colors duration-300 text-plus-jakarta-sans mt-5" onClick={() => handleConfirmPayment(planDetails.subscription_price)}>
+      <button className="w-full py-2 px-4 bg-gray-200 text-gray-800 rounded-md font-medium hover:bg-mapi-secondary-5 hover:text-white transition-colors duration-300 text-plus-jakarta-sans mt-5" onClick={(event) => handleConfirmPayment(planDetails.subscription_price,event)}>
         Confirm & Pay
       </button>
     </>
@@ -182,9 +179,6 @@ const PlanDetailsPage = () => {
 
       </div>
     </div>
-    </div>
-    <Footer/>
-    <br />
     </div>
   );
               }
