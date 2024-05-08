@@ -8,6 +8,7 @@ interface PaymentDetails {
   payment_method: string;
   id_plan: number;
   api_version: number;
+  typeplan :string
 }
 
 interface PaymentResponse {

@@ -2,81 +2,76 @@ import React from 'react';
 import search from '@/assets/search.png';
 import logo1 from '@/assets/logo_1.png'
 import img from '@/assets/Img.png'
-import Apidescription from "../../components/apidesciption"
+import Apidescription from "@/components/apidesciption"
 import "@/styles/index.css"
 import { useEffect } from 'react';
 import { useState } from 'react';
 import { useSelector } from 'react-redux';
-import { fetchPopularAPIs } from '../../components/features/apis/ApiSlice';
-import { RootState, useAppDispatch } from '../../app/store';
-import { searchAPIs, FilterCategorie, GetCategories, GetFonctionnalities, FilterFonctionnalite } from '../../components/features/apis/ApiSlice';
-import { fonctionnalities } from '@/types/fonctionnalities';
+import { fetchPopularAPIs } from '@/components/features/apis/ApiSlice';
+import { RootState, useAppDispatch } from '@/app/store';
+import { searchAPIs, FilterCategorie, FilterFonctionnalite } from '@/components/features/apis/ApiSlice';
+import { fetchCategories } from '@/components/features/apis/categoriesSlice';
+import { fetchFunctionalities } from '@/components/features/apis/functionalitiesSlice';
+import { functionality } from '@/types/functionality';
 import { categorie } from '@/types/categorie';
 import { ValidAttributes } from '@/types/API';
 import { Api } from '@/types/API';
-import Navbar from '../../components/NavBar';
-import Footer from '../../components/Footer';
+import Navbar from '@/components/NavBar';
+import Footer from '@/components/Footer';
 
 const MainPage: React.FC = () => {
     const dispatch = useAppDispatch();
-    const popularAPIs = useSelector((state: RootState) => state.apipopular.popularAPIs);
-    const status = useSelector((state: RootState) => state.apipopular.status);
-    const error = useSelector((state: RootState) => state.apipopular.error);
+    const popularAPIs = useSelector((state: RootState) => state.api.popularAPIs);
+    const status = useSelector((state: RootState) => state.api.status);
+    const error = useSelector((state: RootState) => state.api.error);
+
+   
     const [searchTerm, setSearchTerm] = useState('');
     const [categorieItem, setcategorieItem] = useState('');
     const [searchResults, setSearchResults] = useState<Api[]>([]);
-    const [Categories, setCategories] = useState<categorie[]>([]);
-    const [Fonctionnalities, setFonctionnalities] = useState<fonctionnalities[]>([]);
+
+   
+    const allCategories = useSelector((state: RootState) => state.categories.categories);
+    const allFunctionalities = useSelector((state: RootState) => state.functionalities.functionalities);
+    const categoriesLoading = useSelector((state: RootState) => state.categories.loading);
+    const functionalitiesLoading = useSelector((state: RootState) => state.functionalities.loading);
+
+
+    const [Categories, setCategories] = useState<categorie[]>(allCategories);
+    const [Fonctionnalities, setFonctionnalities] = useState<functionality[]>(allFunctionalities);
     const [showAllCategories, setShowAllCategories] = useState(false);
+    
 
-    console.log(Categories)
-    const filteredCategories = showAllCategories ? Categories : Categories.slice(0, 2);
+    const filteredCategories = showAllCategories ? Categories : Categories.slice(0, 4);
 
-    const handleSort = (attribute: ValidAttributes) => {
-        const sortedResults = [...searchResults];
-
-        sortedResults.sort((a, b) => {
-            if (a[attribute] < b[attribute]) {
-                return -1;
-            }
-            if (a[attribute] > b[attribute]) {
-                return 1;
-            }
-            return 0;
-        });
-
-        setSearchResults(sortedResults);
-    };
+   
+      
+    useEffect(() => {
+        dispatch(fetchPopularAPIs()); 
+        dispatch(fetchCategories());
+        dispatch(fetchFunctionalities());
+        
+    }, [dispatch]);
 
     useEffect(() => {
-        if (status === 'idle') {
-            dispatch(fetchPopularAPIs());
-        }
-    }, [status, dispatch]);
+        setCategories(allCategories);
+        setFonctionnalities(allFunctionalities);
+      }, [allCategories, allFunctionalities]);
+
     useEffect(() => {
-        const handleGetCategories = async () => {
-            const actionResult = await dispatch(GetCategories());
-            if (GetCategories.fulfilled.match(actionResult)) {
-                setCategories(actionResult.payload);
-            }
-        };
-        handleGetCategories();
-    }, [])
-    useEffect(() => {
-        const handleGetFonctionnalities = async () => {
-            const actionResult = await dispatch(GetFonctionnalities());
-            if (GetFonctionnalities.fulfilled.match(actionResult)) {
-                setFonctionnalities(actionResult.payload);
-            }
-        };
-        handleGetFonctionnalities();
-    }, [])
+        setSearchResults(popularAPIs);
+    }, [popularAPIs]);
+
+
     const handleSearch = async () => {
         const actionResult = await dispatch(searchAPIs(searchTerm));
         if (searchAPIs.fulfilled.match(actionResult)) {
             setSearchResults(actionResult.payload);
+            
         }
     };
+
+
     const handleFilterCategorie = async (selectedCategory: string) => {
         const actionResult = await dispatch(FilterCategorie(selectedCategory));
         if (FilterCategorie.fulfilled.match(actionResult)) {
@@ -90,19 +85,70 @@ const MainPage: React.FC = () => {
         }
     };
 
+    const handleSort = (attribute: keyof Api) => {
+
+        if (!searchResults || searchResults.length === 0) {
+          console.warn("searchResults is empty or not initialized.");
+          return;
+        }
+      
+        const sortedResults = [...searchResults];
+        const firstResult = sortedResults[0];
+      
+        if (!firstResult) {
+          console.warn("First element in sortedResults is undefined.");
+          return;
+        }
+      
+
+        if (!(attribute in firstResult)) {
+          console.warn(`Attribute "${attribute}" does not exist in the first element.`);
+          return; 
+        }
+      
+        sortedResults.sort((a, b) => {
+          const valA = a[attribute];
+          const valB = b[attribute];
+      
+          if (valA == null) {
+            return valB == null ? 0 : 1; 
+          }
+          if (valB == null) {
+            return -1;
+          }
+      
+          
+          if (typeof valA === 'string' && typeof valB === 'string') {
+            return -valA.localeCompare(valB); 
+          } else if (typeof valA === 'number' && typeof valB === 'number') {
+            return valB - valA; 
+          }
+      
+          return 0; 
+        });
+      
+        setSearchResults(sortedResults);
+      };
 
 
-    if (status === 'loading') {
-        return <div>Loading...</div>;
+
+    // if (status === 'loading') {
+    //     return <div>Loading...</div>;
+    // }
+
+    // if (status === 'failed') {
+    //     return <div>Error: {error}</div>;
+    // }
+
+
+    const allLoading = categoriesLoading || functionalitiesLoading;
+
+    if (allLoading) {
+        return <div>Loading...</div>; 
     }
+  
 
-    if (status === 'failed') {
-        return <div>Error: {error}</div>;
-    }
-
-
-
-
+ 
     return (
         <main>
             <Navbar />
@@ -200,23 +246,23 @@ const MainPage: React.FC = () => {
                                 )}
                             </div>
                         </div>
-                        {searchResults.length < 0 && (
+                        {/* {searchResults.length < 0 && (
                             <div className=' bg-[#] border border-opacity-30 border-[#7E89AC] rounded shadow-md w-[80%] ml-4 p-4' >
                                 <p className='font-semibold font-inter text-[#FFFFFF] pb-2 '>Popular APIs</p>
                                 <div className='flex flex-wrap'>
                                     {popularAPIs.map(api => (
-                                        <Apidescription key={api.id} id={api.id} name={api.name} description={api.description} category_name={api.category_name} />
+                                        <Apidescription key={api.api_id} id={api.api_id} name={api.name} description={api.description} category_name={api.category_name} />
                                     ))}
                                 </div>
 
                             </div>
-                        )}
+                        )} */}
                         {searchResults.length == 0 && (
                             <div className=' bg-[#] border border-opacity-30 border-[#7E89AC] rounded shadow-md w-[80%] ml-4 p-4' >
                                 <p className='font-semibold font-inter text-[#FFFFFF] pb-2 '>Popular APIs</p>
                                 <div className='flex flex-wrap'>
                                     {popularAPIs.map(api => (
-                                        <Apidescription key={api.id} id={api.id} name={api.name} description={api.description} category_name={api.category_name} />
+                                        <Apidescription key={api.api_id} id={api.api_id} name={api.name} description={api.description} category_name={api.category_name} />
                                     ))}
                                 </div>
 
@@ -227,9 +273,9 @@ const MainPage: React.FC = () => {
                             <div className=' bg-[#] border border-opacity-30 border-[#7E89AC] rounded shadow-md w-[80%] ml-4 p-4' >
                                 <div className='flex flex-wrap'>
                                     {searchResults.map(api => (
+  
 
-
-                                        <Apidescription key={api.id} id={api.id} name={api.name} description={api.description} category_name={api.category_name} />
+                                        <Apidescription key={api.api_id} id={api.api_id} name={api.name} description={api.description} category_name={api.category_name} />
 
                                     ))}
                                 </div>

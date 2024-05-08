@@ -1,8 +1,44 @@
 /* Jakarta Sans Plus */
 @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:ital,wght@0,200..800;1,200..800&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+/* Inter */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+/* Public Sans*/
+@import url('https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap');
 @import 'tailwindcss/base';
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
 
+
+@layer components {
+
+  
+
+
+    .add-api-input {
+      @apply border border-[#858C94] rounded-lg px-2 py-2 outline-none;
+    }
+    
+    .add-api-input:hover,
+    .add-api-input:focus {
+      @apply border border-[#004AD7];
+    }
+    .add-api-input::placeholder {
+      @apply text-[#858C94] font-bold text-sm;
+    }
+    
+    .update-api-input {
+      @apply border-2 border-[#3E3C52] bg-[#081028] text-sm font-normal rounded-md p-1.5 text-[#BFBFBF] outline-none;
+    }
+    .add-plan {
+      @apply border border-[#404040] rounded-lg p-2 outline-none bg-[#081028] text-[#BFBFBF];
+    }
+    .add-plan:hover,
+    .add-plan:focus {
+      @apply border border-[#404040];
+    }
+    .add-plan::placeholder {
+      @apply text-[#858C94] font-bold text-sm;
+    }
+   }
 
