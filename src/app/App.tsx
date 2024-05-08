@@ -69,8 +69,6 @@ const App = () => {
 
         <Route path="/admin/users" element={<UsersTable />} />
 
-
-
       </Routes>
     </Router>
   );
