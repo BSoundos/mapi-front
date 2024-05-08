@@ -1,5 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
+import { BACKEND_BASE_URL } from '@/data/constants';
 
 export const fetchCategories = createAsyncThunk(
   'categories/fetchCategories',
@@ -9,7 +10,7 @@ export const fetchCategories = createAsyncThunk(
       const headers = {
         Authorization: `Token ${token}`,
       };
-      const response = await axios.get('http://localhost:8000/apis_management/get-all-categories', { headers });
+      const response = await axios.get(`${BACKEND_BASE_URL}/apis_management/get-all-categories`, { headers });
       return response.data;
     } catch (error) {
       // If the error is from the server, return the error response data

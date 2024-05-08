@@ -18,7 +18,7 @@ import invoicesReducer from '@/components/features/invoices/invoiceSlice';
 import apiProviderReducer from '@/components/features/apis_management/apiSlice';
 import versionReducer from '@/components/features/apis_management/versionSlice';
 import categoriesReducer from '@/components/features/apis/categoriesSlice';
-import apipopularReducer from '@/components/features/apis/ApiSlice';
+import apiReducer from '@/components/features/apis/ApiSlice';
 import AboutReducer from '@/components/features/apis/AboutSlice';
 import functionalitiesReducer from '@/components/features/apis/functionalitiesSlice';
 import subscriptionplanReducer from '@/components/features/apis_management/subPlanSlice';
@@ -33,6 +33,7 @@ import objectMonthUserReducer from '@/components/features/apis_management/object
 import { useDispatch } from 'react-redux';
 import subscriptionReducer from '@/components/features/subscriptions/SubscriptionsListSlice';
 
+import ReviewReducer from '@/components/features/apis/ReviewSlice';
 
 import discussionsReducer from '@/components/features/discussions/discussionsSlice';
 import discussionReducer from '@/components/features/discussions/discussionSlice';
@@ -44,6 +45,7 @@ import generateAccessKeyReducer from '@/components/features/payments/generateAcc
 import TicketReducer from '@/components/features/tickets/TicketSlice';
 import TicketDiscussionReducer from  '@/components/features/tickets/TicketDiscussionSlice';
 import invoicesDReducer from '@/components/features/invoices/invoiceDetailSlice';
+import Review from '@/components/Review';
 
 
 
@@ -60,7 +62,7 @@ const store = configureStore({
     accesskey: generateAccessKeyReducer,
     invoiceHistory: invoicesReducer,
     invoiceDetail: invoicesDReducer,
-    apipopular: apipopularReducer,
+    api: apiReducer,
     AboutSlice: AboutReducer,
     apiProvider:apiProviderReducer,
     versions:versionReducer,
@@ -83,6 +85,7 @@ const store = configureStore({
     addDiscussion: addDiscussionReducer,
     replies: repliesReducer,
     addReply: addReplyReducer,
+    review: ReviewReducer,
     // other reducers...
   },
 });

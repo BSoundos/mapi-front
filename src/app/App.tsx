@@ -60,7 +60,7 @@ const App = () => {
         {/* Api Hub */}
         <Route path='api' element={<Api />} >
           <Route index element={<ApiAbout />} />
-          <Route path='about' element={<ApiAbout />} />
+          <Route path='about/:pk' element={<ApiAbout />} />
           <Route path='endpoints' element={<Endpoints />} />
           <Route path='documentation' element={<Documentation />} />
           <Route path='pricing' element={<Pricing />} />
