@@ -18,7 +18,7 @@ const PaginationR: React.FC<PaginationProps> = ({ currentPage, totalPages, onPag
           page={currentPage}
           variant="outlined"
           shape="rounded"
-          onChange={(event, page) => onPageChange(page)}
+          onChange={(_event, page) => onPageChange(page)}
           sx={{
             '& .MuiPaginationItem-page': {
               color: '#0D93F2', // Couleur des nombres

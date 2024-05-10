@@ -41,6 +41,7 @@ import Discussion from '@/pages/support_hub/TicketDiscussionsPage';
 import UserTicketsPage from '@/pages/support_hub/userTickets';
 import UserAddTicket from '@/pages/support_hub/AddTicket';
 import UserTicketDiscussionPage from '@/pages/support_hub/userTicketDiscussion';
+import UsersTable from "@/pages/admin/UsersTable.tsx";
 
 const App = () => {
 
@@ -98,12 +99,14 @@ const App = () => {
 
 
          {/* Provider Pages  */}
-        
+
          <Route path="/my-apis" element={<MyApis />} />
         <Route path="/version-api/:id" element={<VersionsApi/>}/>
         <Route path="/general-api/:id" element={<GeneralApi/>}/>
         <Route path="/pricing-api/public/:id" element={<PricingPublicApi/>}/>
         <Route path="/pricing-api/private/:id" element={<PricingPrivateApi/>}/>
+
+        <Route path="/admin/users" element={<UsersTable />} />
 
 
       </Routes>
