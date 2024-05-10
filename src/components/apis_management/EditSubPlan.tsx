@@ -3,6 +3,7 @@ import CheckboxInput from "@/components/ui/CheckBoxInput";
 import { updateSubscriptionPlan,fetchAllSubscriptionPlansByVersion } from "@/components/features/apis_management/subPlanSlice";
 import { useAppDispatch } from "@/app/store";
 import { EditSubPlanProps } from "@/types/EditSubPlanProps";
+import { useState } from "react";
 
 
 
@@ -14,14 +15,42 @@ const EditSubPlan: React.FC<EditSubPlanProps> = ({
 }) => {
   const dispatch = useAppDispatch();
  
+  const [showTypeChangeWarning, setShowTypeChangeWarning] = useState("");
+
   const handleEditPlanInputChange = (e) => {
     const { name, value, type } = e.target;
     const updatedValue = type === 'number' ? Number(value) : value;
-    setEditForm((prevData) => ({
-      ...prevData,
-      [name]: updatedValue,
-    }));
+    const prevType = editForm.type?.toLowerCase();
+  
+    if (name === 'type') {
+      const newType = updatedValue.toLowerCase();
+  
+      if (prevType !== newType) {
+        setShowTypeChangeWarning("If you change the plan type, you need to rewrite all the object values.");
+      } else {
+        setShowTypeChangeWarning("");
+      }
+  
+      if (newType === 'pay_per_use') {
+        setEditForm((prevData) => ({
+          ...prevData,
+          [name]: updatedValue,
+          subscription_price: 0,
+        }));
+      } else {
+        setEditForm((prevData) => ({
+          ...prevData,
+          [name]: updatedValue,
+        }));
+      }
+    } else {
+      setEditForm((prevData) => ({
+        ...prevData,
+        [name]: updatedValue,
+      }));
+    }
   };
+
   const handleSubmit = (e: React.FormEvent, id: number, data: any) => {
     e.preventDefault(); 
     dispatch(updateSubscriptionPlan({ id, data }));
@@ -63,9 +92,10 @@ const EditSubPlan: React.FC<EditSubPlanProps> = ({
                       onChange={handleEditPlanInputChange}
                       disabled={false}
                     />
-             
+                    <p className="text-mapi-text">{showTypeChangeWarning}</p>
             </div>
           </div>
+
           <div className="mb-4 flex gap-6 items-center">
   <label htmlFor="recommended" className="text-sm font-semibold text-mapi-text w-44">
     Recommended

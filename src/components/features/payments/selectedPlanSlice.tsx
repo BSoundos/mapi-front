@@ -31,6 +31,8 @@ interface PlanDetails {
   rate_limit :  number;
   api_version : number ;
   typeplan : string;
+  type : string;
+
 }
 
 interface PlanState {

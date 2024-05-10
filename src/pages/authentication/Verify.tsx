@@ -50,10 +50,10 @@ const Verify = () => {
     e.preventDefault();
     try {
       const response = await dispatch(verify({ ...credentials, verification_code: credentials.verification_code.join('') }));
-      console.log("Response succes: " + response.msg);
       if (response && response.msg === 'user is verified! ') { // The space in this (response.msg === 'user is verified! ') is OBLIGATORY 
         setVerificationSuccess('The code is correct!');
         setTimeout(() => {
+          localStorage.removeItem("verificationNeeded")
           window.location.href = '/login';
         }, 2000);
       }

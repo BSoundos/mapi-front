@@ -2,16 +2,15 @@ import { BACKEND_BASE_URL } from '@/data/constants';
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-
-export const fetchCategories = createAsyncThunk(
-  'categories/fetchCategories',
-  async (_, { rejectWithValue }) => {
+export const fetchEndpoints = createAsyncThunk(
+  'endpoints/fetchEndpoints',
+  async (id, { rejectWithValue }) => {
     try {
       const token = localStorage.getItem('token');
       const headers = {
         Authorization: `Token ${token}`,
       };
-      const response = await axios.get(`${BACKEND_BASE_URL}/apis_management/get-all-categories`, { headers });
+      const response = await axios.get(`${BACKEND_BASE_URL}/apis_management/get-all-endpoint-by-version/${id}/`, { headers });
       return response.data;
     } catch (error) {
       // If the error is from the server, return the error response data
@@ -24,29 +23,29 @@ export const fetchCategories = createAsyncThunk(
   }
 );
 
-const categoriesSlice = createSlice({
-  name: "categories",
+const endpointsSlice = createSlice({
+  name: "endpoints",
   initialState: {
-    categories: [],
+    endpoints: [],
     loading: false,
     error: null,
   },
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchCategories.pending, (state) => {
+      .addCase(fetchEndpoints.pending, (state) => {
         state.loading = true;
       })
-      .addCase(fetchCategories.fulfilled, (state, action) => {
+      .addCase(fetchEndpoints.fulfilled, (state, action) => {
         state.loading = false;
-        state.categories = action.payload;
+        state.endpoints = action.payload;
         state.error = null; // Reset the error when the fetch is successful
       })
-      .addCase(fetchCategories.rejected, (state, action) => {
+      .addCase(fetchEndpoints.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload; // Store the error payload
       });
   },
 });
 
-export default categoriesSlice.reducer;
+export default endpointsSlice.reducer;

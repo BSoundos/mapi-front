@@ -4,6 +4,7 @@ import { BACKEND_BASE_URL } from '@/data/constants';
 const initialState = {
   privatePlans: [],
   privatePlan: {},
+  invitation:{},
   loading: false,
   error: null,
 };
@@ -40,8 +41,56 @@ export const getPrivatePlan = createAsyncThunk(
       }
     }
   );
+  export const searchUsers = createAsyncThunk<User[], string>(
+    'privatePlan/searchUsers',
+    async (searchQuery: string): Promise<User[]> => {
+      const token = localStorage.getItem('token');
+      const headers = {
+        Authorization: `Token ${token}`,
+      };
+      const response = await axios.get(`${BACKEND_BASE_URL}/apis_management/search-users/?q=${searchQuery}`, { headers });
+      const data = response.data;
+  
+      const mappedData: User[] = data.map((user: any) => ({
+          id: user.id,
+          username: user.username,
+          first_name: user.first_name,
+          last_name:user.last_name
+      }));
+  
+      return mappedData;
+    }
+  );
 
+  export const inviteUser = createAsyncThunk<
+  { message: string },
+  { id: number; data: { selected_user_id: number } },
+  { rejectValue: string }
+>('privatePlan/inviteUser', async ({ id, data }, { rejectWithValue }) => {
+  try {
+    const token = localStorage.getItem('token');
+    const headers = {
+      Authorization: `Token ${token}`,
+      'Content-Type': 'application/json',
+    };
 
+    const response = await axios.post(
+      `${BACKEND_BASE_URL}/apis_management/invite-user-to-plan/${id}/`,
+      data,
+      { headers }
+    );
+
+    return response.data;
+  } catch (error) {
+    if (axios.isAxiosError(error)) {
+      const errorMessage =
+        error.response?.data?.error || 'Failed to invite user to this plan';
+      return rejectWithValue(errorMessage);
+    } else {
+      throw error;
+    }
+  }
+});
 
   
  
@@ -119,18 +168,18 @@ const privatePlanSlice = createSlice({
         state.loading = false;
         state.error = action.error?.message;
       })
-      .addCase(getPrivatePlan.pending, (state) => {
+      .addCase(inviteUser.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(getPrivatePlan.fulfilled, (state, action) => {
+      .addCase(inviteUser.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.privatePlan = action.payload;
+        state.invitation = action.payload;
       })
-      .addCase(getPrivatePlan.rejected, (state, action) => {
+      .addCase(inviteUser.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.error?.message;
+        state.error = action.payload;
       })
       .addCase(addPrivatePlan.pending, (state) => {
         state.loading = true;

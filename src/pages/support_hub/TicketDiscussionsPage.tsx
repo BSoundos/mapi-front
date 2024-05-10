@@ -10,10 +10,11 @@ import TicketDiscussion from '@/components/Support_hub/TicketDiscussion';
 import { useParams,useNavigate } from 'react-router-dom';
 import ErrorModal from '@/components/Support_hub/ErrorModal';
 import SearchInput from '@/components/searchInput';
+import Loading from '@/components/ui/Loading';
+import SideBarPro from '@/components/apis_management/SideBarPro';
 
 
 const TicketDiscussionPage = () => {
-  const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const tickets = useSelector((state: RootState) => state.ticket.tickets);
   const loading = useSelector((state: RootState) => state.ticket.loading);
@@ -80,18 +81,18 @@ const TicketDiscussionPage = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
 
  
 
   return (
-    <div className="flex">
-      <Sidebar />
-      <div className="flex-1 bg-mapi-neutral-2 overflow-y-auto max-h-screen scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52]">
+    <div className="flex ">
+      <SideBarPro />
+      <div className="flex-1 bg-mapi-neutral-2 overflow-y-auto max-h-screen scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52] ">
         <SupportNav />
-        <div className="m-12">
+        <div className="px-6">
             {isErrorModalOpen && (
                 <ErrorModal
                   title="Error"
@@ -100,11 +101,11 @@ const TicketDiscussionPage = () => {
                   onClose={handleCloseErrorModal}
                 />
               )}
-          <h4 className="ml-4 font-inter font-bold text-white text-2xl">Support & Discussions</h4>
+          <h4 className="ml-4 mt-8 font-inter font-bold text-white text-lg">Support & Discussions</h4>
           <div className="bg-mapi-neutral-3 border border-corner-1-300 rounded-md mt-5 ml-5 p-5">
 
           
-            <div className="bg-mapi-neutral-3 border border-opacity-50 border-[#343B4F] rounded-md flex h-screen">
+            <div className="bg-mapi-neutral-3 border border-opacity-50 border-[#343B4F] rounded-md flex h-screen ">
             {/* Flex container */}
             
               <div className="w-1/3 pl-3 border-r border-opacity-50 border-[#343B4F]"> {/* 1/3 width for TicketItem list */}
@@ -114,6 +115,7 @@ const TicketDiscussionPage = () => {
                         searchTerm={searchTerm}
                         setSearchTerm={setSearchTerm}
                         handleSearch={handleSearch}
+                        placeholder="Search a ticket"
                       />
                     </div>
                 </div>

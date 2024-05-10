@@ -67,17 +67,17 @@ const getToken = () => {
 
   return localStorage.getItem('token'); // Retrieve token from localStorage
 };
-export const fetchSubscriptionPlans = createAsyncThunk<SubscriptionPlan[], number>(
-  'subscriptionPlans/fetchPlans',
+export const fetchSubscriptionPlansPerUse = createAsyncThunk<SubscriptionPlan[], number>(
+  'subscriptionPlans/fetchPlans-peruse',
   async (versionApiId: number) => {
     const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-per-use/subscription-plans/${versionApiId}/`);
-    console.log("subscription_plans",response.data)
+    console.log("subscription_plans per use ",response.data)
     return response.data; 
   }
 );
 
-export const fetchUserPlans = createAsyncThunk<UserPlan[], number>(
-  'userPlans/fetchPlans',
+export const fetchUserPlansPerUse = createAsyncThunk<UserPlan[], number>(
+  'userPlans/fetchPlans-peruse',
   async (versionApiId: number) => {
     const token = getToken();
     const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-per-use/user-plans/${versionApiId}/`,{
@@ -91,7 +91,7 @@ export const fetchUserPlans = createAsyncThunk<UserPlan[], number>(
 );
 
 const subscriptionPlansPerUseSlice = createSlice({
-  name: 'subscriptionPlans',
+  name: 'subscriptionPlansPerUse',
   initialState: {
     plans: [],
     userplans: [],
@@ -106,26 +106,26 @@ const subscriptionPlansPerUseSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchSubscriptionPlans.pending, (state) => {
+      .addCase(fetchSubscriptionPlansPerUse.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchSubscriptionPlans.fulfilled, (state, action) => {
+      .addCase(fetchSubscriptionPlansPerUse.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.plans = action.payload;
       })
-      .addCase(fetchSubscriptionPlans.rejected, (state, action) => {
+      .addCase(fetchSubscriptionPlansPerUse.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || 'An error occurred';
       })
-      .addCase(fetchUserPlans.pending, (state) => {
+      .addCase(fetchUserPlansPerUse.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchUserPlans.fulfilled, (state, action) => {
+      .addCase(fetchUserPlansPerUse.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.userplans = action.payload;
         console.log("state.userplans",state.userplans )
       })
-      .addCase(fetchUserPlans.rejected, (state, action) => {
+      .addCase(fetchUserPlansPerUse.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || 'An error occurred';
       });

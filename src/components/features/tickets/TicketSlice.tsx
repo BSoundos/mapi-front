@@ -80,6 +80,37 @@ export const FetchProviderTickets = createAsyncThunk<Ticket[]>(
     }
   );
 
+  export const searchUserTickets = createAsyncThunk<Ticket[], string>(
+    'Tickets/searchUserTickets',
+    async (searchQuery: string): Promise<Ticket[]> => {
+      const response = await axios.get(`${BACKEND_BASE_URL}/support_hub/tickets_user/search/?q=${searchQuery}`);
+      const data = response.data;
+  
+      const mappedData: Ticket[] = data.map((ticket: any) => ({
+        id: ticket.id,
+        title: ticket.title,
+        content: ticket.content,
+        user: {
+          id: ticket.user.id,
+          username: ticket.user.username,
+          first_name: ticket.user.first_name,
+          last_name: ticket.user.last_name
+        },
+        priority: ticket.priority,
+        api: ticket.api,
+        status_history: ticket.status_history.map((status: StatusHistoryItem) => ({
+          id: status.id,
+          status: status.status,
+          update_message: status.update_message,
+          update_date: status.update_date,
+          ticket: status.ticket,
+        })),
+      }));
+  
+      return mappedData;
+    }
+  );
+
   export const fetchTicketsByPriority = createAsyncThunk<Ticket[], number>(
     'Tickets/fetchTicketsByPriority',
     async (priority: number): Promise<Ticket[]> => {
@@ -382,7 +413,6 @@ const TicketSlice = createSlice({
       .addCase(updateTicketPriority.fulfilled, (state, action) => {
         state.loading = false; 
         const updatedTicket = action.payload;
-        console.log("updated ticket in priority = ",updatedTicket);
         const index = state.tickets.findIndex(
           (ticket) => ticket.id === updatedTicket.id
         );

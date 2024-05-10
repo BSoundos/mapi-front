@@ -1,7 +1,7 @@
 import logo from "@/assets/logo.png";
 import { Link,useLocation } from 'react-router-dom';
 import { PiBarcode } from "react-icons/pi";
-import { BiSolidDashboard ,BiDollar } from "react-icons/bi";
+import { BiSolidDashboard ,BiDollar ,BiSupport} from "react-icons/bi";
 import { IoBag } from "react-icons/io5";
 import { logout } from "@/components/features/authentication/authActions";
 import { useAppDispatch } from "@/app/store";
@@ -18,11 +18,12 @@ function SideBarPro() {
     { icon:<BiSolidDashboard size={24} />,text: 'Dashboard', path: '/dashboard' },
     { icon:<IoBag size={24} /> ,text: 'My APIs', path: '/my-apis' },
     {icon:<BiDollar size={24} />, text: 'Billing & Incomes', path: '/billing-incomes' },
-    {icon:<PiBarcode size={24} />, text: 'Updates & FAQ', path: '/updates-faq' },
+    { icon: <BiSupport size={24} />, text: 'Ticket System', path: '/Tickets' },
   ];
   const dispatch=useAppDispatch();
   const handleLogout = () => {
     dispatch(logout());
+    localStorage.removeItem('token')
   };
 
 
@@ -64,7 +65,7 @@ function SideBarPro() {
               <p className="text-mapi-neutral-4 font-semibold -mt-0.5">{email}</p>
             </div>
           </div>
-          <Link to="/" className="  border-2 border-[#343839] flex justify-center items-center text-white rounded-xl py-2 mx-3 font-bold">Settings</Link>
+          <Link to="/providerProfileSettings" className="  border-2 border-[#343839] flex justify-center items-center text-white rounded-xl py-2 mx-3 font-bold">Settings</Link>
           <button onClick={handleLogout} className=" border-2 border-[#343839] flex justify-center items-center text-white rounded-xl py-2 mx-3 font-bold">Logout</button>
         </div>
     </div>

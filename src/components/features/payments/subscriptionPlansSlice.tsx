@@ -54,7 +54,7 @@ interface SubscriptionPlan {
 }
 
 interface SubscriptionPlansState {
-  plans: SubscriptionPlan[];
+  monthlyplans: SubscriptionPlan[];
   userplans: UserPlan[];
   selectedPlan: SubscriptionPlan | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -62,7 +62,7 @@ interface SubscriptionPlansState {
 }
 
 export const fetchSubscriptionPlans = createAsyncThunk<SubscriptionPlan[], number>(
-  'subscriptionPlans/fetchPlans',
+  'subscriptionPlans/fetchPlans-permonth',
   async (versionApiId: number) => {
     const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-per-month/subscription-plans/${versionApiId}/`);
     console.log("subscription_plans",response.data)
@@ -92,7 +92,7 @@ export const fetchUserPlans = createAsyncThunk<UserPlan[], number>(
 const subscriptionPlansSlice = createSlice({
   name: 'subscriptionPlans',
   initialState: {
-    plans: [],
+    monthlyplans: [],
     userplans: [],
     selectedPlan: null,
     status: 'idle',
@@ -110,7 +110,7 @@ const subscriptionPlansSlice = createSlice({
       })
       .addCase(fetchSubscriptionPlans.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.plans = action.payload;
+        state.monthlyplans = action.payload;
       })
       .addCase(fetchSubscriptionPlans.rejected, (state, action) => {
         state.status = 'failed';

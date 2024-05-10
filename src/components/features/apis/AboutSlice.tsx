@@ -48,6 +48,7 @@ export const fetchApiById = createAsyncThunk<
 const AboutSlice = createSlice({
   name: 'AboutSlice',
   initialState: {
+    api:null,
     data: null,
     status: 'idle',
     error: null,

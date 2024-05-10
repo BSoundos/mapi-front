@@ -18,7 +18,7 @@ const Feature: React.FC<FeatureProps> = ({ feature }) => {
   const [editfeatureFormData, setEditfeatureFormData] = useState({
     name: feature.name,
     description: feature.description,
-    endpoints: feature.endpoint,
+    endpoints: feature.endpoints,
   });
 
  

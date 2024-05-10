@@ -2,13 +2,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 
 import store, { RootState } from '@/app/store';
-import Navbar from '@/components/NavBar';
-import NavBar2 from '@/components/NavBar2';
+
 import Footer from '@/components/Footer';
 import { Link, useParams } from 'react-router-dom';
 import { fetchReplies } from '@/components/features/discussions/ReplySlice';
 import { fetchDiscussion } from '@/components/features/discussions/discussionSlice';
 import { postReply } from '@/components/features/discussions/addReplySlice';
+import Loading from '@/components/ui/Loading';
 
 
 
@@ -29,7 +29,7 @@ const DiscussionDetailsPage = () => {
 
   //for the discussion
   const discussion = useSelector((state: RootState) => state.discussion.discussion);
-  const { discussionId } = useParams();
+  const {iddis} = useParams();
 
   //for adding a reply
   const [content, setContent] = useState('');
@@ -67,21 +67,20 @@ const DiscussionDetailsPage = () => {
 
   //To fetsch the discussion and the replies of the discussion
   useEffect(() => {
-    console.log(discussionId)
-    if (discussionId) {
-      const discussionIdNumber = parseInt(discussionId, 10);
+    if (iddis) {
+      const  discussionIdNumber = parseInt(iddis, 10);
       dispatch(fetchDiscussion(discussionIdNumber)); // Fetch discussion when component mounts
       dispatch(fetchReplies(discussionIdNumber)); // Fetch replies for a specific discussion
     }
-
-  }, [dispatch, discussionId]);
+    
+  }, [dispatch, iddis]);
 
 
   //To add a new reply:
   const handlePostComment = () => {
-    if (!content.trim() || !discussionId) return; // Prevent posting empty content or invalid discussionId
+    if (!content.trim() || !iddis) return; // Prevent posting empty content or invalid discussionId
 
-    const discussionIdNumber = parseInt(discussionId, 10); // Parse discussionId to a number
+    const discussionIdNumber = parseInt(iddis, 10); // Parse discussionId to a number
     const newReply = {
       discussionId: discussionIdNumber,
       content,
@@ -99,7 +98,7 @@ const DiscussionDetailsPage = () => {
 
 
   if (loading) {
-    return <div>Loading for replies...</div>;
+    return <Loading/>;
   }
 
   if (error) {
@@ -109,21 +108,19 @@ const DiscussionDetailsPage = () => {
 
 
 
-  return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      {discussion && (
-        <div className="flex-grow bg-mapi-neutral-3 ">
-          <div className="mx-auto max-w-7xl mt-4">
-            <div className="border border-white border-opacity-10 rounded-md">
-              <NavBar2 api={discussion.api} />
+return (
+  <div className="flex flex-col min-h-screen">
+    {discussion && (
+    <div className="flex-grow bg-mapi-neutral-3 ">
+      <div className="mx-auto max-w-7xl mt-4"> 
+        <div className="border border-white border-opacity-10 rounded-md">
 
-              {/*Displaying the discussion info:*/}
-              <div className='pl-16 pr-8 py-2'>
-                <Link to={`/Discussions/${discussion.api?.api_id}`}>
-                  <p className='font-inter font-normal text-sm text-[#007BFF]  py-4'>&lt; Back to All Discussions</p>
-                </Link>
-                <p className='font-inter font-normal text-2xl text-secondary-gray  py-4'>{discussion.title}</p>
+          {/*Displaying the discussion info:*/ }
+          <div className='pl-16 pr-8 py-2'>
+          <Link to={`/api/Discussions/${discussion.api?.api_id}`}>
+            <p className='font-inter font-normal text-sm text-[#007BFF]  py-4'>&lt; Back to All Discussions</p>
+          </Link>
+            <p className='font-inter font-normal text-2xl text-secondary-gray  py-4'>{discussion.title}</p>
 
                 <div >
                   <p className='text-base text-[#007BFF] '>{discussion.user?.username}</p>
@@ -153,26 +150,24 @@ const DiscussionDetailsPage = () => {
                 ))}
               </div>
 
-              <div className='pl-16 pr-8 py-1 flex flex-col'>
-                <p className='text-sm text-white opacity-80 pb-1'>Join in the discussion - add comment below:</p>
-                <textarea
-                  value={content}
-                  onChange={(e) => setContent(e.target.value)}
-                  className="bg-[#081028] text-white border border-[#404040] h-40 rounded-md p-2"
-                />
-                <button
-                  onClick={handlePostComment}
-                  className="text-white font-semibold text-sm bg-[#141943] border border-[#404040] px-1 py-1 my-2 max-w-[9rem] rounded-md"
-                >
-                  Post Comment
-                </button>
-              </div>
-
-
-            </div>
-          </div>
+        <div className='pl-16 pr-8 py-1 flex flex-col'>
+          <p className='text-sm text-white opacity-80 pb-1'>Join in the discussion - add comment below:</p>
+          <textarea
+            value={content}
+            onChange={(e) => setContent(e.target.value)}
+            className="bg-[#081028] text-white border border-[#404040] h-40 rounded-md p-2"
+          />
+          <button
+            onClick={handlePostComment}
+            className="text-white font-semibold text-sm bg-[#141943] border border-[#404040] px-1 py-1 my-2 max-w-[9rem] rounded-md"
+          >
+            Post Comment
+          </button>
         </div>
-      )}
+       </div>
+      </div>
+    </div>
+    )}
 
       <Footer />
     </div>

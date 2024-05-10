@@ -50,7 +50,6 @@ export const fetchDiscussions = createAsyncThunk<Discussion[], number>(
         Authorization: `Token ${token}`
       }
     });
-    console.log(response.data)
     return response.data; 
   }
 );

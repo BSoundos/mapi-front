@@ -45,7 +45,7 @@ const initialState: PlanState = {
   error: null,
 };
 //recuperer les détails d'un plan selectionné
-export const fetchPlanDetails = createAsyncThunk<PlanDetails, { planId: string , objectPrices: { id: string, name: string, price: number }[]}>(
+export const fetchPlanDetailsPerUse = createAsyncThunk<PlanDetails, { planId: string , objectPrices: { id: string, name: string, price: number }[]}>(
   'plans/fetchPlanDetails',
   async ({planId, objectPrices }) => {
     try {
@@ -65,7 +65,7 @@ export const fetchPlanDetails = createAsyncThunk<PlanDetails, { planId: string ,
 
 
 
-export const fetchUserPlanDetails = createAsyncThunk<PlanDetails, { planId: number }>(
+export const fetchUserPlanDetailsPerUse = createAsyncThunk<PlanDetails, { planId: number }>(
   'plans/fetchUserPlanDetails',
   async ({ planId }) => {
     try {
@@ -86,27 +86,27 @@ const planPerUseSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPlanDetails.pending, (state) => {
+      .addCase(fetchPlanDetailsPerUse.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchPlanDetails.fulfilled, (state, action) => {
+      .addCase(fetchPlanDetailsPerUse.fulfilled, (state, action) => {
         state.loading = false;
         state.details = action.payload;
       })
-      .addCase(fetchPlanDetails.rejected, (state, action) => {
+      .addCase(fetchPlanDetailsPerUse.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? 'Failed to fetch plan details';
       })
-      .addCase(fetchUserPlanDetails.pending, (state) => {
+      .addCase(fetchUserPlanDetailsPerUse.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchUserPlanDetails.fulfilled, (state, action) => {
+      .addCase(fetchUserPlanDetailsPerUse.fulfilled, (state, action) => {
         state.loading = false;
         state.details = action.payload;
       })
-      .addCase(fetchUserPlanDetails.rejected, (state, action) => {
+      .addCase(fetchUserPlanDetailsPerUse.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message ?? 'Failed to fetch plan details';
       });

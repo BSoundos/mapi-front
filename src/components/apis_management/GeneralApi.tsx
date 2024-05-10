@@ -38,6 +38,7 @@ export default function GeneralApi() {
       name: api.name,
       category: api.category,
       description: api.description,
+      is_visible:api.is_visible,
     });
   }, [api]);
 
@@ -47,6 +48,7 @@ export default function GeneralApi() {
       category: api.category,
       description: api.description,
       is_visible: api.is_visible,
+      documentation_url:api.documentation_url,
       functionalities: api.functionalities,
     });
   };
@@ -79,6 +81,7 @@ export default function GeneralApi() {
           name: formData.name,
           category: formData.category,
           description: formData.description,
+          is_visible:formData.is_visible,
           functionalities: api.functionalities,
         },
       })
@@ -106,7 +109,7 @@ export default function GeneralApi() {
   return (
     <div className="flex ">
       <SideBarPro />
-      <div className="bg-mapi-neutral-2 flex-1 ">
+      <div className="bg-mapi-neutral-2 flex-1  ">
         <Navbar id={id} />
         {!api.loading ? (
           <div className="overflow-y-auto max-h-[80vh] w-fit  scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52]">
@@ -126,6 +129,21 @@ export default function GeneralApi() {
                         placeholder="Name of api"
                         required
                         value={formData.name}
+                        onChange={handleInputChange}
+                        className="mt-1 update-api-input w-1/2"
+                      />
+                    </div>
+                    <div className="mb-2 flex flex-col gap-1">
+                      <label htmlFor="documentation" className="block text-sm font-semibold text-[#BFBFBF] ">
+                        Documentation Url
+                      </label>
+                      <input
+                        type="text"
+                        id="documentation_url"
+                        name="documentation_url"
+                        placeholder="Documentation of api"
+                        required
+                        value={formData.documentation_url}
                         onChange={handleInputChange}
                         className="mt-1 update-api-input w-1/2"
                       />
@@ -154,7 +172,7 @@ export default function GeneralApi() {
                         className="mt-1 update-api-input w-3/4 pb-5"
                       />
                     </div>
-                    <div className="mb-3 flex flex-col gap-2 items-start ">
+                    {/* <div className="mb-3 flex flex-col gap-2 items-start ">
                       <label htmlFor="visibily" className="block text-sm font-semibold text-[#BFBFBF]">
                         Visibilty
                       </label>
@@ -217,7 +235,7 @@ export default function GeneralApi() {
                          id="material-switch visibility"
                        />
                      </div>
-                   </div>
+                   </div> */}
                    <FunctionalitiesApi
                      api={id}
                      functionalities={api?.functionalities}

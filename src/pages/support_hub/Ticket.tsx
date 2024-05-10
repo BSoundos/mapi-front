@@ -6,11 +6,12 @@ import TicketDescription from '@/components/Support_hub/TicketDescription';
 import SupportNav from '@/components/Support_hub/SupportNav';
 import { Ticket } from '@/types/Ticket';
 import PaginationR from '@/components/PaginationR';
-import Sidebar from '@/components/Support_hub/Sidebar';
 import ErrorModal from '@/components/Support_hub/ErrorModal';
 import SearchInput from '@/components/searchInput';
 import { STATUS_CHOICES, PRIORITY_CHOICES } from '@/types/choices';
 import CustomSelect from '@/components/Support_hub/CustomSelect'; 
+import SideBarPro from '@/components/apis_management/SideBarPro';
+import Loading from '@/components/ui/Loading';
 
 const TicketPage = () => {
     
@@ -123,14 +124,14 @@ const TicketPage = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   
 
   return (
     <div className='flex'>
-    <Sidebar/>
+    <SideBarPro/>
     <div className='flex-1 bg-mapi-neutral-2 overflow-y-auto max-h-screen  scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52]'>
 
       <SupportNav />
@@ -145,7 +146,7 @@ const TicketPage = () => {
           )}
       
 
-      <div className=''>
+      <div className='px-6'>
         <h4 className="font-inter font-bold text-white text-2xl">Tickets Tracking</h4>
         <div className="font-public-sans flex justify-start space-x-6 text-[#BFBFBF] mt-8">
           <CustomSelect
@@ -170,6 +171,7 @@ const TicketPage = () => {
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
             handleSearch={handleSearch}
+            placeholder="Search a ticket"
           />
         </div>
       </div>

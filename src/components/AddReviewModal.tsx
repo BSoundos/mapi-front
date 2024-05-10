@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { addReview } from '@/components/features/apis/ReviewSlice';
 import { RootState, useAppDispatch } from '@/app/store';
 
@@ -14,7 +14,7 @@ const AddReviewModal: React.FC<AddReviewProps> = ({ apiId, onClose, isOpen }) =>
   const dispatch = useAppDispatch();
   const [comment, setComment] = useState('');
   const [rating, setRating] = useState(0); 
-  const status = useSelector((state: RootState) => state.review.loading);
+ 
   const error = useSelector((state: RootState) => state.review.error);
 
   const handleSubmit = () => {
@@ -22,10 +22,6 @@ const AddReviewModal: React.FC<AddReviewProps> = ({ apiId, onClose, isOpen }) =>
       console.error('Content or rating is missing');
       return;
     }
-
-    console.log("add Review apiID=",apiId);
-    console.log("add Review comment=",comment);
-    console.log("add Review rating=",rating);
     dispatch(addReview({ apiId, comment, rating })).then(() => {
       setComment('');
       setRating(0); 

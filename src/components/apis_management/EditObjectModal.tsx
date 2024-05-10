@@ -1,6 +1,7 @@
 import { EditObjectProps } from "@/types/EditObjectProps";
 import { removeObject,updateObject } from "@/components/features/apis_management/objectSlice";
-import { useAppDispatch } from "@/app/store";
+import { RootState, useAppDispatch } from "@/app/store";
+import { useSelector } from "react-redux";
 
 
 
@@ -12,7 +13,7 @@ const EditObjectModal: React.FC<EditObjectProps> = ({
   objectId
 }) => {
   const dispatch = useAppDispatch();
- 
+  const endpoints = useSelector((state:RootState)=>state.endpoints.endpoints);
   const handleEditObjectInputChange = (e) => {
     if (e.target.name === 'endpoints') {
         const selectedOptions = Array.from(
@@ -54,9 +55,15 @@ const EditObjectModal: React.FC<EditObjectProps> = ({
             <div className="mb-2 flex gap-6 items-center">
               <label htmlFor="endpoint" className="text-sm font-semibold text-mapi-text flex-1">Associated Endpoints</label>
               <select id="endpoint" multiple multiselect-search="true" multiselect-select-all="true"  name="endpoints"  onChange={handleEditObjectInputChange} className="add-plan w-4/5 multiselect">
-                <option value="">Select Endpoints</option>
-                <option value="1">zouj</option>
-                <option value="2">tlata</option>
+                <option value="" disabled>Select Endpoints</option>
+                {endpoints.map((endpoint) => (
+                  <option
+                key={endpoint.endpoint_id}
+                value={endpoint.endpoint_id}
+                selected={editForm.endpoints?.includes(endpoint.endpoint_id)} 
+                >
+                {endpoint.title}
+              </option>))}
               </select>
             </div>
             <div className="flex  justify-between mt-5 w-full">
