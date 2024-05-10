@@ -19,12 +19,15 @@ import { fetchObjectPerUseUser } from "@/components/features/apis_management/obj
 import { fetchObjectPerMonthUser } from "@/components/features/apis_management/objectPerMonthSlice";
 import { fetchAllFeaturesStatusForUser } from "@/components/features/apis_management/featureStatusSlice";
 import SideBarPro from "@/components/apis_management/SideBarPro";
+import PlanUsers from "@/components/apis_management/PlanUsers";
 
 export default function PricingPrivateApi() {
   const dispatch = useAppDispatch();
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const [showModal, setShowModal] = useState(false);
+  const [showUserModal, setShowUserModal] = useState(false);
+
   const [showAddFeatureModal, setShowAddFeatureModal] = useState(false);
   const [showAddObjectModal, setShowAddObjectModal] = useState(false);
   const { id } = useParams<{ id: string }>();
@@ -38,7 +41,6 @@ export default function PricingPrivateApi() {
   const fetchVersionId = versionId ? parseInt(versionId) : currentVersion?.api_version_id;
 
   useEffect(() => {
-    console.log(selectedPlan);
     if (fetchVersionId) {
       dispatch(fetchAllPrivatePlansByVersion(fetchVersionId));
       dispatch(fetchAllObjectsByVersion(fetchVersionId));
@@ -179,11 +181,23 @@ export default function PricingPrivateApi() {
                 </div>
                 </div>
             </div>
-            <div className="flex w-1/4 p-2 ">
+            <div className="flex w-1/4 p-2 flex-col ">
                 <div className="flex items-start justify-between w-full">
                 <div className="text-mapi-text">Users</div>
-                <button onClick={()=>setShowAddObjectModal(true)} className="bg-[#2C5EAF] bg-opacity-15 border border-[#616161] text-[#99BDE6] text-opacity-85 py-1 px-3 rounded text-sm  font-semibold ">+ Invite User </button>
-                </div>
+                <button
+                onClick={() => setShowUserModal(true)}
+                className={`py-1 px-3 rounded text-sm  ${
+                  (selectedPlan!==null)
+                    ? 'bg-[#2C5EAF] bg-opacity-15 border border-[#616161] text-[#99BDE6] text-opacity-85 font-semibold'
+                    : 'bg-[#3B73CE] border border-[#7E89AC] border-opacity-30 text-white font-normal'
+                }`}
+              >
+                + Invite User
+              </button>               
+               </div>
+               <div className="">
+               <PlanUsers showModal={showUserModal} setShowModal={setShowUserModal} selectedPlan={selectedPlan} />
+               </div>
             </div>    
                   </div>
                 ) : privatePlan.loading ? (

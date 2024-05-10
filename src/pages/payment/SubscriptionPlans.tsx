@@ -254,7 +254,7 @@ const handleSubscribeUserPlanPerUse = (planId: number) => {
                    </div>
                     )}
 
-                  <h2 className="plan-title text-xl font-bold text-mapi-secondary-3 mb-2 pt-4 pb-6">{plan.name}</h2>
+                  <h2 className="plan-title text-xl font-bold text-mapi-secondary-3 mb-2 pt-4 pb-4">{plan.name}</h2>
                   
                   {plan.objects.map(obj => (
                   <p  key={obj.id} className="subscription-price text-lg font-medium text-mapi-neutral-5 mt-10">

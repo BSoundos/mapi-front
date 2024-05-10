@@ -7,6 +7,7 @@ import HalfNavBar from '@/components/HalfNavBar';
 import Footer from '@/components/Footer';
 import { useParams } from 'react-router-dom';
 import { fetchInvoiceDetail } from '@/components/features/invoices/invoiceDetailSlice';
+import SideBarUser from '@/components/SideBarUser';
 
 
 
@@ -38,7 +39,7 @@ const InvoiceDetailsPage = () => {
 
       <div className="flex-grow bg-mapi-neutral-3 ">
         <div className="mt-3 flex space-x-2">
-          <HalfNavBar/>
+          <SideBarUser/>
           <div className="bg-gradient-to-l from-mapi-neutral-3 to-white/5 rounded-lg shadow-lg p-8 w-11/12 border border-x-corner-1-300 space-y-4 " style={{ height: '500px', marginRight: '60px'}}>
             <h1 className="font-inter font-bold text-secondary-gray">Transaction History</h1>
 

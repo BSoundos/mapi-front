@@ -1,25 +1,83 @@
+import SideBarUser from '@/components/SideBarUser';
 import { useSelector } from 'react-redux';
-import { useEffect } from 'react';
+import { useEffect,useState } from 'react';
 import { FetchUserTickets } from '@/components/features/tickets/TicketSlice';
 import { useAppDispatch,RootState } from '@/app/store'; 
-import TicketDescription from '@/components/Support_hub/TicketDescription';
 import Navbar from '@/components/NavBar';
 import Footer from '@/components/Footer';
-import NavBar2 from '@/components/NavBar2';
-import SideBarUser from '@/components/SideBarUser';
+import TicketDescription from '@/components/Support_hub/TicketDescription';
+import { Ticket } from '@/types/Ticket';
+import { searchUserTickets } from '@/components/features/tickets/TicketSlice';
+import SearchInput from '@/components/searchInput';
+import PaginationR from '@/components/PaginationR';
 
 const UserTicketsPage  = () => {
     
-    const dispatch = useAppDispatch();
-    const tickets = useSelector((state: RootState) => state.ticket.tickets);
-    const loading = useSelector((state: RootState) => state.ticket.loading);
-    const error = useSelector((state: RootState) => state.ticket.error);
+  const dispatch = useAppDispatch();
+  const tickets = useSelector((state: RootState) => state.ticket.tickets);
+  const loading = useSelector((state: RootState) => state.ticket.loading);
+  const error = useSelector((state: RootState) => state.ticket.error);
 
+  const [searchTerm, setSearchTerm] = useState('');
+
+  const [searchResults, setSearchResults] = useState<Ticket[]>(tickets);
+
+ 
+
+  // Pagination setup
+  const totalTickets = searchResults.length
+  const [currentPage, setCurrentPage] = useState(1);
+  const ticketsPerPage = 2; // Number of tickets per page
+
+  const startIndex = (currentPage - 1) * ticketsPerPage;
+  const endIndex = Math.min(startIndex + ticketsPerPage, totalTickets);
+
+  // Get tickets for the current page
+
+  const handlePageChange = (page: number) => {
+      setCurrentPage(page);
+  };
+
+
+  const renderTickets = () => {
+      const paginatedTickets = [];
+      for (let i = startIndex; i < endIndex; i++) {
+        const ticket = searchResults[i]; // Retrieve ticket from searchResults
+        paginatedTickets.push(
+          <TicketDescription
+              key={ticket.id}
+              id={ticket.id}
+              title={ticket.title}
+              content={ticket.content}
+              priority={ticket.priority}
+              username={ticket.user.username}
+              postDate={ticket.status_history.length > 0 ? ticket.status_history[0].update_date : 'No update date'}
+              currentStatus={ticket.status_history.length > 0 ? ticket.status_history[ticket.status_history.length - 1].status : 'null'}
+              statusHistory={ticket.status_history}
+              forUser={true}
+              apiName={ticket.api.name}
+          />
+        );
+      }
+      return paginatedTickets;
+    };
+  
     useEffect(() => {
-        dispatch(FetchUserTickets());
-    }, [dispatch]);
-
-
+      dispatch(FetchUserTickets());
+  }, [dispatch]);
+  
+    useEffect(() => {
+      setSearchResults(tickets);
+    }, [tickets]); 
+  
+    const handleSearch = async () => {
+      const actionResult = await dispatch(searchUserTickets(searchTerm));
+      if (searchUserTickets.fulfilled.match(actionResult) ) {
+          setSearchResults(actionResult.payload);
+      }
+      
+      setCurrentPage(1);
+    };
     return(
         <main className=''>
         <Navbar />
@@ -33,24 +91,30 @@ const UserTicketsPage  = () => {
               </div>
               <div>
                 <h2 className="font-inter font-bold text-white text-base mb-3 overflow-y-auto w-fit scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52]">My Tickets</h2>
-                <div className="max-h-96 overflow-y-auto scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52]">
-                  {tickets.map(ticket => (
-                    <TicketDescription
-                      key={ticket.id}
-                      id={ticket.id}
-                      title={ticket.title}
-                      content={ticket.content}
-                      priority={ticket.priority}
-                      username={ticket.user.username}
-                      postDate={ticket.status_history.length > 0 ? ticket.status_history[0].update_date : 'No update date'}
-                      currentStatus={ticket.status_history.length > 0 ? ticket.status_history[ticket.status_history.length - 1].status : 'null'}
-                      statusHistory={ticket.status_history}
-                      forUser={true}
-                      apiName={ticket.api.name}
-                    />
-                  ))}
-                </div>
-              </div>
+
+                            
+                            <div className='mt-9 flex justify-end'> 
+                                <div className="w-1/3 rounded-md border border-opacity-50 border-[#343B4F]">
+                                <SearchInput
+                                    searchTerm={searchTerm}
+                                    setSearchTerm={setSearchTerm}
+                                    handleSearch={handleSearch}
+                                    placeholder="Search a ticket"
+                                />
+                                </div>
+                            </div>
+                            <div className='mt-9 '>
+                                {renderTickets()}
+                                <div className='flex items-center justify-start pt-8 pb-20'>
+                                    <PaginationR
+                                    currentPage={currentPage}
+                                    totalPages={Math.ceil(totalTickets/ ticketsPerPage)}
+                                    onPageChange={handlePageChange}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+              
             </div>
           </div>
         </div>

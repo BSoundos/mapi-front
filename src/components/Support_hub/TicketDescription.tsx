@@ -136,7 +136,7 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
       
         {!forUser && (
           <div className="flex justify-between ">
-            <div className="flex ">
+            <div className="flex gap-4">
               <p className={`${priorityDetails.bgcolor} rounded-md px-2 py-1 cursor-pointer ${priorityDetails.color}`} onClick={handlePriorityClick}>
                 {priorityDetails.text}
               </p>
@@ -148,7 +148,7 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
           </div>
           )
         }
-       <div className="pb-2">
+       <div className="pb-2 mt-3">
        <div className="flex justify-between items-center pb-2">
             <div>
                 {forUser ? (

@@ -141,7 +141,7 @@ export default function GeneralApi() {
                         type="text"
                         id="documentation_url"
                         name="documentation_url"
-                        placeholder="Description of api"
+                        placeholder="Documentation of api"
                         required
                         value={formData.documentation_url}
                         onChange={handleInputChange}

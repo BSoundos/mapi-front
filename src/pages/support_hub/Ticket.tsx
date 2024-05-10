@@ -6,12 +6,12 @@ import TicketDescription from '@/components/Support_hub/TicketDescription';
 import SupportNav from '@/components/Support_hub/SupportNav';
 import { Ticket } from '@/types/Ticket';
 import PaginationR from '@/components/PaginationR';
-import Sidebar from '@/components/Support_hub/Sidebar';
 import ErrorModal from '@/components/Support_hub/ErrorModal';
 import SearchInput from '@/components/searchInput';
 import { STATUS_CHOICES, PRIORITY_CHOICES } from '@/types/choices';
 import CustomSelect from '@/components/Support_hub/CustomSelect'; 
 import SideBarPro from '@/components/apis_management/SideBarPro';
+import Loading from '@/components/ui/Loading';
 
 const TicketPage = () => {
     
@@ -124,7 +124,7 @@ const TicketPage = () => {
   };
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <Loading/>;
   }
 
   
@@ -171,6 +171,7 @@ const TicketPage = () => {
             searchTerm={searchTerm}
             setSearchTerm={setSearchTerm}
             handleSearch={handleSearch}
+            placeholder="Search a ticket"
           />
         </div>
       </div>

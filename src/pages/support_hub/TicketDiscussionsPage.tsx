@@ -115,6 +115,7 @@ const TicketDiscussionPage = () => {
                         searchTerm={searchTerm}
                         setSearchTerm={setSearchTerm}
                         handleSearch={handleSearch}
+                        placeholder="Search a ticket"
                       />
                     </div>
                 </div>
