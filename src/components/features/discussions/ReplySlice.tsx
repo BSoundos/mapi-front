@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
@@ -27,13 +28,13 @@ export const fetchReplies = createAsyncThunk<Reply[], number>(
   'Replies',
   async (discussionId: number) => {
     const token = getToken();
-    const response = await axios.get(`${BACKEND_BASE_URL}/support_hub/discussion/${discussionId}/replies/`,{
+    const response = await axios.get(`${BACKEND_BASE_URL}/support_hub/discussion/${discussionId}/replies/`, {
       headers: {
         Authorization: `Token ${token}`
       }
     });
     console.log(response.data)
-    return response.data; 
+    return response.data;
   }
 );
 
@@ -44,7 +45,7 @@ const ReplySlice = createSlice({
     loading: false,
     status: 'idle',
     error: null,
-  } as ReplyState, 
+  } as ReplyState,
   reducers: {
     // Reducer to handle loading state
     setLoading(state, action: PayloadAction<boolean>) {
@@ -56,33 +57,33 @@ const ReplySlice = createSlice({
     },
     // Reducer to handle adding discussions
     addReplies(state, action: PayloadAction<Reply[]>) {
-        state.replies = action.payload.map((reply) => ({
-          reply_id: reply.reply_id, // Add reply_id property
-          reply_date: reply.reply_date, // Add reply_date property
-          content: reply.content,
-          author_object_id: reply.author_object_id,
-          author_content_type: reply.author_content_type,
-          discussion: {
-            discussion_id: reply.discussion.discussion_id,
-            content: reply.discussion.content,
-            title: reply.discussion.title,
-            discussion_date: reply.discussion.discussion_date,
-            user: reply.discussion.user,
-            api: reply.discussion.api,
-          },
-          author: {
-            id: reply.author.id,
-            first_name: reply.author.first_name,
-            last_name: reply.author.last_name,
-            email: reply.author.email,
-            contact_info: reply.author.contact_info,
-            status: reply.author.status,
-            is_verified: reply.author.is_verified,
-            role: reply.author.role,
-            username: reply.author.username,
-          },
-        }));
-      },
+      state.replies = action.payload.map((reply) => ({
+        reply_id: reply.reply_id, // Add reply_id property
+        reply_date: reply.reply_date, // Add reply_date property
+        content: reply.content,
+        author_object_id: reply.author_object_id,
+        author_content_type: reply.author_content_type,
+        discussion: {
+          discussion_id: reply.discussion.discussion_id,
+          content: reply.discussion.content,
+          title: reply.discussion.title,
+          discussion_date: reply.discussion.discussion_date,
+          user: reply.discussion.user,
+          api: reply.discussion.api,
+        },
+        author: {
+          id: reply.author.id,
+          first_name: reply.author.first_name,
+          last_name: reply.author.last_name,
+          email: reply.author.email,
+          contact_info: reply.author.contact_info,
+          status: reply.author.status,
+          is_verified: reply.author.is_verified,
+          role: reply.author.role,
+          username: reply.author.username,
+        },
+      }));
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -100,6 +101,6 @@ const ReplySlice = createSlice({
   },
 });
 
-export const { setLoading, setError, addReplies }  = ReplySlice.actions;
+export const { setLoading, setError, addReplies } = ReplySlice.actions;
 
 export default ReplySlice.reducer;

@@ -1,3 +1,5 @@
+import { Category } from "./Category";
+import { User } from "./user";
 
 
 export interface API {
@@ -16,6 +18,9 @@ export interface Api {
     latency: number;
     service_level: number;
     category_name: string;
+    health_check:string;
+    category:Category;
+    provider:User;
 }
 
 export type ValidAttributes = keyof Api;

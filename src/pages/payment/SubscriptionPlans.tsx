@@ -1,15 +1,14 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
-import { fetchSubscriptionPlans, fetchUserPlans} from '../../components/features/payments/subscriptionPlansSlice';
-import { fetchPlanDetails, fetchUserPlanDetails} from '../../components/features/payments/selectedPlanSlice';
-import { fetchSubscriptionPlansPerUse, fetchUserPlansPerUse} from '../../components/features/payments/subscriptionPlansPerUseSlice';
-import { fetchUserPlanDetailsPerUse} from '../../components/features/payments/selectedPlanPerUseSlice';
-import store, { RootState } from '../../app/store';
-import { fetchPlanDetailsPerUse} from '../../components/features/payments/selectedPlanPerUseSlice';
+import { fetchSubscriptionPlans, fetchUserPlans} from '@/components/features/payments/subscriptionPlansSlice';
+import { fetchPlanDetails, fetchUserPlanDetails} from '@/components/features/payments/selectedPlanSlice';
+import { fetchSubscriptionPlansPerUse, fetchUserPlansPerUse} from '@/components/features/payments/subscriptionPlansPerUseSlice';
+import { fetchUserPlanDetailsPerUse} from '@/components/features/payments/selectedPlanPerUseSlice';
+import store, { RootState } from '@store/app/store';
+import { fetchPlanDetailsPerUse} from '@/components/features/payments/selectedPlanPerUseSlice';
 import { Link, useParams } from 'react-router-dom'; 
-import Navbar from '../../components/NavBar';
-import HalfNavBar from '../../components/HalfNavBar';
-import Footer from '../../components/Footer';
+
+
 import { FaCheck, FaTimes } from 'react-icons/fa';
 import { getAllVersions } from '@/components/features/apis_management/versionSlice';
 
@@ -24,7 +23,7 @@ const SubscriptionPlansPage = () => {
   //Au cas ou il y une erreur de saisie des objets 
   // Fusionner les objets des userPlans et subscriptionPlans
   const allObjects = userPlans.flatMap(plan => plan.objects)
-  .concat(subscriptionPlans.flatMap(plan => plan.objects));
+    .concat(subscriptionPlans.flatMap(plan => plan.objects));
   // Supprimer les doublons en utilisant un ensemble
   const uniqueObjectNames = Array.from(new Set(allObjects.map(obj => obj.object_name)));
   const allFeatures= userPlans.flatMap(plan => plan.features)
@@ -169,12 +168,12 @@ const handleSubscribeUserPlanPerUse = (planId: number) => {
         </Link>
       </div>
 
-      {/* Ajouter le rectangle et le texte "Recommended" si plan.is_recommended est défini sur true */}
-      {plan.is_recommended === true && (
-        <div className="private-plan-indicator absolute top-0 left-0 bg-custom-color text-mapi-secondary-3 px-2 py-1 rounded-md flex items-center justify-center">
-          Recommended
-        </div>
-      )}
+                    {/* Ajouter le rectangle et le texte "Recommended" si plan.is_recommended est défini sur true */}
+                    {plan.is_recommended === true && (
+                      <div className="private-plan-indicator absolute top-0 left-0 bg-custom-color text-mapi-secondary-3 px-2 py-1 rounded-md flex items-center justify-center">
+                        Recommended
+                      </div>
+                    )}
 
 
   </div>

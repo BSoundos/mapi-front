@@ -12,12 +12,12 @@ const ApiAbout = () => {
 
     const dispatch = useAppDispatch();
     const api = useSelector((state: RootState) => state.AboutSlice.data);
-    const status = useSelector((state: RootState) => state.AboutSlice.status);
-    const error = useSelector((state: RootState) => state.AboutSlice.error);
+    // const status = useSelector((state: RootState) => state.AboutSlice.status);
+    // const error = useSelector((state: RootState) => state.AboutSlice.error);
 
     const reviews = useSelector((state: RootState) => state.review.reviews); 
-    const loadingReviews = useSelector((state: RootState) => state.review.loading);
-    const errorReviews = useSelector((state: RootState) => state.review.error);
+    // const loadingReviews = useSelector((state: RootState) => state.review.loading);
+    // const errorReviews = useSelector((state: RootState) => state.review.error);
 
     const [isFormVisible, setIsFormVisible] = useState(false);
     const [localReviews, setLocalReviews] = useState(reviews);
@@ -55,6 +55,7 @@ const ApiAbout = () => {
         setLocalReviews(reviews); // Mettez à jour les avis locaux lorsque Redux change
       }, [reviews]);
 
+      
       const renderReviews = () => {
         const resultReviews = [];
         for (let i = startIndex; i < endIndex; i++) {
@@ -73,7 +74,11 @@ const ApiAbout = () => {
             
         }
         return resultReviews;
+
     };
+
+    
+
 
     
 
@@ -82,6 +87,7 @@ const ApiAbout = () => {
             <div className='pl-16 pr-8 py-4'>
                 <pre className='text-white text-sm font-inter font-normal opacity-[87%] pb-4 whitespace-pre-line'>
                     {api?.description}
+                    
                 </pre>
 
             </div>
@@ -90,12 +96,14 @@ const ApiAbout = () => {
                 <button className='text-[#21C3FC] bg-[#081028] w-fit py-2 px-4 border border-[#7E89AC] border-opacity-30 rounded-lg' onClick={() => setIsFormVisible(true)} >
                     + New Review
                 </button>
+                
             </div>
             <AddReviewModal
-                apiId={api?.api_id}
+                apiId={api?.id}
                 isOpen={isFormVisible}
                 onClose={() => setIsFormVisible(false)} 
             />
+            
             <div className='pl-16 pr-8 '>
                 {renderReviews()}
             </div>
@@ -112,4 +120,4 @@ const ApiAbout = () => {
     )
 }
 
-export default ApiAbout
+export default ApiAbout;

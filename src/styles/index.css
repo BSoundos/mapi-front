@@ -10,7 +10,6 @@
 
 
 
-
 @layer components {
 
   
@@ -42,3 +41,4 @@
       @apply text-[#858C94] font-bold text-sm;
     }
    }
+

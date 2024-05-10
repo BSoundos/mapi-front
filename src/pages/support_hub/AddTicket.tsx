@@ -6,6 +6,7 @@ import Navbar from '@/components/NavBar';
 import Footer from '@/components/Footer';
 import NavBar2 from '@/components/NavBar2';
 
+
 const UserAddTicket = () => {
     const [title, setTitle] = useState('');
     const [content, setContent] = useState('');

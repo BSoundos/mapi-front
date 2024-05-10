@@ -38,15 +38,15 @@ import PricingPublicApi from '@/pages/apis_management/PricingPublicApi';
 import PricingPrivateApi from '@/pages/apis_management/PriningPrivateApi';
 import Ticket from '@/pages/support_hub/Ticket';
 import Discussion from '@/pages/support_hub/TicketDiscussionsPage';
-import UserTicketsPage  from '@/pages/support_hub/userTickets';
-import UserAddTicket  from '@/pages/support_hub/AddTicket';
-import UserTicketDiscussionPage  from '@/pages/support_hub/userTicketDiscussion';
+import UserTicketsPage from '@/pages/support_hub/userTickets';
+import UserAddTicket from '@/pages/support_hub/AddTicket';
+import UserTicketDiscussionPage from '@/pages/support_hub/userTicketDiscussion';
+import UsersTable from "@/pages/admin/UsersTable.tsx";
 import DiscussionsPage from '@/pages/discussions/Discussions';
 import UserProfilSetting from '@/pages/UserSettings/UserProfilSetting';
 import UserSecuritySettings from '@/pages/UserSettings/UserSecuriteSettings';
 import ProviderProfilSetting from '@/pages/UserSettings/ProviderProfilSetting';
 import ProviderSecuritySettings from '@/pages/UserSettings/ProviderSecuriteSettings';
-import ProviderRoutes from './ProviderRoutes';
 const App = () => {
 
   useEffect(() => {
@@ -118,6 +118,8 @@ const App = () => {
         <Route path="/providerProfileSettings" element={<ProviderProfilSetting/>}/>
         <Route path="/providerSecuritySettings" element={<ProviderSecuritySettings/>}/>
   
+        <Route path="/admin/users" element={<UsersTable />} />
+
 
       </Routes>
     </Router>

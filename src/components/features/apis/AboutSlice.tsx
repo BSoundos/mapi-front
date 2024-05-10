@@ -1,5 +1,3 @@
-// apiSlice.ts
-
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { BACKEND_BASE_URL } from '@/data/constants';
@@ -16,11 +14,18 @@ export interface ApiData {
   // Autres propriétés...
 }
 
-interface ApiState {
+interface AboutState {
   data: ApiData | null;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error: string | null;
 }
+
+
+
+const getToken = () => {
+  return localStorage.getItem('token'); // Retrieve token from localStorage
+};
+
 
 export const fetchApiById = createAsyncThunk<
   ApiData,
@@ -28,7 +33,12 @@ export const fetchApiById = createAsyncThunk<
 >(
   'api/fetchApiById', // Nom de l'action
   async (apiId: number) => {
-    const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/api/${apiId}`);
+    const token = getToken();
+    const headers = {
+      Authorization: `Token ${token}`, 
+    };
+
+    const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/api/${apiId}`, { headers });
     const data = response.data;
     return data;
   }
@@ -42,7 +52,7 @@ const AboutSlice = createSlice({
     data: null,
     status: 'idle',
     error: null,
-  } as ApiState,
+  } as AboutState,
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchApiById.pending, (state) => {

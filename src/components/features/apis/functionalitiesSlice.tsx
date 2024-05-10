@@ -1,6 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { BACKEND_BASE_URL } from '@/data/constants';
+
+
 export const fetchFunctionalities = createAsyncThunk(
   'functionalities/fetchFunctionalities',
   async (_, { rejectWithValue }) => {

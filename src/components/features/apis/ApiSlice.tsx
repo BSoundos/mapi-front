@@ -1,10 +1,13 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { API } from '../../../types/API';
-import { Api } from '../../../types/API';
+import { API } from '@/types/API';
+import { Api } from '@/types/API';
 import { BACKEND_BASE_URL } from '@/data/constants';
 
 
+const getToken = () => {
+  return localStorage.getItem('token'); // Retrieve token from localStorage
+};
 
 
 export const fetchPopularAPIs = createAsyncThunk<
@@ -12,7 +15,13 @@ export const fetchPopularAPIs = createAsyncThunk<
   void,
   {}
 >('api/fetchPopularAPIs', async (_, thunkAPI) => {
-  const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/popular/`)
+  const token = getToken();
+  const headers = {
+    Authorization: `Token ${token}`, 
+  };
+
+  const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/popular/`, { headers });
+  
   const data = response.data;
   const mappedData = data.map((api: any) => ({
     api_id: api.api_id,
@@ -66,6 +75,7 @@ export const fetchAPIById = createAsyncThunk('api/fetchAPIById', async (apiId, t
     throw error;
   }
 });
+
 export const searchAPIs = createAsyncThunk<
   Api[],
   string,
@@ -92,7 +102,7 @@ export const FilterCategorie = createAsyncThunk<
   Api[],
   string,
   {}
->('api/searchAPIs', async (categorie: string, thunkAPI) => {
+>('api/FilterCategorie', async (categorie: string, thunkAPI) => {
   const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/category/?query=${categorie}`);
   const data = response.data;
   const mappedData = data.map((api: any) => ({
@@ -110,33 +120,33 @@ export const FilterCategorie = createAsyncThunk<
 }
 );
 
-export const GetCategories = createAsyncThunk<
-  Api[],
-  void,
-  {}
->('api/searchAPIs', async (_, thunkAPI) => {
-  const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/categories/`);
-  const data = response.data;
-  return data;
-}
-);
+// export const GetCategories = createAsyncThunk<
+//   Api[],
+//   void,
+//   {}
+// >('api/searchAPIs', async (_, thunkAPI) => {
+//   const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/categories/`);
+//   const data = response.data;
+//   return data;
+// }
+// );
 
-export const GetFonctionnalities = createAsyncThunk<
-  Api[],
-  void,
-  {}
->('api/searchAPIs', async (_, thunkAPI) => {
-  const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/fonctionnalities/`);
-  const data = response.data;
-  return data;
-}
-);
+// export const GetFonctionnalities = createAsyncThunk<
+//   Api[],
+//   void,
+//   {}
+// >('api/searchAPIs', async (_, thunkAPI) => {
+//   const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/fonctionnalities/`);
+//   const data = response.data;
+//   return data;
+// }
+// );
 
 export const FilterFonctionnalite = createAsyncThunk<
   Api[],
   string,
   {}
->('api/searchAPIs', async (fonctionnaliter: string, thunkAPI) => {
+>('api/FilterFonctionnalite', async (fonctionnaliter: string, thunkAPI) => {
   const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/functionalite/?query=${fonctionnaliter}`);
   const data = response.data;
   const mappedData = data.map((api: any) => ({
