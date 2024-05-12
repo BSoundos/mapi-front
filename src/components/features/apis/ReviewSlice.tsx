@@ -67,7 +67,6 @@ export const addReview = createAsyncThunk<
         },
       }
     );
-    console.log("test",response.data);
     return response.data; 
   }
 );

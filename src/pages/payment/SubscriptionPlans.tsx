@@ -36,7 +36,6 @@ const SubscriptionPlansPage = () => {
   .concat(subscriptionPlansPerUse.flatMap(plan => plan.features));
   const uniqueFeatureNamesPerUse = Array.from(new Set(allFeaturesPerUse.map(obj => obj.feature_name))); 
   const currentVersion=useSelector((state:RootState)=>state.versions.currentVersion?.api_version_id);
-  console.log("currentVersion f lcode",currentVersion);
 
   
   const objectPrices: { id: string, name: string, price: number }[] = [];
@@ -49,7 +48,6 @@ const SubscriptionPlansPage = () => {
 
     const loadData = async () => {
       try {
-        console.log("currentVersion f lcode",currentVersion);
         dispatch(fetchSubscriptionPlans(currentVersion));
         await dispatch(fetchUserPlans(currentVersion));
         await dispatch(fetchSubscriptionPlansPerUse(currentVersion));

@@ -38,7 +38,6 @@ export const fetchInvoices = createAsyncThunk<Invoice[], number>(
           Authorization: `Token ${token}`
         }
       });
-      console.log(response.data);
       return response.data; 
     }
   );

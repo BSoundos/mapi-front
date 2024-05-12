@@ -18,7 +18,6 @@ const PlanDetailsPage = () => {
     if (planDetails && planDetails.objects) {
       const uniqueObjectNames = Array.from(new Set(planDetails.objects.flatMap(obj => obj.object_name)));
     }
-    console.log(planDetails);
 
 
   const handlePaymentMethodChange = (method: string) => {
@@ -41,7 +40,6 @@ const PlanDetailsPage = () => {
             if (response.payload && response.payload) {
                 const payloadString = JSON.stringify(response.payload);
                 const payloadObject = JSON.parse(payloadString);
-                console.log(payloadObject.checkout_url);
                 window.location.href = payloadObject.checkout_url;  //checkoutUrl pour le paiement en utilisant ChargilyAPI
                    } else  {
               console.error('Payment error:');

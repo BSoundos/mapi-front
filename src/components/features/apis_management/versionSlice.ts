@@ -19,7 +19,6 @@ export const getAllVersions = createAsyncThunk('versions/getAllVersions', async 
       Authorization: `Token ${token}`,
     };
     const response = await axios.get(`${BACKEND_BASE_URL}/apis_management/get-all-versions-api/${id}`, { headers });
-    console.log("response",response.data);
     return response.data;
   } catch (error:Error) {
     throw Error(error.response.data.message || 'Failed to fetch versions');
