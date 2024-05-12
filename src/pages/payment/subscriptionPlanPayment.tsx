@@ -18,14 +18,13 @@ const PlanDetailsPage = () => {
     if (planDetails && planDetails.objects) {
       const uniqueObjectNames = Array.from(new Set(planDetails.objects.flatMap(obj => obj.object_name)));
     }
+    console.log(planDetails);
 
 
   const handlePaymentMethodChange = (method: string) => {
     dispatch(setPaymentMethod(method));
   };
-  const handleConfirmPayment = (price: string,event) => {
-    event.preventDefault();
-    console.log(planDetails);
+  const handleConfirmPayment = (price: string) => {
     try {
       if (planDetails) {
        
@@ -36,7 +35,7 @@ const PlanDetailsPage = () => {
           payment_method: paymentMethod,
           id_plan : parseInt(planDetails.id),
           api_version : planDetails.api_version,
-          typeplan : planDetails.type
+          typeplan : planDetails.typeplan
 
         })).then((response) => {
             if (response.payload && response.payload) {
@@ -167,7 +166,7 @@ const PlanDetailsPage = () => {
       <span className="font-semibold text-plus-jakarta-sans text-base ml-14 text-mapi-neutral-5">
         {planDetails.subscription_price} DA
       </span>
-      <button className="w-full py-2 px-4 bg-gray-200 text-gray-800 rounded-md font-medium hover:bg-mapi-secondary-5 hover:text-white transition-colors duration-300 text-plus-jakarta-sans mt-5" onClick={(event) => handleConfirmPayment(planDetails.subscription_price,event)}>
+      <button className="w-full py-2 px-4 bg-gray-200 text-gray-800 rounded-md font-medium hover:bg-mapi-secondary-5 hover:text-white transition-colors duration-300 text-plus-jakarta-sans mt-5" onClick={(event) => handleConfirmPayment(planDetails.subscription_price)}>
         Confirm & Pay
       </button>
     </>

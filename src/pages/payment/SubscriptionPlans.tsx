@@ -4,13 +4,11 @@ import { fetchSubscriptionPlans, fetchUserPlans} from '@/components/features/pay
 import { fetchPlanDetails, fetchUserPlanDetails} from '@/components/features/payments/selectedPlanSlice';
 import { fetchSubscriptionPlansPerUse, fetchUserPlansPerUse} from '@/components/features/payments/subscriptionPlansPerUseSlice';
 import { fetchUserPlanDetailsPerUse} from '@/components/features/payments/selectedPlanPerUseSlice';
-import store, { RootState } from '@store/app/store';
 import { fetchPlanDetailsPerUse} from '@/components/features/payments/selectedPlanPerUseSlice';
 import { Link, useParams } from 'react-router-dom'; 
-
-
 import { FaCheck, FaTimes } from 'react-icons/fa';
 import { getAllVersions } from '@/components/features/apis_management/versionSlice';
+import store, { RootState } from '@/app/store';
 
 export type AppDispatch = typeof store.dispatch
 const SubscriptionPlansPage = () => {
@@ -38,6 +36,9 @@ const SubscriptionPlansPage = () => {
   .concat(subscriptionPlansPerUse.flatMap(plan => plan.features));
   const uniqueFeatureNamesPerUse = Array.from(new Set(allFeaturesPerUse.map(obj => obj.feature_name))); 
   const currentVersion=useSelector((state:RootState)=>state.versions.currentVersion?.api_version_id);
+  console.log("currentVersion f lcode",currentVersion);
+
+  
   const objectPrices: { id: string, name: string, price: number }[] = [];
   subscriptionPlansPerUse.forEach(plan => {
       const prices = plan.objects.map(obj => ({ id: plan.id, name: obj.object_name, price: obj.price }));
@@ -45,9 +46,10 @@ const SubscriptionPlansPage = () => {
   });
   useEffect(() => {
     dispatch(getAllVersions(id));
+
     const loadData = async () => {
       try {
-        console.log(currentVersion);
+        console.log("currentVersion f lcode",currentVersion);
         dispatch(fetchSubscriptionPlans(currentVersion));
         await dispatch(fetchUserPlans(currentVersion));
         await dispatch(fetchSubscriptionPlansPerUse(currentVersion));
@@ -158,7 +160,7 @@ const handleSubscribeUserPlanPerUse = (planId: number) => {
             </div>
           </div>
         ))}
-        <p className="rate-limit mb-1 text-base font-inter  flex justify-center items-center text-mapi-neutral-5 pt-2 pb-2">{plan.rate_limit} requests per hour</p>
+        <p className="rate-limit mb-3 text-base font-inter text-gray-300 flex justify-center items-center text-mapi-neutral-5 pt-4 pb-4">{plan.rate_limit} requests per hour</p>
 
         <Link to={`per-month/plan/${plan.id}`}>
          
@@ -185,11 +187,11 @@ const handleSubscribeUserPlanPerUse = (planId: number) => {
             .filter(plan => plan.type === 'monthly')
             .map(plan => (
               <div key={plan.id} className="plan-item mb-6 relative mr-2 bg-mapi-neutral-3">
-                <div className="plan-container rounded-lg p-5 bg-primary-secondary-1 min-w-[250px] max-w-[400px] cursor-pointer flex flex-col justify-center items-center relative shadow-xl group">
+                <div className="plan-container rounded-lg p-5 bg-primary-secondary-1 min-w-[200px] max-w-[350px] cursor-pointer flex flex-col justify-center items-center relative shadow-xl group">
               
                 <h2 className="plan-title text-xl font-bold text-mapi-secondary-3 mb-2 pt-4 pb-6">{plan.name}</h2>                 
 
-                  <p className="subscription-price text-xl font-medium text-mapi-neutral-5 pb-4">
+                  <p className="subscription-price text-xl font-medium text-mapi-neutral-5 pb-2">
                     {plan.subscription_price} DA <sup className="text-sm text-mapi-neutral-5">per month</sup>
                   </p>        
                     
@@ -238,8 +240,8 @@ const handleSubscribeUserPlanPerUse = (planId: number) => {
 {subscriptionPlansPerUse.length>0 && subscriptionPlansPerUse
               .filter(plan => plan.type === 'pay_per_use')
               .map(plan => (
-                <div key={plan.id} className="plan-item mb-8 relative mr-4 bg-mapi-neutral-3">
-                  <div className="plan-container rounded-lg p-5 bg-primary-secondary-1 min-w-[200px] max-w-[350px] cursor-pointer flex flex-col justify-center items-center relative shadow-xl group">
+                <div key={plan.id} className="plan-item mb-6 relative mr-2 bg-mapi-neutral-3">
+                <div className="plan-container rounded-lg p-5 bg-primary-secondary-1 min-w-[200px] max-w-[350px] cursor-pointer flex flex-col justify-center items-center relative shadow-xl group">
                     {/* Bulle d'information pour la promotion */}
                     {plan.promotion && plan.promotion.is_active && (
                      <div className="absolute top-0 left-auto right-0 mt-2">
@@ -273,7 +275,7 @@ const handleSubscribeUserPlanPerUse = (planId: number) => {
           </div>
         ))}
                  
-                  <p className="rate-limit mb-3 text-base font-inter  flex justify-center items-center text-mapi-neutral-5 pt-4 pb-4">{plan.rate_limit} requests per hour</p>
+                  <p className="rate-limit mb-3 text-base font-inter text-gray-300 flex justify-center items-center text-mapi-neutral-5 pt-8 pb-4">{plan.rate_limit} requests per hour</p>
                   <Link to={`per-use/plan/${plan.id}`}>
                  
                     <button onClick={() => handleSubscribePerUse(plan.id , objectPrices)} className="bg-white w-24 h-10 rounded-md text-sm text-mapi-neutral-5flex font-medium items-center justify-center hover:bg-mapi-secondary-5 transition-colors duration-300">
@@ -293,9 +295,9 @@ const handleSubscribeUserPlanPerUse = (planId: number) => {
               {userPlansPerUse.length > 0 && userPlansPerUse
                 .filter(plan => plan.type === 'pay_per_use')
                 .map((plan, index) => (
-                  <div key={plan.id} className="plan-item mb-12 relative mr-4 bg-mapi-neutral-3">
+                  <div key={plan.id} className="plan-item mb-6 relative mr-2 bg-mapi-neutral-3">
 
-                <div className="plan-container rounded-lg p-5 bg-primary-secondary-1 min-w-[250px] max-w-[400px] cursor-pointer flex flex-col justify-center items-center relative shadow-xl group">
+                <div className="plan-container rounded-lg p-5 bg-primary-secondary-1 min-w-[200px] max-w-[350px] cursor-pointer flex flex-col justify-center items-center relative shadow-xl group">
                   <h2 className="plan-title text-3xl font-bold text-mapi-secondary-3 mb-2 pt-4 pb-12">{plan.name}</h2>
                   {plan.objects.map(obj => (
                   <p key={obj.id}  className="subscription-price text-xl font-medium text-mapi-neutral-5 pb-6">
