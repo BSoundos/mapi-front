@@ -14,7 +14,7 @@ import { useAppDispatch,RootState } from '@/app/store';
 import {User} from '@/types/user';
 
 const UserProfilSetting:React.FC  = () => {
-    const username = localStorage.getItem('username');
+    const username1 = localStorage.getItem('username');
     
 
     const dispatch = useAppDispatch();
@@ -27,6 +27,7 @@ const UserProfilSetting:React.FC  = () => {
     const [newEmail, setNewEmail] = useState('');
     const [newPhoneNumber, setNewPhoneNumber] = useState('');
     const [userInfo, setUserInfo] = useState<User>(null);
+    const [username, setusername] = useState(username1);
 
     //dispatcher les information user
     useEffect(() => {
@@ -65,16 +66,28 @@ const UserProfilSetting:React.FC  = () => {
         dispatch(updateUserSettings({
           oldUsername: username,
           userData: {
-              firstName: newFirstName,
-              lastName: newLastName,
-              username: newUsername,
-              email: newEmail,
-              phoneNumber: newPhoneNumber,
+            first_name: newFirstName,
+            last_name: newLastName,
+            username: newUsername,
+            email: newEmail,
+            contact_info: newPhoneNumber,
           },
       }));
-      
+
+      setusername(newUsername)
+      const updatedUserInfo = {
+        user_id: userInfo.id,
+        last_name: newLastName,
+        username: newUsername,
+        email: newEmail,
+        first_name: newFirstName,
+      };
+    
+      Object.keys(updatedUserInfo).forEach((key) => {
+        localStorage.setItem(key, updatedUserInfo[key]);
+      });
+    
       setVerificationEmailSent(true);
-      handleDiscard();
       }
       
 

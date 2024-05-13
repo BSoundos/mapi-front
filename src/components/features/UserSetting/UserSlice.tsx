@@ -29,12 +29,13 @@ const initialState: UserSettingsState = {
 };
 
 interface BasicInformation {
-  firstName: string;
-  lastName: string;
+  first_name: string;
+  last_name: string;
   username: string;
   email: string;
-  phoneNumber: string;
+  contact_info: string;
 }
+
 
 interface Settings {
   oldUsername: string;
@@ -97,9 +98,15 @@ export const GetInformationUser = async (username: string): Promise<User> => {
 };
 export const GetInformationProvider = async (username: string): Promise<User> => {
   try {
+    console.log("user ;",username);
+    
     const response = await axios.get(`${backendBaseUrl}/profile_management/providerInfo/${username}/`);
+    console.log(response);
+    
     return response.data;
   } catch (error) {
+    console.log('ettttt. ',error);
+    
     throw error;
   }
 };
@@ -109,7 +116,7 @@ export const updateProviderSettings = createAsyncThunk<BasicInformation, Setting
   'userSettings/update',
   async ({ oldUsername, userData }, { rejectWithValue }) => {
     try {
-    
+      console.log(userData)
       const response = await axios.patch(`${backendBaseUrl}/profile_management/update-provider/${oldUsername}/`, userData);
       return response.data;
     }  catch (error: any) {
@@ -151,7 +158,6 @@ const userSettingsSlice = createSlice({
     builder
       .addCase(updateUserSettings.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.basicInformation = action.payload;
       })
       .addCase(updateUserSettings.rejected, (state, action) => {
         state.status = 'failed';
