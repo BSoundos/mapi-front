@@ -16,7 +16,6 @@ const Support = () => {
     
         e.preventDefault(); // Prevent default form submission behavior
         const apiPk = parseInt(id);
-        console.log(id);
         if (isNaN(apiPk)) {
           // Handle the case when pk is not a valid number
           return;

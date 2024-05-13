@@ -41,7 +41,6 @@ const UserProfilSetting:React.FC  = () => {
             setNewPhoneNumber(userInfo.contact_info)
             setNewUsername(userInfo.username)
             setUserInfo(userInfo);
-            console.log(userInfo)
             dispatch({ type: 'USER_INFO_FETCHED', payload: userInfo });
           } catch (error) {
             console.error('Error fetching user info:', error);

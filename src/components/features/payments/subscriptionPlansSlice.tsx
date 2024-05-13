@@ -65,7 +65,6 @@ export const fetchSubscriptionPlans = createAsyncThunk<SubscriptionPlan[], numbe
   'subscriptionPlans/fetchPlans-permonth',
   async (versionApiId: number) => {
     const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-per-month/subscription-plans/${versionApiId}/`);
-    console.log("subscription_plans",response.data)
     return response.data; 
   }
 );
@@ -83,7 +82,6 @@ export const fetchUserPlans = createAsyncThunk<UserPlan[], number>(
         Authorization: `Token ${token}`
       }
     });
-    console.log("user_plans", response.data);
     return response.data; 
   }
 );

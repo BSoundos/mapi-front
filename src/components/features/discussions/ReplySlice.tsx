@@ -33,7 +33,6 @@ export const fetchReplies = createAsyncThunk<Reply[], number>(
         Authorization: `Token ${token}`
       }
     });
-    console.log(response.data)
     return response.data;
   }
 );

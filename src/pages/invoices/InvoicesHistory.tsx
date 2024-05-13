@@ -20,11 +20,9 @@ const InvoiceHistoryPage = () => {
 
   useEffect(() => {
     dispatch(fetchInvoices(3));
-    console.log(invoices)
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(loading);
   }, [invoices]);
 
   if (loading) {

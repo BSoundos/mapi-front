@@ -28,24 +28,23 @@ const ProviderProfilSetting:React.FC  = () => {
     const [userInfo, setUserInfo] = useState<User>(null);
     const [username, setusername] = useState(username1);
 
-    useEffect(() => {
-      const fetchUserInfo = async () => {
-         
-      
-        try {
-
-          const userInfo = await GetInformationProvider(username);
-          setNewLastName(userInfo.last_name);
-          setNewFirstName((prevState) => userInfo.first_name);
-          setNewEmail((prevState) => userInfo.email);
-          setNewPhoneNumber((prevState) => userInfo.contact_info);
-          setNewUsername((prevState) => userInfo.username);
-          setUserInfo(userInfo);
-          dispatch({ type: 'USER_INFO_FETCHED', payload: userInfo });
-        } catch (error) {
-          console.error('Error fetching user info:', error);
-        }
-      };
+       //dispatcher les information Provider
+       useEffect(() => {
+        const fetchUserInfo = async () => {
+          try {
+           
+            const userInfo = await GetInformationProvider(username);
+            setNewLastName(userInfo.last_name)
+            setNewFirstName(userInfo.first_name)
+            setNewEmail(userInfo.email)
+            setNewPhoneNumber(userInfo.contact_info)
+            setNewUsername(userInfo.username)
+            setUserInfo(userInfo);
+            dispatch({ type: 'USER_INFO_FETCHED', payload: userInfo });
+          } catch (error) {
+            console.error('Error fetching user info:', error);
+          }
+        };
     
       fetchUserInfo();
     }, [dispatch]);

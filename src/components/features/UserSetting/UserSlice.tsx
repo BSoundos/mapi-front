@@ -58,9 +58,7 @@ export const UpdateUserSecurity = createAsyncThunk<BasicInformationSecurity, Set
   async ({  userSecurityData }, { rejectWithValue }) => {
     try {
     
-      console.log(userSecurityData)
       const response = await axios.post(`${backendBaseUrl}/profile_management/update-user-password/`, userSecurityData);
-     console.log(response)
       return response.data;
     }  catch (error: any) {
       if (axios.isAxiosError(error)) {
@@ -78,10 +76,7 @@ export const updateUserSettings = createAsyncThunk<BasicInformation, Settings>(
   async ({ oldUsername, userData }, { rejectWithValue }) => {
     try {
     
-      console.log(`/profile_management/update-user/${oldUsername}/`);
-      console.log(userData)
       const response = await axios.patch(`${backendBaseUrl}/profile_management/update-user/${oldUsername}/`, userData);
-     console.log(response)
       return response.data;
     }  catch (error: any) {
       if (axios.isAxiosError(error)) {
@@ -123,7 +118,6 @@ export const updateProviderSettings = createAsyncThunk<BasicInformation, Setting
     try {
       console.log(userData)
       const response = await axios.patch(`${backendBaseUrl}/profile_management/update-provider/${oldUsername}/`, userData);
-      console.log(response)
       return response.data;
     }  catch (error: any) {
       if (axios.isAxiosError(error)) {
@@ -140,9 +134,7 @@ export const UpdateProviderSecurity = createAsyncThunk<BasicInformationSecurity,
   async ({  userSecurityData }, { rejectWithValue }) => {
     try {
     
-      console.log(userSecurityData)
       const response = await axios.post(`${backendBaseUrl}/profile_management/update-user-provider/`, userSecurityData);
-     console.log(response)
       return response.data;
     }  catch (error: any) {
       if (axios.isAxiosError(error)) {

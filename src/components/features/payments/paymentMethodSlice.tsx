@@ -16,7 +16,6 @@ const paymentSlice = createSlice({
   reducers: {
     setPaymentMethod(state, action) {
       state.method = action.payload;
-      console.log("method", state.method)
     },
   },
 });
