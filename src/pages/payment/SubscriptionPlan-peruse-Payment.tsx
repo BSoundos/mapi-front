@@ -22,7 +22,6 @@ const PlanDetailsPerusePage = () => {
     
     if (planDetails && planDetails.objects) {
         objectPrices = planDetails.objects;
-        console.log("objectPrices",objectPrices)
         totalPrice = objectPrices.reduce((total, obj) => total + parseFloat(obj.price), 0);
     }
 
@@ -33,13 +32,8 @@ const PlanDetailsPerusePage = () => {
     };
 
     //confirmation du paiement
-    const handleConfirmPayment = (price: number,event) => {
-        event.preventDefault();
-        console.log(price) ;
-        console.log(paymentMethod);
-        console.log(planId);
-        console.log(planDetails.api_version)
-        console.log(planDetails.typeplan);
+    const handleConfirmPayment = (price: number) => {
+       
   
      
         try {
@@ -57,7 +51,6 @@ const PlanDetailsPerusePage = () => {
                 if (response.payload && response.payload) {
                     const payloadString = JSON.stringify(response.payload);
                     const payloadObject = JSON.parse(payloadString);
-                    console.log(payloadObject);
                     window.location.href = payloadObject.checkout_url;  //checkoutUrl pour le paiement en utilisant ChargilyAPI
                        } else  {
                   console.error('Payment error:');
@@ -77,9 +70,7 @@ const PlanDetailsPerusePage = () => {
         // Si planDetails est null
         return <div>Loading...</div>;
     }
-    else{
-        console.log("planDetails.objectPrices;",planDetails);
-    }
+   
 
     return (
         <div className=" bg-mapi-neutral-2 w-full h-full">
@@ -151,7 +142,7 @@ const PlanDetailsPerusePage = () => {
                                     </div>
                                     <button 
                                         className="w-full py-2 px-4 bg-gray-200 text-gray-800 rounded-md font-medium hover:bg-mapi-secondary-5 hover:text-white transition-colors duration-300 text-plus-jakarta-sans mt-5" 
-                                        onClick={(event) => handleConfirmPayment((totalPrice - totalPrice * planDetails.promotion.discount_amount / 100),event)}
+                                        onClick={() => handleConfirmPayment((totalPrice - totalPrice * planDetails.promotion.discount_amount / 100))}
                                     >
                                         Confirm & Pay
                                     </button>

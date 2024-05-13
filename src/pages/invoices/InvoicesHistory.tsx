@@ -27,7 +27,6 @@ const InvoiceHistoryPage = () => {
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(loading);
   }, [invoices]);
 
   if (loading) {

@@ -286,7 +286,6 @@ export const FetchProviderTickets = createAsyncThunk<Ticket[]>(
           },
         }
       );
-      console.log("add ticket : ",response.data)
       return response.data; // Return the added ticket's data
     }
   );
