@@ -29,11 +29,11 @@ interface InvoiceState {
   const getToken = () => {
     return localStorage.getItem('token'); // Retrieve token from localStorage
   };
-export const fetchInvoices = createAsyncThunk<Invoice[], number>(
+export const fetchInvoices = createAsyncThunk<Invoice[], string>(
     'InvoiceHistory',
-    async (user_id: number) => {
+    async (username: string) => {
       const token = getToken();
-      const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-history/`,{
+      const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-history/${username}`,{
         headers: {
           Authorization: `Token ${token}`
         }
