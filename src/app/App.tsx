@@ -47,6 +47,8 @@ import UserProfilSetting from '@/pages/UserSettings/UserProfilSetting';
 import UserSecuritySettings from '@/pages/UserSettings/UserSecuriteSettings';
 import ProviderProfilSetting from '@/pages/UserSettings/ProviderProfilSetting';
 import ProviderSecuritySettings from '@/pages/UserSettings/ProviderSecuriteSettings';
+import Revenue from '@/pages/apis_management/Revenue';
+
 const App = () => {
 
   useEffect(() => {
@@ -117,6 +119,7 @@ const App = () => {
         <Route path="/pricing-api/private/:id" element={<PricingPrivateApi/>}/>
         <Route path="/providerProfileSettings" element={<ProviderProfilSetting/>}/>
         <Route path="/providerSecuritySettings" element={<ProviderSecuritySettings/>}/>
+        <Route path="/revenue" element={<Revenue />} />
   
         <Route path="/admin/users" element={<UsersTable />} />
 
