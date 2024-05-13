@@ -5,15 +5,28 @@ import Rating from '@mui/material/Rating';
 import StarIcon from '@mui/icons-material/Star';
 
 // Function to format date with default value handling
-const formatDate = (dateString) => {
-  if (!dateString) return 'Invalid date';
+const formatDate = (discussionDate: string) => {
+  const currentDate = new Date();
+  const discussionDateObj = new Date(discussionDate);
 
-  const [datePart, timePart] = dateString.split('T');
-  const [year, month, day] = datePart.split('-');
-  const [hours, minutes, seconds] = (timePart.split('.')[0]).split(':');
-  
-  const date = new Date(year, month - 1, day, hours, minutes, seconds);
-  return `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`;
+  // Set time components to midnight to compare date parts only
+  currentDate.setHours(0, 0, 0, 0);
+  discussionDateObj.setHours(0, 0, 0, 0);
+
+  // Calculate the difference in milliseconds
+  const differenceInMs = currentDate.getTime() - discussionDateObj.getTime();
+  const differenceInDays = Math.floor(differenceInMs / (1000 * 60 * 60 * 24));
+
+  if (differenceInDays === 0) {
+    return 'today';
+  } else if (differenceInDays === 1) {
+    return 'yesterday';
+  } else if (differenceInDays > 365) {
+    const differenceInYears = Math.floor(differenceInDays / 365);
+    return `${differenceInYears} year${differenceInYears > 1 ? 's' : ''} ago`;
+  } else {
+    return `${differenceInDays} day${differenceInDays > 1 ? 's' : ''} ago`;
+  }
 };
 
 const Review = ({ content , rating , author , created_at }) => {
