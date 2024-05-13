@@ -66,8 +66,8 @@ const InvoiceDetailsPage = () => {
                 <tr>
                 <th className="px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left">API Name</th>
                   <th className='px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left  '>Description</th>
-                  <th className='px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left  '>Discount</th>
                   <th className="px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left">Amount</th>
+                  <th className='px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left  '>Discount</th>
                   <th className="px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left">Total</th>
 
                   
@@ -78,8 +78,8 @@ const InvoiceDetailsPage = () => {
                 <tr>
                   <td className="px-4 py-2 text-xs text-mapi-neutral-5 ">{invoiceDetail.apiName}</td>
                   <td className="px-4 py-2 text-xs text-mapi-neutral-5 ">{invoiceDetail.description}</td>
-                  <td className="px-4 py-2 text-xs text-mapi-neutral-5 ">-{invoiceDetail.discount} %</td>
                   <td className="px-4 py-2 text-xs text-mapi-neutral-5 ">{invoiceDetail.amount} DA</td>
+                  <td className="px-4 py-2 text-xs text-mapi-neutral-5 ">-{invoiceDetail.discount} %</td>
                   <td className="px-4 py-2 text-xs text-mapi-neutral-5">
                     {calculateDiscountedAmount(invoiceDetail.amount, invoiceDetail.discount)} DA
                   </td>                

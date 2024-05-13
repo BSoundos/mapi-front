@@ -59,7 +59,6 @@ const InvoiceHistoryPage = () => {
           <tr>
             <th className='px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left  '>API Name</th>
             <th className="px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left">Plan Name</th>
-            <th className="px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left">Amount</th>
             <th className="px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left">Created At</th>
             <th className="px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left">Monthly statement</th>
 
@@ -70,7 +69,6 @@ const InvoiceHistoryPage = () => {
             <tr key={invoice.id} className="text-mapi-neutral-5"> {/* Make sure to add a unique key for each row */}
              <td className='px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left  '>{invoice.apiName}</td>
               <td className='px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left  '>{invoice.planName}</td>
-              <td className='px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left  '>{invoice.totalAmount}</td>
               <td className='px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left  '>{invoice.createdAt}</td>
               <td className="px-4 py-2 text-xs text-secondary-blue">
                 <Link to={`/Transaction_details/${invoice.id}`}>
