@@ -2488,7 +2488,7 @@
   "resolved" "https://registry.npmjs.org/react-router/-/react-router-6.22.3.tgz"
   "version" "6.22.3"
   dependencies:
-    "@remix-run/router" "1.15.3"
+    "@remix-run/router" "1.16.1"
 
 "react-style-singleton@^2.2.1":
   "integrity" "sha512-ZWj0fHEMyWkHzKYUr2Bs/4zU6XLmq9HsgBURm7g5pAVfyn49DgUiNgY2d4lXRlYSiCif9YBGpQleewkcqddc7g=="

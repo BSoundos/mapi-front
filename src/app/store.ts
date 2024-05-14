@@ -44,6 +44,9 @@ import endpointReducer from '@/components/features/apis/endpointSlice';
 import reviewsReducer from '@/components/features/apis/ReviewSlice';
 import statsReducer from '@/components/features/apis_management/statisticsSlice';
 
+import usersListReducer from '@/components/features/admin/usersSlice'
+import providersListReducer from '@/components/features/admin/providersSlice'
+
 const store = configureStore({
   reducer: {
     auth: authReducer,
@@ -83,6 +86,8 @@ const store = configureStore({
     addReply: addReplyReducer,
     endpoints:endpointReducer,
     statistics:statsReducer,
+    users: usersListReducer,
+    providers: providersListReducer,
 
     // other reducers...
   },
