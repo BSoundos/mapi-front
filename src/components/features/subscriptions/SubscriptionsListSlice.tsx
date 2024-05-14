@@ -62,7 +62,6 @@ export const fetchSubscriptions = createAsyncThunk<Subscription[]>(
           Authorization: `Token ${token}`
         }
       });
-      console.log("response.data",response.data);
 
       return response.data; 
     }

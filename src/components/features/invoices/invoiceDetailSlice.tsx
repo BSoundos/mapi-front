@@ -9,6 +9,7 @@ interface InvoiceDetail {
   clientName: String;
   apiName: string;
   description: string;
+  discount: number;
 }
 
 
@@ -28,7 +29,8 @@ interface InvoiceDetailState {
       payment_date: "",
       clientName: "",
       apiName: "",
-      description: ""
+      description: "",
+      discount: 0,
     },
     loading: false,
     error: null,
@@ -38,9 +40,7 @@ interface InvoiceDetailState {
 export const fetchInvoiceDetail = createAsyncThunk<InvoiceDetail, number>(
     'InvoiceDetail',
     async (payment_id: number) => {
-      console.log(payment_id);
       const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-detail/${payment_id}`);
-      console.log(response.data);
       return response.data; 
     }
   );

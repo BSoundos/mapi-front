@@ -1,3 +1,5 @@
+import CheckboxInput from "../ui/CheckBoxInput";
+
 const UpdateTicketForm = ({
   isOpen,
   name,
@@ -26,36 +28,39 @@ const UpdateTicketForm = ({
 
         <form onSubmit={onSubmit}>
           <div className="flex flex-col gap-6 px-3">
-
+          <div className="mb-4 flex gap-6 items-center">
+           <label htmlFor="quota-type" className="text-sm font-semibold text-mapi-text w-32">
+                Status
+            </label>
             <div className="mb-4 flex flex-col gap-6 items-start">
               {choices.map((choice, index) => (
-                <label key={index} className="flex items-center gap-3 text-white">
-                  <input
-                    type="radio"
-                    name={name}
-                    value={choice.value}
-                    checked={selectedChoice === choice.value}
-                    onChange={() => {
-                      setSelectedChoice(choice.value)
-                    }
-                    }
-                  />
-                  {choice.label} 
-                </label>
+                <CheckboxInput
+                id={index}
+                name={name}
+                value={choice.value}
+                checked={selectedChoice === choice.value}
+                label= {choice.label} 
+                onChange={() => {
+                  setSelectedChoice(choice.value)
+                }
+                }
+                disabled={false}
+              />
               ))}
+            </div>
             </div>
 
             {
               hasMessage &&
-              (<div className="mb-4 flex gap-6 items-center">
-                <label htmlFor="updateMessage" className="text-sm text-white font-semibold">
-                  Update Message (Optional)
-                </label>
-                <textarea
+              ( <div className="mb-4 flex gap-6 items-center">
+              <label htmlFor="quota-type" className="text-sm font-semibold text-mapi-text w-36">
+                   Update Message(optional)
+               </label>
+               <textarea
                   id="updateMessage"
                   value={updateMessage}
                   onChange={(e) => setUpdateMessage(e.target.value)}
-                  className="w-full px-3 py-2 border rounded"
+                  className="add-plan w-60 h-20"
                 />
               </div>)
             }

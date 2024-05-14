@@ -1,3 +1,4 @@
+
 import { useDispatch, useSelector } from 'react-redux';
 import { useEffect } from 'react';
 import { fetchInvoices } from '@/components/features/invoices/invoiceSlice';
@@ -20,6 +21,15 @@ const InvoiceDetailsPage = () => {
   const loading = useSelector((state: RootState) => state.invoiceDetail.loading);
   const error = useSelector((state: RootState) => state.invoiceDetail.error);
   const {id} = useParams(); // Extraire les paramètres dynamiques de l'URL
+
+// Function to calculate discounted amount
+  const calculateDiscountedAmount = (amount: number, discountPercentage: number) => {
+    const discountAmount = (discountPercentage / 100) * amount;
+    const discountedAmount = amount - discountAmount;
+    return discountedAmount.toFixed(2); // Assuming you want to display two decimal places
+  };
+
+
 
   useEffect(() => {
     dispatch(fetchInvoiceDetail(parseInt(id)));
@@ -57,6 +67,9 @@ const InvoiceDetailsPage = () => {
                 <th className="px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left">API Name</th>
                   <th className='px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left  '>Description</th>
                   <th className="px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left">Amount</th>
+                  <th className='px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left  '>Discount</th>
+                  <th className="px-4 py-2  text-mapi-neutral-5 text-opacity-85 text-sm text-left">Total</th>
+
                   
                   
                 </tr>
@@ -66,6 +79,10 @@ const InvoiceDetailsPage = () => {
                   <td className="px-4 py-2 text-xs text-mapi-neutral-5 ">{invoiceDetail.apiName}</td>
                   <td className="px-4 py-2 text-xs text-mapi-neutral-5 ">{invoiceDetail.description}</td>
                   <td className="px-4 py-2 text-xs text-mapi-neutral-5 ">{invoiceDetail.amount} DA</td>
+                  <td className="px-4 py-2 text-xs text-mapi-neutral-5 ">-{invoiceDetail.discount} %</td>
+                  <td className="px-4 py-2 text-xs text-mapi-neutral-5">
+                    {calculateDiscountedAmount(invoiceDetail.amount, invoiceDetail.discount)} DA
+                  </td>                
                 </tr>
                 
               </tbody>

@@ -132,10 +132,9 @@ const TicketPage = () => {
   return (
     <div className='flex'>
     <SideBarPro/>
-    <div className='flex-1 bg-mapi-neutral-2 overflow-y-auto max-h-screen  scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52]'>
-
+    <div className='flex-1 flex-col bg-mapi-neutral-2 '>
       <SupportNav />
-      <div className='m-12'>
+      <div className='m-6 overflow-y-auto max-h-[80vh] scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52] '>
       {isErrorModalOpen && (
             <ErrorModal
               title="Error"
@@ -144,11 +143,8 @@ const TicketPage = () => {
               onClose={handleCloseErrorModal}
             />
           )}
-      
-
-      <div className='px-6'>
-        <h4 className="font-inter font-bold text-white text-2xl">Tickets Tracking</h4>
-        <div className="font-public-sans flex justify-start space-x-6 text-[#BFBFBF] mt-8">
+        <h4 className="font-inter font-bold text-white text-xl">Tickets Tracking</h4>
+        <div className="font-public-sans flex justify-start space-x-3 text-[#BFBFBF] mt-4">
           <CustomSelect
             options={PRIORITY_CHOICES}
             onChange={handleFilterByPriority}
@@ -159,13 +155,11 @@ const TicketPage = () => {
             onChange={handleFilterByStatus}
             defaultFirstOption="By Status" // Customizable default option
           />
-          <button className="bg-mapi-neutral-1 rounded-md px-5 py-2 hover:border hover:border-mapi-secondary-3"
+          <button className="bg-mapi-neutral-1 rounded-md px-4 py-2 hover:border hover:border-mapi-secondary-3"
           onClick={handleFilterByNewest} >Newest</button>
         </div>
-      </div>
-
-
-      <div className='mt-9 flex justify-end'> 
+  
+      <div className='mt-4 flex justify-end'> 
         <div className="w-1/3 rounded-md border border-opacity-50 border-[#343B4F]">
           <SearchInput
             searchTerm={searchTerm}
@@ -176,9 +170,9 @@ const TicketPage = () => {
         </div>
       </div>
       
-      <div className='mt-9 '>
+      <div className='mt-4 '>
           {renderTickets()}
-          <div className='flex items-center justify-start pt-8 pb-20'>
+          <div className='flex items-center justify-start pt-6 pb-10'>
             <PaginationR
               currentPage={currentPage}
               totalPages={Math.ceil(totalTickets/ ticketsPerPage)}
@@ -189,8 +183,7 @@ const TicketPage = () => {
 
           
       </div>
-      
-    </div>
+      </div>
     </div>
   );
 };

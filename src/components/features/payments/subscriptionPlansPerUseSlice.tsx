@@ -71,7 +71,6 @@ export const fetchSubscriptionPlansPerUse = createAsyncThunk<SubscriptionPlan[],
   'subscriptionPlans/fetchPlans-peruse',
   async (versionApiId: number) => {
     const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-per-use/subscription-plans/${versionApiId}/`);
-    console.log("subscription_plans per use ",response.data)
     return response.data; 
   }
 );
@@ -85,7 +84,6 @@ export const fetchUserPlansPerUse = createAsyncThunk<UserPlan[], number>(
         Authorization: `Token ${token}`
       }
     });
-    console.log("user_plans",response.data)
     return response.data; 
   }
 );
@@ -123,7 +121,6 @@ const subscriptionPlansPerUseSlice = createSlice({
       .addCase(fetchUserPlansPerUse.fulfilled, (state, action) => {
         state.status = 'succeeded';
         state.userplans = action.payload;
-        console.log("state.userplans",state.userplans )
       })
       .addCase(fetchUserPlansPerUse.rejected, (state, action) => {
         state.status = 'failed';

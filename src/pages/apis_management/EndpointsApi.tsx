@@ -35,7 +35,7 @@ export default function EndpointsApi() {
             <FaSearch/>
             </div>
             <div className="flex flex-1 justify-end gap-2">
-            <Link to="/add-enpoint">
+            <Link to={`/add-endpoint/${id}`}>
             <button  className="bg-[#2C5EAF] bg-opacity-15 border border-[#616161] text-[#99BDE6] text-opacity-85 py-1 px-3 rounded text-sm  font-semibold w-fit">+ Add Endpoint </button>
             </Link>
             {showAddEndpointModal && <AddEndpointModal showModal={showAddEndpointModal} setShowModal={setShowAddEndpointModal} versionId={1}/>}

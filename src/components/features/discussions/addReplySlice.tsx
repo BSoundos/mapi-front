@@ -18,7 +18,6 @@ export const postReply = createAsyncThunk(
   async ({ discussionId, content }: { discussionId: number;  content: string }) => {
     try {
       const response = await axios.post(`${BACKEND_BASE_URL}/support_hub/add-reply/${discussionId}/`, { content });
-      console.log(response.data)
       return response.data;
 
     } catch (error) {

@@ -12,7 +12,7 @@ import invoicesReducer from '@/components/features/invoices/invoiceSlice';
 import apiProviderReducer from '@/components/features/apis_management/apiSlice';
 import versionReducer from '@/components/features/apis_management/versionSlice';
 import categoriesReducer from '@/components/features/apis/categoriesSlice';
-import apiReducer from '@/components/features/apis/ApiSlice';
+
 import apiReducer from '@/components/features/apis/ApiSlice';
 import AboutReducer from '@/components/features/apis/AboutSlice';
 import functionalitiesReducer from '@/components/features/apis/functionalitiesSlice';
@@ -42,6 +42,10 @@ import invoicesDReducer from '@/components/features/invoices/invoiceDetailSlice'
 import endpointReducer from '@/components/features/apis/endpointSlice';
 import reviewsReducer from '@/components/features/apis/ReviewSlice';
 import promotionReducer from '@/components/features/apis_management/promotionSlice';
+import statsReducer from '@/components/features/apis_management/statisticsSlice';
+
+import usersListReducer from '@/components/features/admin/usersSlice'
+import providersListReducer from '@/components/features/admin/providersSlice'
 
 const store = configureStore({
   reducer: {
@@ -82,6 +86,9 @@ const store = configureStore({
     addReply: addReplyReducer,
     endpoints:endpointReducer,
     promotion:promotionReducer,
+    statistics:statsReducer,
+    users: usersListReducer,
+    providers: providersListReducer,
 
     // other reducers...
   },

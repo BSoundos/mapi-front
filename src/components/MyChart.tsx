@@ -1,5 +1,9 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef,useState } from 'react';
 import Chart, { ChartConfiguration, Scale } from 'chart.js/auto';
+
+import { useSelector } from 'react-redux';
+import {  fetchRevenueReport } from '@/components/features/apis_management/statisticsSlice';
+import { useAppDispatch,RootState } from '@/app/store'; 
 
 interface ExtendedChartOptions extends ChartConfiguration<'bar'> {
   grid?: {
@@ -8,6 +12,14 @@ interface ExtendedChartOptions extends ChartConfiguration<'bar'> {
 }
 
 const MyChart = () => {
+
+
+  const dispatch = useAppDispatch();
+  
+  const revenueReport = useSelector((state: RootState) => state.statistics.revenueReport);
+  const loading = useSelector((state: RootState) => state.statistics.loading);
+  const error = useSelector((state: RootState) => state.statistics.error);
+
   const chartRef = useRef<HTMLCanvasElement | null>(null);
   const chartInstance = useRef<Chart<'bar', (number | undefined)[], string, ExtendedChartOptions> | null>(null);
   const [year, setYear] = React.useState(2024);// pour la valeur de year 
@@ -16,17 +28,38 @@ const MyChart = () => {
   const [week, setWeek] = React.useState<number>(1);// pour la valeur de week
 
   let data: number[] = [];
-  // Le fetch de données sera dans cette partie 
-  // sont des donnees statique pour toute les annee et pour toute les mois et pour tous les jour 
+  
+
   useEffect(() => {
-    if (period === 'year') {
-      data = [200, 300, 400, 100, 200, 150, 250, 300, 400, 200, 300, 350];
+      dispatch(fetchRevenueReport({ timeRange: 'year' })); // Fetch for current year
+  }, [dispatch]);
+
+
+  useEffect(() => {
+    const fetchParameters = { timeRange: period, year, month, week };
+
+    if (period === 'week') {
+      fetchParameters.timeRange = 'week';
+      fetchParameters.week = week;
+      fetchParameters.month = null;
+      fetchParameters.year = null;
+
     } else if (period === 'month') {
-      data = [50, 60, 70, 80];
-    } else if (period === 'week') {
-      data = [10, 20, 30, 40, 50, 60, 70];
+      fetchParameters.timeRange = 'month';
+      fetchParameters.month = month;
+      fetchParameters.week = null;
+      fetchParameters.year = null;
+
+    } else {
+      fetchParameters.timeRange = 'year';
+      fetchParameters.year = year;
+      fetchParameters.week = null;
+      fetchParameters.month = null;
+
     }
-  }, [period, year, month, week]);
+
+    dispatch(fetchRevenueReport(fetchParameters));
+  }, [dispatch, period, year, month, week]);
   
 
 
@@ -36,12 +69,30 @@ const MyChart = () => {
       if (ctx) {
 
         let labelsData;
+        let data: number[] = [];
+
         if (period === 'year') {
-          labelsData = ['Janv ' + year, 'Fév ' + year, 'Mars ' + year, 'Avr ' + year, 'Mai ' + year, 'Juin ' + year, 'Juill ' + year, 'Août ' + year, 'Sept ' + year, 'Oct ' + year, 'Nov ' + year, 'Déc ' + year];
+          labelsData = [
+            `Jan ${year}`,
+            `Feb ${year}`,
+            `Mar ${year}`,
+            `Apr ${year}`,
+            `May ${year}`,
+            `Jun ${year}`,
+            `Jul ${year}`,
+            `Aug ${year}`,
+            `Sep ${year}`,
+            `Oct ${year}`,
+            `Nov ${year}`,
+            `Dec ${year}`,
+          ];
+          data = revenueReport.map((item) => item.amount ?? 0); // Ensure data matches labels
         } else if (period === 'month') {
-          labelsData = ['Week 1', 'Week 2', 'Week 3', 'Week 4']; 
+          labelsData = Array.from({ length: 5 }, (_, i) => `Week ${i + 1}`); // Adjust if needed
+          data = revenueReport.map((item) => item.amount ?? 0);
         } else if (period === 'week') {
-          labelsData = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']; 
+          labelsData = revenueReport.map((item) => item.date); // Adjust if needed
+          data = revenueReport.map((item) => item.amount ?? 0);
         }
 
         chartInstance.current = new Chart(ctx, {
@@ -86,13 +137,14 @@ const MyChart = () => {
         chartInstance.current = null;
       }
     };
-  }, [period]);
+  }, [period, revenueReport, year]);
 
  
   
   const handleYearChange = (increment: number) => {
     setYear(prevYear => prevYear + increment);
   };
+
   const handleMonthChange = (increment: number) => {
     setMonth(prevMonth => {
       let newMonth = prevMonth + increment;
@@ -101,26 +153,37 @@ const MyChart = () => {
       return newMonth;
     });
   };
+
   const handleWeekChange = (increment: number) => {
     setWeek(prevWeek => {
       let newWeek = prevWeek + increment;
-      const maxWeeksInYear = 4; // Modifier ceci avec le nombre maximum de semaines dans une année
+      const maxWeeksInYear = 5; // Modifier ceci avec le nombre maximum de semaines dans une année
       if (newWeek < 1) newWeek = 1;
       if (newWeek > maxWeeksInYear) newWeek = maxWeeksInYear;
+
       return newWeek;
     });
   };
+
   const handlePeriodChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    setPeriod(event.target.value);
+    setPeriod(event.target.value as 'year' | 'month' | 'week');
   };
+
   const daysOfWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
   const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-   const weeks = ['week 1','week 2','week 3','week 4']
+   const weeks = ['week 1','week 2','week 3','week 4','week 5']
   return (
     <div className=' bg-[#0B1739]  border border-opacity-30 border-[#7E89AC]'>
-      <div className='dataCard revenueCard p-8'>
+      <div className='dataCard revenueCard p-8' style={{ maxHeight: '340px' }}>
         <div className='flex justify-between'>
-             <h3 className='text-[#BFBFBF] font-semibold'>Earning Overview</h3>
+             <h3 className='text-[#BFBFBF] font-semibold'>Earning Overview 
+            {period === 'month' ? (
+               <span> Of The current Year</span> 
+            ) : period === 'week' ? (
+             <span> Of The current Month</span> 
+            ): null }
+
+             </h3>
              <div className='flex'>
              <div className='flex items-center mr-4 bg-[#081028] border border-opacity-30 border-[#7E89AC] text-white'>
              {period === 'year' ? (

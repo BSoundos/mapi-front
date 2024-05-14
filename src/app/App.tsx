@@ -48,8 +48,10 @@ import UserSecuritySettings from '@/pages/UserSettings/UserSecuriteSettings';
 import ProviderProfilSetting from '@/pages/UserSettings/ProviderProfilSetting';
 import ProviderSecuritySettings from '@/pages/UserSettings/ProviderSecuriteSettings';
 import EndpointsApi from '@/pages/apis_management/EndpointsApi';
-import AddEndpointModal from '@/pages/apis_management/AddEndpointPage';
 import AddEndpointPage from '@/pages/apis_management/AddEndpointPage';
+import Revenue from '@/pages/apis_management/Revenue';
+
+import ProvidersTable from '@/pages/admin/ProvidersTable';
 const App = () => {
 
   useEffect(() => {
@@ -122,8 +124,11 @@ const App = () => {
         <Route path="/pricing-api/private/:id" element={<PricingPrivateApi/>}/>
         <Route path="/providerProfileSettings" element={<ProviderProfilSetting/>}/>
         <Route path="/providerSecuritySettings" element={<ProviderSecuritySettings/>}/>
+        <Route path="/revenue" element={<Revenue />} />
   
+        {/*Tracking users and providers*/}
         <Route path="/admin/users" element={<UsersTable />} />
+        <Route path="/admin/providers" element={<ProvidersTable />} />
 
 
       </Routes>

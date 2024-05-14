@@ -57,7 +57,6 @@ const paymentSlice = createSlice({
       .addCase(confirmPayment.fulfilled, (state, action) => {
         state.loading = false;
         if (action.payload && action.payload.checkout_url) {
-          console.log("")
         } else if (action.payload && action.payload.error) {
           state.error = action.payload.error;
         }

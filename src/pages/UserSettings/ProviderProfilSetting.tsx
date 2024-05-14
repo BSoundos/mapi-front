@@ -14,7 +14,7 @@ import {User} from '@/types/user'
 import SideBarPro from '@/components/apis_management/SideBarPro';
 
 const ProviderProfilSetting:React.FC  = () => {
-    const username = localStorage.getItem('username');
+    const username1 = localStorage.getItem('username');
 
     const dispatch = useAppDispatch();
 
@@ -26,7 +26,7 @@ const ProviderProfilSetting:React.FC  = () => {
     const [newEmail, setNewEmail] = useState('');
     const [newPhoneNumber, setNewPhoneNumber] = useState('');
     const [userInfo, setUserInfo] = useState<User>(null);
-
+    const [username, setusername] = useState(username1);
 
        //dispatcher les information Provider
        useEffect(() => {
@@ -40,15 +40,14 @@ const ProviderProfilSetting:React.FC  = () => {
             setNewPhoneNumber(userInfo.contact_info)
             setNewUsername(userInfo.username)
             setUserInfo(userInfo);
-            console.log(userInfo)
             dispatch({ type: 'USER_INFO_FETCHED', payload: userInfo });
           } catch (error) {
             console.error('Error fetching user info:', error);
           }
         };
     
-        fetchUserInfo(); 
-      }, [dispatch]);
+      fetchUserInfo();
+    }, [dispatch]);
 
 
     const handleDiscard = () => {
@@ -62,21 +61,38 @@ const ProviderProfilSetting:React.FC  = () => {
       };
 
       const handleUpdateUserSettings = () => {
-        setVerificationEmailSent(false)
-        dispatch(updateProviderSettings({
-          oldUsername: username,
-          userData: {
-              firstName: newFirstName,
-              lastName: newLastName,
+        console.log(newFirstName)
+        dispatch(
+          updateProviderSettings({
+            oldUsername: username,
+            userData: {
+              first_name: newFirstName,
+              last_name: newLastName,
               username: newUsername,
               email: newEmail,
-              phoneNumber: newPhoneNumber,
-          },
-      }));
+              contact_info: newPhoneNumber,
+            },
+          })
+        );
+        setusername(newUsername)
+        const updatedUserInfo = {
+          user_id: userInfo.id,
+          last_name: newLastName,
+          username: newUsername,
+          email: newEmail,
+          role: 'provider',
+          first_name: newFirstName,
+        };
       
-      setVerificationEmailSent(true);
-      handleDiscard();
-      }
+        Object.keys(updatedUserInfo).forEach((key) => {
+          localStorage.setItem(key, updatedUserInfo[key]);
+        });
+       
+      
+        setVerificationEmailSent(true);
+        
+      };
+      
       
 
   return (

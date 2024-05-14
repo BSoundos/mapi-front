@@ -19,7 +19,6 @@ export const postDiscussion = createAsyncThunk(
   async ({ apiId, title, content }: { apiId: number; title: string; content: string }) => {
     try {
       const response = await axios.post(`${BACKEND_BASE_URL}/support_hub/add-discussion/${apiId}/`, { title, content });
-      console.log(response.data)
       return response.data;
 
     } catch (error) {

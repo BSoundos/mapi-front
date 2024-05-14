@@ -12,6 +12,9 @@ import SideBarUser from '@/components/SideBarUser';
 export type AppDispatch = typeof store.dispatch
 
 const InvoiceHistoryPage = () => {
+
+  const username = localStorage.getItem('username');
+
     
   const dispatch = useDispatch<AppDispatch>();
   const invoices = useSelector((state: RootState) => state.invoiceHistory.invoices);
@@ -19,12 +22,11 @@ const InvoiceHistoryPage = () => {
   const error = useSelector((state: RootState) => state.invoiceHistory.error);
 
   useEffect(() => {
-    dispatch(fetchInvoices(3));
+    dispatch(fetchInvoices(username));
     console.log(invoices)
   }, [dispatch]);
 
   useEffect(() => {
-    console.log(loading);
   }, [invoices]);
 
   if (loading) {
