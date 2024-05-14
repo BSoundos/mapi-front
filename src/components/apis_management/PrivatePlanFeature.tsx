@@ -17,7 +17,7 @@ const PrivatePlanFeature: React.FC<FeatureProps> = ({ feature,selectedPlan }) =>
   const [editfeatureFormData, setEditfeatureFormData] = useState({
     name: feature.name,
     description: feature.description,
-    endpoints: feature.endpoint,
+    endpoints: feature.endpoints,
   });
 
  

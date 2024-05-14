@@ -14,7 +14,7 @@ import ErrorLoading from "@/components/ErrorLoading";
 import PrivatePlanObject from "@/components/apis_management/PrivatePlanObject";
 import PrivatePlanFeature from "@/components/apis_management/PrivatePlanFeature";
 import EditPrivatePlan from "@/components/apis_management/EditPrivatePlan";
-import { fetchAllPrivatePlansByVersion, removePrivatePlan } from "@/components/features/apis_management/privatePlanSlice";
+import { fetchAllPrivatePlansByVersion, getPlanUsers, removePrivatePlan } from "@/components/features/apis_management/privatePlanSlice";
 import { fetchObjectPerUseUser } from "@/components/features/apis_management/objectPerUseSlice";
 import { fetchObjectPerMonthUser } from "@/components/features/apis_management/objectPerMonthSlice";
 import { fetchAllFeaturesStatusForUser } from "@/components/features/apis_management/featureStatusSlice";
@@ -66,6 +66,7 @@ export default function PricingPrivateApi() {
 
   const handlePlanSelection = (plan: any) => {
     setSelectedPlan(plan);
+    dispatch(getPlanUsers(plan.id)); // Call getPlanUsers with the selected plan's ID
   };
 
   const handleEditPlan = (plan: any) => {
@@ -75,7 +76,8 @@ export default function PricingPrivateApi() {
   };
 
   const handleDeletePlan = (planId: number) => {
-    dispatch(removePrivatePlan(planId));  };
+    dispatch(removePrivatePlan(planId));
+  };
 
   const handleAddPlan = () => {
     setSelectedPlan(null);
@@ -88,7 +90,6 @@ export default function PricingPrivateApi() {
     setSelectedPlan(null);
     setEditing(false);
   };
-
 
   return (
     <div className="flex">
@@ -122,7 +123,7 @@ export default function PricingPrivateApi() {
                       {privatePlan.privatePlans.map((plan) => (
                         <div
                           key={plan.id}
-                          className={`flex px-1.5 pt-1 pb-1.5  rounded text-mapi-text font-semibold text-sm justify-between items-start ${
+                          className={`flex px-1.5 pt-1 pb-1.5  rounded text-mapi-text font-semibold text-sm justify-between items-start cursor-pointer ${
                             selectedPlan === plan ? "bg-[#2C5EAF] bg-opacity-10" : "bg-transparent"
                           }`}
                           onClick={() => handlePlanSelection(plan)}
@@ -167,14 +168,14 @@ export default function PricingPrivateApi() {
                 <div className="text-mapi-text  font-medium border-b border-b-[#7E89AC] border-opacity-30 px-2 py-2.5">Objects</div>
                 <div className="px-2 flex flex-col ">
                   {object.objects.map((obj) => (
-                      <PrivatePlanObject object={obj} selectedPlan={selectedPlan}/>
+                      <PrivatePlanObject key={obj.id} object={obj} selectedPlan={selectedPlan}/>
                       ))}
                 <button onClick={()=>setShowAddObjectModal(true)} className="bg-[#2C5EAF] bg-opacity-15 border border-[#616161] text-[#99BDE6] text-opacity-85 py-1 px-3 rounded text-sm  font-semibold mb-4 w-full">+ Add Object </button>
                 {showAddObjectModal && <AddObjectModal showModal={showAddObjectModal} setShowModal={setShowAddObjectModal} versionId={fetchVersionId}/>}
                 <div className="text-mapi-text  font-medium border-b border-b-[#7E89AC] border-opacity-30 px-2 py-2.5">Features</div>
                 <div className="px-2 flex flex-col ">
                 {feature.features.map((feature) => (
-                  <PrivatePlanFeature feature={feature} selectedPlan={selectedPlan}/>
+                  <PrivatePlanFeature key={feature.id} feature={feature} selectedPlan={selectedPlan}/>
                 ))}
                 {showAddFeatureModal && <AddFeatureModal showModal={showAddFeatureModal} setShowModal={setShowAddFeatureModal} versionId={fetchVersionId}/>}
                 <button onClick={()=>setShowAddFeatureModal(true)} className="bg-[#2C5EAF] bg-opacity-15 border border-[#616161] text-[#99BDE6] text-opacity-85 py-1 px-3 rounded text-sm  font-semibold mb-4 w-full">+ Add Feature </button>
@@ -187,15 +188,16 @@ export default function PricingPrivateApi() {
                 <button
                 onClick={() => setShowUserModal(true)}
                 className={`py-1 px-3 rounded text-sm  ${
-                  (selectedPlan!==null)
+                  (selectedPlan!== null)
                     ? 'bg-[#2C5EAF] bg-opacity-15 border border-[#616161] text-[#99BDE6] text-opacity-85 font-semibold'
-                    : 'bg-[#3B73CE] border border-[#7E89AC] border-opacity-30 text-white font-normal'
+                    : 'bg-[#4d86e3] border border-[#7E89AC] border-opacity-30 text-white text-opacity-85 font-normal cursor-not-allowed'
                 }`}
+                disabled={(selectedPlan == null)}
               >
                 + Invite User
               </button>               
                </div>
-               <div className="">
+               <div className="w-full h-full">
                <PlanUsers showModal={showUserModal} setShowModal={setShowUserModal} selectedPlan={selectedPlan} />
                </div>
             </div>    

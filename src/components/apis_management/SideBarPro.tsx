@@ -1,6 +1,5 @@
 import logo from "@/assets/logo.png";
 import { Link,useLocation } from 'react-router-dom';
-import { PiBarcode } from "react-icons/pi";
 import { BiSolidDashboard ,BiDollar ,BiSupport} from "react-icons/bi";
 import { IoBag } from "react-icons/io5";
 import { logout } from "@/components/features/authentication/authActions";
@@ -43,7 +42,7 @@ function SideBarPro() {
       className={`flex items-center text-md p-3 mr-5 ml-3 rounded-lg font-semibold ${
         (item.text === 'My APIs' &&
           (pathname === '/my-apis' || pathname.includes('api'))) ||
-        pathname === item.path
+           pathname === item.path
           ? 'bg-mapi-secondary-1 bg-opacity-50 text-mapi-secondary-3 shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_4px_8px_0_rgba(0,0,0,0.1)] '
           : 'text-mapi-neutral-4'
       }`}

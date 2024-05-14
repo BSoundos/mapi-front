@@ -8,7 +8,6 @@ import securite from '@/assets/lock.png'
 import { UpdateProviderSecurity } from '@/components/features/UserSetting/UserSlice';
 import { useAppDispatch } from '@/app/store'; 
 import SideBarPro from '@/components/apis_management/SideBarPro';
-import SideBarProvider from '@/components/SideBarProvider';
 
 const ProviderSecuritySettings:React.FC  = () => {
 
@@ -65,7 +64,7 @@ const ProviderSecuritySettings:React.FC  = () => {
   <div className='bg-[#0B1739] '>
        <Navbar />
        <div className='flex mt-4'>
-       <SideBarProvider />
+       <SideBarPro />
        <div className='mb-20 pt-4 pl-8 ml-2 mr-8 border border-opacity-30 border-[#7E89AC] w-[75%] rounded'> 
             <p className='text-white font-semibold'>Security Settings</p>
             {verificationEmailSent && <p className="text-[#25E130]">Your password has been successfully updated.</p>}
