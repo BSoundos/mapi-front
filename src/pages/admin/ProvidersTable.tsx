@@ -40,7 +40,6 @@ const ProvidersTable: React.FC= () => {
   
     useEffect(() => {
       dispatch(fetchProviders());
-      console.log(providers)
     }, [dispatch]);
 
 
