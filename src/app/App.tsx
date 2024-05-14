@@ -50,6 +50,7 @@ import ProviderSecuritySettings from '@/pages/UserSettings/ProviderSecuriteSetti
 import Revenue from '@/pages/apis_management/Revenue';
 
 import ProvidersTable from '@/pages/admin/ProvidersTable';
+import DashboardAdmin from '@/pages/admin/DashboardAdmin';
 const App = () => {
 
   useEffect(() => {
@@ -125,6 +126,7 @@ const App = () => {
         {/*Tracking users and providers*/}
         <Route path="/admin/users" element={<UsersTable />} />
         <Route path="/admin/providers" element={<ProvidersTable />} />
+        <Route path="/admin/dashboard" element={<DashboardAdmin />} />
 
 
       </Routes>

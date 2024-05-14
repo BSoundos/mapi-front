@@ -40,7 +40,6 @@ const UsersTable: React.FC= () => {
   
     useEffect(() => {
       dispatch(fetchUsers());
-      console.log(users)
     }, [dispatch]);
 
 

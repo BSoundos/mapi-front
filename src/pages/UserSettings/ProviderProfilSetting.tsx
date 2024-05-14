@@ -61,7 +61,6 @@ const ProviderProfilSetting:React.FC  = () => {
       };
 
       const handleUpdateUserSettings = () => {
-        console.log(newFirstName)
         dispatch(
           updateProviderSettings({
             oldUsername: username,

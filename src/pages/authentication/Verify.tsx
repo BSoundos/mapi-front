@@ -67,7 +67,6 @@ const Verify = () => {
         });
       }
     } catch (error: any) {
-      console.log(error);
     }
   };
 
