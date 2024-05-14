@@ -43,7 +43,7 @@ const EditFeatureModal: React.FC<EditFeatureProps> = ({
   <form>
         <div className="fixed inset-0 flex justify-center items-center bg-gray-800 bg-opacity-50 z-50">
           <div className="bg-mapi-neutral-1 pt-6 pb-4 mt-3 px-6 rounded-md w-1/2 ">
-            <h2 className="text-lg font-semibold mb-8 text-white pb-2 border-b-[#404040] border-b">Add Feature</h2>
+            <h2 className="text-lg font-semibold mb-8 text-white pb-2 border-b-[#404040] border-b">Edit Feature</h2>
             <div className="flex flex-col gap-2 px-3 ">
             <div className="mb-2 flex gap-6 items-center">
               <label htmlFor="name" className="text-sm font-semibold text-mapi-text flex-1">Name</label>

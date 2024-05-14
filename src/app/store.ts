@@ -28,7 +28,6 @@ import objectMonthUserReducer from '@/components/features/apis_management/object
 import { useDispatch } from 'react-redux';
 import subscriptionReducer from '@/components/features/subscriptions/SubscriptionsListSlice';
 
-import ReviewReducer from '@/components/features/apis/ReviewSlice';
 
 import discussionsReducer from '@/components/features/discussions/discussionsSlice';
 import discussionReducer from '@/components/features/discussions/discussionSlice';
@@ -42,6 +41,7 @@ import TicketDiscussionReducer from  '@/components/features/tickets/TicketDiscus
 import invoicesDReducer from '@/components/features/invoices/invoiceDetailSlice';
 import endpointReducer from '@/components/features/apis/endpointSlice';
 import reviewsReducer from '@/components/features/apis/ReviewSlice';
+import promotionReducer from '@/components/features/apis_management/promotionSlice';
 import statsReducer from '@/components/features/apis_management/statisticsSlice';
 
 import usersListReducer from '@/components/features/admin/usersSlice'
@@ -85,6 +85,7 @@ const store = configureStore({
     replies: repliesReducer,
     addReply: addReplyReducer,
     endpoints:endpointReducer,
+    promotion:promotionReducer,
     statistics:statsReducer,
     users: usersListReducer,
     providers: providersListReducer,
