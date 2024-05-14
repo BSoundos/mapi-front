@@ -47,6 +47,8 @@ import UserProfilSetting from '@/pages/UserSettings/UserProfilSetting';
 import UserSecuritySettings from '@/pages/UserSettings/UserSecuriteSettings';
 import ProviderProfilSetting from '@/pages/UserSettings/ProviderProfilSetting';
 import ProviderSecuritySettings from '@/pages/UserSettings/ProviderSecuriteSettings';
+import EndpointsApi from '@/pages/apis_management/EndpointsApi';
+import AddEndpointPage from '@/pages/apis_management/AddEndpointPage';
 import Revenue from '@/pages/apis_management/Revenue';
 
 import ProvidersTable from '@/pages/admin/ProvidersTable';
@@ -116,7 +118,9 @@ const App = () => {
          {/* Provider Pages  */}
         <Route path="/my-apis" element={<MyApis />} />
         <Route path="/version-api/:id" element={<VersionsApi/>}/>
+        <Route path="/endpoint-api/:id" element={<EndpointsApi/>}/>
         <Route path="/general-api/:id" element={<GeneralApi/>}/>
+        <Route path="/add-endpoint/:id" element={<AddEndpointPage/>}/>
         <Route path="/pricing-api/public/:id" element={<PricingPublicApi/>}/>
         <Route path="/pricing-api/private/:id" element={<PricingPrivateApi/>}/>
         <Route path="/providerProfileSettings" element={<ProviderProfilSetting/>}/>

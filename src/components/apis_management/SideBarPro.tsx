@@ -1,6 +1,5 @@
 import logo from "@/assets/logo.png";
 import { Link,useLocation } from 'react-router-dom';
-import { PiBarcode } from "react-icons/pi";
 import { BiSolidDashboard ,BiDollar ,BiSupport} from "react-icons/bi";
 import { IoBag } from "react-icons/io5";
 import { logout } from "@/components/features/authentication/authActions";
@@ -17,7 +16,7 @@ function SideBarPro() {
   const items = [
     { icon:<BiSolidDashboard size={24} />,text: 'Dashboard', path: '/dashboard' },
     { icon:<IoBag size={24} /> ,text: 'My APIs', path: '/my-apis' },
-    {icon:<BiDollar size={24} />, text: 'Billing & Incomes', path: '/revenue' },
+    {icon:<BiDollar size={24} />, text: 'Billing & Incomes', path: '/Revenue' },
     { icon: <BiSupport size={24} />, text: 'Ticket System', path: '/Tickets' },
   ];
   const dispatch=useAppDispatch();
@@ -42,8 +41,9 @@ function SideBarPro() {
       to={item.path}
       className={`flex items-center text-md p-3 mr-5 ml-3 rounded-lg font-semibold ${
         (item.text === 'My APIs' &&
-          (pathname === '/my-apis' || pathname.includes('api'))) ||
-        pathname === item.path
+          (pathname === '/my-apis' || pathname.includes('api'))) ||(item.text === 'Ticket System' &&
+          (pathname === '/ticket' || pathname === '/Discussions' )) ||
+           pathname === item.path
           ? 'bg-mapi-secondary-1 bg-opacity-50 text-mapi-secondary-3 shadow-[inset_0_1px_2px_rgba(0,0,0,0.1),0_4px_8px_0_rgba(0,0,0,0.1)] '
           : 'text-mapi-neutral-4'
       }`}

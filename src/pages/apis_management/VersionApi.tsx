@@ -66,7 +66,7 @@ export default function VersionsApi() {
       <SideBarPro />
       <div className="bg-mapi-neutral-2 flex-1 ">
         <Navbar id={id} />
-        <div className="container px-5 flex-1 mt-8 pl-14 ">
+        <div className="container px-5 flex-1 mt-8 pl-14 overflow-y-auto max-h-[80vh]  scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52]">
           <h2 className="text-white text-2xl font-bold">Manage Versions</h2>
           <div className="flex">
             <div className="flex-col w-1/2 border-r border-[#7E89AC] border-opacity-30 pr-8">

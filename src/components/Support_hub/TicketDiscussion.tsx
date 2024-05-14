@@ -129,13 +129,13 @@ const TicketDiscussion: React.FC<TicketDiscussionProps> = ({
 
   return (
      
-    <div className="flex flex-col h-full mb-2 p-4 " >
+    <div className="flex flex-col h-full mb-2 p-4 text-sm " >
       <div className="border-b font-inter border-[#343B4F] pb-3">
         <div className="flex justify-between ">
          {!forUser ? (
           <>
             <div className="flex space-x-4">
-              <p className={`${priorityDetails.bgcolor} text-12px rounded-md px-2 py-1 cursor-pointer ${priorityDetails.color}`} onClick={handlePriorityClick}>
+              <p className={`${priorityDetails.bgcolor} text-sm rounded-md px-2 py-1 cursor-pointer ${priorityDetails.color}`} onClick={handlePriorityClick}>
                 {priorityDetails.text}</p>
               <p className="text-20px text-white">Ticket ID: <span>#{id}</span></p>
             </div>
@@ -167,7 +167,7 @@ const TicketDiscussion: React.FC<TicketDiscussionProps> = ({
         </div>
       </div>
       <div className="font-public-sans pt-4 text-white ">
-        {!forUser && <h2 className="font-semibold text-16px mb-2">{title}</h2>}
+        {!forUser && <h2 className="font-semibold text-sm mb-2">{title}</h2>}
         <p className=''>
             {content}
         </p>

@@ -102,7 +102,7 @@ const ProvidersTable: React.FC= () => {
     return (
         <div className='flex '>
             <AdminSidebar/>
-            <div className="flex flex-col px-10 bg-[#081028] w-full py-10">
+            <div className="flex flex-col px-10 bg-[#081028] w-full py-4">
             <div className="flex items-center justify-between mb-10">
                 <div className="flex items-center">
                     <h1 className="text-xl font-semibold text-white mb-0 mr-14">List of providers</h1>
@@ -132,7 +132,7 @@ const ProvidersTable: React.FC= () => {
                 </div>
                 </div>
 
-                <div className="w-full">
+                <div className="w-full overflow-y-auto max-h-[80vh] scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52] ">
                     <Table>
                         <TableHead>
                         <TableRow style={{ backgroundColor: '#060C1D' }}>

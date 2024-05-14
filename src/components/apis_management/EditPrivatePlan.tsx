@@ -2,10 +2,11 @@
 
 
 import CheckboxInput from "@/components/ui/CheckBoxInput";
-import { useAppDispatch } from "@/app/store";
+import { RootState, useAppDispatch } from "@/app/store";
 import { EditSubPlanProps } from "@/types/EditSubPlanProps";
 import { useState, useEffect } from "react";
-import { addPrivatePlan, fetchAllPrivatePlansByVersion, updatePrivatePlan } from "@/components/features/apis_management/privatePlanSlice";
+import { addPrivatePlan, clearPlanError, fetchAllPrivatePlansByVersion, updatePrivatePlan } from "@/components/features/apis_management/privatePlanSlice";
+import { useSelector } from "react-redux";
 
 const EditPrivatePlan: React.FC<EditSubPlanProps> = ({
   setShowModal,
@@ -19,7 +20,7 @@ const EditPrivatePlan: React.FC<EditSubPlanProps> = ({
     name: editing ? privatePlan?.name : '',
     description:editing ? privatePlan.description:'',
     type: editing ? privatePlan?.type : 'monthly',
-    rate_limit: editing ? privatePlan?.rate_limit : '',
+    rate_limit: editing ? privatePlan?.rate_limit : 0,
     subscription_price: editing ? privatePlan?.subscription_price :0,
   });
 
@@ -34,14 +35,20 @@ const EditPrivatePlan: React.FC<EditSubPlanProps> = ({
       });
     }
   }, [editing, privatePlan]);
+  const planError = useSelector((state:RootState) => state.privatePlan.error); 
+  const [error, setError] = useState("");
 
   const handleInputChange = (e) => {
+    if (planError ) {
+      dispatch(clearPlanError());
+    }
     const { name, value, type } = e.target;
     const updatedValue = type === 'number' ? Number(value) : value;
     setEditForm((prevData) => ({
       ...prevData,
       [name]: updatedValue,
     }));
+    setError("");
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -69,6 +76,9 @@ const EditPrivatePlan: React.FC<EditSubPlanProps> = ({
           <div className="bg-mapi-neutral-1 pt-6 pb-4 mt-3 px-6 rounded-md w-1/2 ">
             <h2 className="text-lg font-semibold mb-8 text-white pb-2 border-b-[#404040] border-b">{(editing ? 'Edit Plan' : 'Add New Plan')}</h2>
             <div className="flex flex-col gap-6 px-3 ">
+            {(error || planError) && ( 
+              <p className="text-red-500 mb-4">{error || planError}</p>
+            )} 
               <div className="mb-2 flex gap-6 items-center w-full">
                 <label htmlFor="name" className="text-sm font-semibold text-mapi-text w-40">Name<span className='text-red-500 -mt-3'>*</span></label>
                 <input type="text" id="name" name="name" required value={editForm.name} onChange={handleInputChange} className="add-plan w-1/2" />

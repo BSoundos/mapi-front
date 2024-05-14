@@ -34,7 +34,7 @@ const AddVersionModal = ({ toggleModal,id }) => {
     }
   
     try {
-      await dispatch(createNewVersion({ id: id, data: formData }));
+      const response = await dispatch(createNewVersion({ id: id, data: formData }));
       setError('');
       setFormData({
         version_number: '',
@@ -42,6 +42,10 @@ const AddVersionModal = ({ toggleModal,id }) => {
         base_url: '',
         status: 'draft',
       });
+      if (createNewVersion.fulfilled.match(response)) {
+      toggleModal()
+      }
+      
     } catch (error) {
       setError(error.payload || 'Failed to create new version');
     }

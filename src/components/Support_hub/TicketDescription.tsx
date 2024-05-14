@@ -89,7 +89,7 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
 
 
   return (
-    <div className="bg-mapi-neutral-1 font-inter w-full mb-2 px-6 py-2 border border-opacity-50 border-[#343B4F] rounded-md">
+    <div className="bg-mapi-neutral-1 text-sm font-inter w-full mb-2 px-6 py-2 border border-opacity-50 border-[#343B4F] rounded-md">
       {isPriorityModalOpen && (
       <UpdateTicketForm
         isOpen={isPriorityModalOpen}
@@ -135,7 +135,7 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
       {/* Main Content */}
       
         {!forUser && (
-          <div className="flex justify-between ">
+          <div className="flex justify-between text-sm ">
             <div className="flex gap-4">
               <p className={`${priorityDetails.bgcolor} rounded-md px-2 py-1 cursor-pointer ${priorityDetails.color}`} onClick={handlePriorityClick}>
                 {priorityDetails.text}
@@ -148,23 +148,23 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
           </div>
           )
         }
-       <div className="pb-2 mt-3">
+       <div className="pb-2 mt-3 text-sm">
        <div className="flex justify-between items-center pb-2">
             <div>
                 {forUser ? (
                     <Link to={`/userDiscussions/${id}`}>
-                      <h2 className="font-semibold text-base text-white mb-2">{title}</h2>
+                      <h2 className="font-semibold text-sm text-white mb-2">{title}</h2>
                     </Link>    
                 ) : (
                   <Link to={`/TicketsDiscussions/${id}`}>
-                    <h2 className="font-semibold text-base text-white mb-2">{title}</h2>
+                    <h2 className="font-semibold text-sm text-white mb-2">{title}</h2>
                   </Link>
                 )}
             </div>
 
             {forUser && (
               <button
-                className="bg-red-500 border font-bold text-base py-2 px-3 rounded-md text-white"
+                className="bg-red-500 border font-bold text-sm py-1  px-3 rounded-md text-white"
                 onClick={handleDeleteClick}
               >
                 <FaTrash /> 
@@ -173,7 +173,7 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
           </div>
          <p className="text-[#787486]">{content}</p>
        </div>
-       <div className="border-t border-gray-400 pt-2">
+       <div className="border-t border-gray-400 pt-2 text-sm">
           {forUser ? (
               <p className="text-white">For the API : <span className="text-secondary-blue">{apiName}</span></p>
                 ) : (
@@ -191,7 +191,7 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
               <div className="relative group">
                 <img src={checkIcon} alt="Check Icon" className="w-5 h-5" />
                 <div
-                  className="absolute bottom-8 left-1/2 transform -translate-x-1/2 opacity-0 bg-gray-700 text-white text-sm rounded-md py-1 px-4 transition-opacity duration-300 group-hover:opacity-100 max-w-xs whitespace-nowrap overflow-hidden text-ellipsis"
+                  className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 bg-gray-700 text-white text-sm rounded-md py-1 px-4 transition-opacity duration-300 group-hover:opacity-100 max-w-xs whitespace-nowrap overflow-hidden text-ellipsis"
                 >
                   {status.update_message}
                 </div>
