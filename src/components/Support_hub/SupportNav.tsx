@@ -17,11 +17,11 @@ const SupportNavBar = () => {
 
 
   return (
-    <div className="pt-10">
+    <div className="pt-3">
       <div className="flex space-x-10 pl-12">
         <Link
           to="/Tickets"
-          className={`font-inter text-xl pb-3 ${
+          className={`font-inter text-base pb-3 ${
             activeTab === 'Tickets' ? 'text-mapi-secondary-3 font-bold border-b border-mapi-secondary-3' : 'text-white'
           }`}
         >
@@ -29,7 +29,7 @@ const SupportNavBar = () => {
         </Link>
         <Link
           to="/Discussions"
-          className={`font-inter text-xl pb-3 ${
+          className={`font-inter text-base pb-3 ${
             activeTab === 'Discussions' ? 'text-mapi-secondary-3 font-bold border-b border-mapi-secondary-3' : 'text-white'
           }`}
         >

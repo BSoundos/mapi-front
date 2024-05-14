@@ -22,7 +22,7 @@ const Navbar = () => {
 
   const items = [
     { text: 'MarketPlace', path: '/apis' },
-    { text: 'Create', path: '/create' },
+    { text: 'Create', path: '/my-apis' },
     { text: 'Community', path: '/community' },
     { text: 'Contact', path: '/contact' },
   ];

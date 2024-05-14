@@ -14,7 +14,7 @@ const PrivatePlanObject: React.FC<ObjectProps> = ({object,selectedPlan}) => {
   const [editObjectFormData, setEditObjectFormData] = useState({
     name:object.name,
     description:object.description,
-    endpoints:object.endpoint,
+    endpoints:object.endpoints,
     });
 
   return (

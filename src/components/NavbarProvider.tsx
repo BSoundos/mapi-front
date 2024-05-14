@@ -41,9 +41,8 @@ function Navbar({ id }) {
 
   const items = [
     { text: 'General', path: `/general-api/${id}` },
-    { text: 'Endpoints', path: '/endpoint-api' },
+    { text: 'Endpoints', path: `/endpoint-api/${id}`},
     { text: 'Pricing', path: `/pricing-api/public/${id}` },
-    { text: 'Community', path: '/community-api' },
     { text: 'Versions', path: `/version-api/${id}` },
   ];
 
@@ -56,7 +55,9 @@ function Navbar({ id }) {
               key={index}
               to={item.path}
               className={`text-base pb-4 mr-5 ${
-                pathname === item.path
+                (item.text === 'Pricing' &&
+               (pathname === '/pricing/public' || pathname.includes('pricing'))) ||
+                 pathname === item.path
                   ? 'text-mapi-secondary-3 border-b-2 border-b-mapi-secondary-3 font-bold'
                   : 'text-white'
               }`}

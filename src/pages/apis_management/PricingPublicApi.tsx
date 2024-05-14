@@ -20,21 +20,31 @@ import { fetchObjectPerUseData } from "@/components/features/apis_management/obj
 import { fetchAllFeaturesStatusForSub } from "@/components/features/apis_management/featureStatusSlice";
 import SideBarPro from "@/components/apis_management/SideBarPro";
 import { fetchEndpoints } from "@/components/features/apis/endpointSlice";
+import AddPromotionModal from "@/components/apis_management/AddPromotionModal";
+import { fetchAllPromotionsByVersion } from "@/components/features/apis_management/promotionSlice";
 export default function PricingPublicApi() {
 
     const dispatch=useAppDispatch();
 
     const [showEditModal, setShowEditModal] = useState(false);
+    const [selectedId, setSelectedId] = useState("");
     const [showAddFeatureModal, setShowAddFeatureModal] = useState(false);
+    const [showAddPromotionModal, setShowAddPromotionModal] = useState(false);
     const [showAddObjectModal, setShowAddObjectModal] = useState(false);
     const { id } = useParams<{ id: string }>();
     const subscriptionPlan = useSelector((state: RootState) => state.subscriptionplan);
+    const promotions = useSelector((state:RootState)=>state.promotion);
+    const getPromotionForPlan = (planId) => {
+      return promotions.promotions.find(
+        (promotion) => promotion.subscription_plan === planId
+      );
+    };
     const object =useSelector((state: RootState) => state.object);
     const feature =useSelector((state: RootState) => state.feature);
     const currentVersion=useSelector((state:RootState)=>state.versions.currentVersion);
     const versionId = new URLSearchParams(window.location.search).get('versionId');
       const fetchVersionId = versionId ? parseInt(versionId) : currentVersion?.api_version_id;
-    useEffect(() => {
+      useEffect(() => {
       if (fetchVersionId) {
         dispatch(fetchAllSubscriptionPlansByVersion(fetchVersionId));
         dispatch(fetchAllObjectsByVersion(fetchVersionId));
@@ -43,6 +53,8 @@ export default function PricingPublicApi() {
         dispatch(fetchObjectPerMonthData(fetchVersionId));
         dispatch(fetchObjectPerUseData(fetchVersionId));
         dispatch(fetchEndpoints(fetchVersionId));
+        dispatch(fetchAllPromotionsByVersion(fetchVersionId))
+       
       }
     }, [dispatch, fetchVersionId]);
 
@@ -75,10 +87,8 @@ export default function PricingPublicApi() {
 
   try {
     if (isActive) {
-      // Call the "activateSubscriptionPlan" action
       await dispatch(activateSubscriptionPlan(subId));
     } else {
-      // Call the "hideSubscriptionPlan" action
       await dispatch(hideSubscriptionPlan(subId));
     }
 
@@ -117,8 +127,24 @@ export default function PricingPublicApi() {
                       id="material-switch"
                     />
                 <div className="text-mapi-text uppercase font-bold text-xl">{subPlan.name}</div>
-                <div className="text-mapi-text font-medium text-xs">{subPlan.subscription_price}<span>/Month</span></div>
+                {subPlan.type==="monthly" ?
+                <div className="text-mapi-text font-medium text-xs">{subPlan.subscription_price}<span>/Month</span></div>:
+                <div className="text-mapi-text font-medium text-xs">Pay Per Use</div>
+                }
                 <button onClick={()=>{toggleEditPlanModal(subPlan.id)}}className="bg-mapi-neutral-2 rounded border border-[#616161] text-white text-xs font-medium w-full py-1">Edit</button>
+                <button
+                    onClick={() =>{setShowAddPromotionModal(true); setSelectedId(subPlan.id)}}
+                    className="bg-[#2C5EAF] bg-opacity-15 border border-[#616161] text-[#99BDE6] text-opacity-85 py-1 px-3 rounded text-sm  font-semibold w-full"
+                    >
+                  {getPromotionForPlan(subPlan.id) ? "Edit Promotion": "+ Add Promotion"}
+                </button>
+                {showAddPromotionModal && (
+                  <AddPromotionModal
+                    setShowModal={setShowAddPromotionModal}
+                    subId={selectedId}
+                  />
+                )}
+
                 </div>
                 {showEditModal && <EditSubPlan showModal={showEditModal} setShowModal={setShowEditModal} editForm={editPlanFormData} setEditForm={setEditPlanFormData} versionId={fetchVersionId}/>}
   
@@ -129,7 +155,7 @@ export default function PricingPublicApi() {
         <div className="flex flex-col mt-8">
   <div className="title border-b border-b-[#404040] w-full text-center text-white font-bold text-base pb-2">Objects</div>
   {object.objects.map((obj) => (
-   <Object object={obj}/>
+   <Object key={obj.id} object={obj}/>
 ))}
 {showAddObjectModal && <AddObjectModal showModal={showAddObjectModal} setShowModal={setShowAddObjectModal} versionId={fetchVersionId}/>}
 </div>
@@ -137,7 +163,7 @@ export default function PricingPublicApi() {
 <div className="flex flex-col mt-4">
             <div className="title border-b border-b-[#404040] w-full text-center text-white font-bold text-base pb-2 ">Features</div>
             {feature.features.map((feature) => (
-            <Feature feature={feature}/>
+            <Feature key={feature.id} feature={feature}/>
           ))}
           {showAddFeatureModal && <AddFeatureModal showModal={showAddFeatureModal} setShowModal={setShowAddFeatureModal} versionId={fetchVersionId}/>}
 </div>
