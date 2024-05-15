@@ -52,6 +52,7 @@ export const fetchPlanDetails = createAsyncThunk<PlanDetails, { planId: number }
   async ({ planId }) => {
     try {
       const response = await axios.get(`${BACKEND_BASE_URL}/payment/subscription-plan/${planId}/`);
+      
       return { ...response.data, typeplan: 'subscriptionplan' };
     } catch (error) {
       throw new Error('Failed to fetch subscription plan details');

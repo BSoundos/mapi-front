@@ -121,7 +121,7 @@ const handleSubscribeUserPlanPerUse = (planId: number) => {
                     {plan.promotion && plan.promotion.is_active && (
                      <div className="absolute top-0 left-auto right-0 mt-2">
                      <div className="relative bg-red-600 text-white px-2 py-1 rounded-md z-10">
-                       <span className="text-xl font-bold text-mapi-neutral-5">-{plan.promotion.discount_amount} %</span>
+                       <span className="text-xl font-bold ">-{plan.promotion.discount_amount} %</span>
                        {/* Ajout de la div pour les dates de promotion */}
                        <div className="absolute left-15 bottom-7 opacity-0 transition-opacity duration-300 group-hover:opacity-100 bg-custom-color text-mapi-secondary-3 px-2 py-1 rounded-md flex items-center justify-center whitespace-nowrap">
                         Available until {plan.promotion.end_date}

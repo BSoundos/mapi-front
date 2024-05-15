@@ -46,6 +46,7 @@ import statsReducer from '@/components/features/apis_management/statisticsSlice'
 
 import usersListReducer from '@/components/features/admin/usersSlice'
 import providersListReducer from '@/components/features/admin/providersSlice'
+import adminDashReducer from '@/components/features/admin/dashboardAdminSlice'
 
 const store = configureStore({
   reducer: {
@@ -89,6 +90,7 @@ const store = configureStore({
     statistics:statsReducer,
     users: usersListReducer,
     providers: providersListReducer,
+    admin : adminDashReducer ,
 
     // other reducers...
   },
