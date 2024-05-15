@@ -80,6 +80,7 @@ const App = () => {
           <Route path="payment/Plans/:id" element={<SubscriptionPlansPage/>} />
           <Route path="payment/Plans/:id/per-month/plan/:planId" element={<PlanDetailsPage />} />
           <Route path="payment/Plans/:id/per-use/plan/:planId" element={<PlanDetailsPerusePage  />} />
+          <Route path="payment/Plans/:id/:planId" element={<SubscriptionPlansPage/>} />
         </Route>
         <Route path="/accesskey/:apiVersion/:planId/:typeplan" element={<GeneratingAccessKeyPage />} />
         <Route path="apis" element={<MainPage />} />
@@ -97,6 +98,7 @@ const App = () => {
 
         {/* Authentication */}
         <Route path="login" element={<Login />} />
+        <Route path="login/:api/:plan" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="verify/:username" element={<Verify />} />
         {/* Invoices */}

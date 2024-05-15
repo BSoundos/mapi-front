@@ -24,6 +24,7 @@ export default function GeneralApi() {
   const [formData, setFormData] = useState({
     name: api.name,
     category: api.category,
+    documentation_url: api.documentation_url,
     description: api.description,
     is_visible: api.is_visible,
     functionalities: api.functionalities,
@@ -31,16 +32,19 @@ export default function GeneralApi() {
 
   useEffect(() => {
     dispatch(fetchCategories());
-    dispatch(getApi(id))
+    dispatch(getApi(id));
   }, [dispatch,id]); 
+
   useEffect(() => {
-    setFormData({
+    setFormData(prevFormData => ({
+      ...prevFormData,
       name: api.name,
       category: api.category,
+      documentation_url: api.documentation_url,
       description: api.description,
-      is_visible:api.is_visible,
-    });
-  }, [api]);
+      is_visible: api.is_visible !== undefined ? api.is_visible : prevFormData.is_visible, // Providing a default value
+    }));
+  }, [dispatch,api]);
 
   const updateFormData = () => {
     setFormData({
@@ -61,6 +65,14 @@ export default function GeneralApi() {
     });
   };
 
+  const handleIsVisibleInputChange = () => {
+    setFormData(prevFormData => ({
+      ...prevFormData,
+      is_visible: !prevFormData.is_visible, // Toggle the value
+    }));
+
+  };
+
   const handleCancel = () => {
     updateFormData();
   };
@@ -74,12 +86,14 @@ export default function GeneralApi() {
   };
 
   const handleUpdateApi = () => {
+    
     dispatch(
       updateApi({
         id,
         data: {
           name: formData.name,
           category: formData.category,
+          documentation_url: formData.documentation_url,
           description: formData.description,
           is_visible:formData.is_visible,
           functionalities: api.functionalities,
@@ -172,7 +186,7 @@ export default function GeneralApi() {
                         className="mt-1 update-api-input w-3/4 pb-5"
                       />
                     </div>
-                    {/* <div className="mb-3 flex flex-col gap-2 items-start ">
+                    <div className="mb-3 flex flex-col gap-2 items-start ">
                       <label htmlFor="visibily" className="block text-sm font-semibold text-[#BFBFBF]">
                         Visibilty
                       </label>
@@ -222,20 +236,20 @@ export default function GeneralApi() {
                      <div className="flex items-center gap-2 mt-3 ml-1">
                        <p className="text-mapi-text text-sm">Set to visible:</p>
                        <Switch
-                         checked={api?.is_visible}
-                         onChange={handleInputChange}
+                         checked={formData.is_visible}
+                         onChange={handleIsVisibleInputChange}
                          onColor="#3B73CE"
                          onHandleColor="#1F1F1F"
                          handleDiameter={8}
                          uncheckedIcon={false}
-                         checkedIcon={false}
+                         checkedIcon={true}
                          height={15}
                          width={28}
                          className="react-switch mt-1"
                          id="material-switch visibility"
                        />
                      </div>
-                   </div> */}
+                   </div>
                    <FunctionalitiesApi
                      api={id}
                      functionalities={api?.functionalities}

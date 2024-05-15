@@ -4,6 +4,8 @@ import { login } from '@/components/features/authentication/authActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import loginBGImg from '@/assets/loginBg.png';
+import { useNavigate,useParams } from 'react-router-dom';
+
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -11,6 +13,9 @@ const Login = () => {
   const [focusedField, setFocusedField] = useState('');
   const [loginError, setLoginError] = useState('');
   const dispatch = useAppDispatch();
+
+  const navigate = useNavigate();
+  const { api, plan } = useParams();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
@@ -27,6 +32,13 @@ const Login = () => {
       const confirmAlert = window.confirm('User is not verified! Click on OK to verify your account.');
       if (confirmAlert) {
         window.location.href = '/verify/' + response.username;
+      }
+    }
+    else {
+      // Redirect based on the parameters
+      if (api && plan) {
+        const redirectUrl = `/api/payment/Plans/${api}/${plan}`;
+        navigate(redirectUrl);
       }
     }
   };
