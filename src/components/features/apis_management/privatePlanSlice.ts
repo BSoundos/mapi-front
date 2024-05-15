@@ -234,6 +234,25 @@ export const removePrivatePlan = createAsyncThunk('privatePlan/removePrivatePlan
   }
 });
 
+
+
+// Define the async thunk for accepting invitation user plan
+export const acceptInvitationUserPlan = createAsyncThunk(
+  'userPlans/acceptInvitationUserPlan',
+  async (userPlanId : number, thunkAPI) => {
+    try {
+      // Make a request to accept the invitation user plan
+      const response = await axios.put(`${BACKEND_BASE_URL}/apis_management/accept-invitation/${userPlanId}/`);
+
+      // Return the data from the response
+      return response.data;
+    } catch (error) {
+      // Return any error that occurs
+      return thunkAPI.rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const privatePlanSlice = createSlice({
   name: 'privatePlan',
   initialState,
@@ -277,7 +296,7 @@ const privatePlanSlice = createSlice({
       .addCase(inviteUser.fulfilled, (state, action) => {
         state.loading = false;
         state.error = null;
-        state.invitation = action.payload;
+        state.users.push(action.payload);
       })
       .addCase(inviteUser.rejected, (state, action) => {
         state.loading = false;
@@ -379,6 +398,17 @@ const privatePlanSlice = createSlice({
         state.users = state.users.filter(user => !(user.user === idUser && user.user_plan === idPlan));
       })
       .addCase(deleteUserFromPlan.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
+      .addCase(acceptInvitationUserPlan.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(acceptInvitationUserPlan.fulfilled, (state, action) => {
+        state.loading = false;
+      })
+      .addCase(acceptInvitationUserPlan.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload;
       })

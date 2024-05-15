@@ -4,7 +4,7 @@ import { login } from '@/components/features/authentication/authActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import loginBGImg from '@/assets/loginBg.png';
-import { useNavigate,useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 
 
 const Login = () => {
@@ -14,7 +14,6 @@ const Login = () => {
   const [loginError, setLoginError] = useState('');
   const dispatch = useAppDispatch();
 
-  const navigate = useNavigate();
   const { api, plan } = useParams();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -24,7 +23,7 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await dispatch(login(credentials));
+    const response = await dispatch(login(credentials,api,plan));
     if (response && response.error === 'Invalid email or password.') {
       setLoginError(response.error);
     }
@@ -32,13 +31,6 @@ const Login = () => {
       const confirmAlert = window.confirm('User is not verified! Click on OK to verify your account.');
       if (confirmAlert) {
         window.location.href = '/verify/' + response.username;
-      }
-    }
-    else {
-      // Redirect based on the parameters
-      if (api && plan) {
-        const redirectUrl = `/api/payment/Plans/${api}/${plan}`;
-        navigate(redirectUrl);
       }
     }
   };

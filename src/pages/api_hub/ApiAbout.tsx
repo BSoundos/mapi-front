@@ -99,7 +99,7 @@ const ApiAbout = () => {
                 
             </div>
             <AddReviewModal
-                apiId={api?.id}
+                apiId={parseInt(id, 10)}
                 isOpen={isFormVisible}
                 onClose={() => setIsFormVisible(false)} 
             />
