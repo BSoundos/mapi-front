@@ -22,6 +22,7 @@ import SideBarPro from "@/components/apis_management/SideBarPro";
 import { fetchEndpoints } from "@/components/features/apis/endpointSlice";
 import AddPromotionModal from "@/components/apis_management/AddPromotionModal";
 import { fetchAllPromotionsByVersion } from "@/components/features/apis_management/promotionSlice";
+import HideConfirmModal from "@/components/apis_management/HideConfirmModal";
 export default function PricingPublicApi() {
 
     const dispatch=useAppDispatch();
@@ -81,21 +82,36 @@ export default function PricingPublicApi() {
         });
       };
  
-  const handleSwitchChange = async (subId) => {
-  const subPlan = subscriptionPlan.subscriptionPlans.find((plan) => plan.id === subId);
-  const isActive = !subPlan.is_active;
-
-  try {
-    if (isActive) {
-      await dispatch(activateSubscriptionPlan(subId));
-    } else {
-      await dispatch(hideSubscriptionPlan(subId));
-    }
-
-  } catch (error) {
-    console.error('Error updating subscription plan:', error);
-  }
-};
+      const [showHideConfirmModal, setShowHideConfirmModal] = useState(false);
+      const [planToHide, setPlanToHide] = useState(null);
+      
+      const handleSwitchChange = async (subId) => {
+        const subPlan = subscriptionPlan.subscriptionPlans.find((plan) => plan.id === subId);
+        const isActive = !subPlan.is_active;
+      
+        if (!isActive) {
+          setPlanToHide(subPlan);
+          setShowHideConfirmModal(true);
+        } else {
+          try {
+            await dispatch(activateSubscriptionPlan(subId));
+          } catch (error) {
+            console.error('Error updating subscription plan:', error);
+          }
+        }
+      };
+      
+      const handleHideConfirmation = async (confirm) => {
+        if (confirm) {
+          try {
+            await dispatch(hideSubscriptionPlan(planToHide.id));
+          } catch (error) {
+            console.error('Error updating subscription plan:', error);
+          }
+        }
+        setShowHideConfirmModal(false);
+        setPlanToHide(null);
+      };
   
   
   return (
@@ -147,7 +163,7 @@ export default function PricingPublicApi() {
 
                 </div>
                 {showEditModal && <EditSubPlan showModal={showEditModal} setShowModal={setShowEditModal} editForm={editPlanFormData} setEditForm={setEditPlanFormData} versionId={fetchVersionId}/>}
-  
+                <HideConfirmModal show={showHideConfirmModal} onConfirm={handleHideConfirmation} />
       
  </>
     ))}

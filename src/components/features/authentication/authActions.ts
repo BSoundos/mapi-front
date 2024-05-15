@@ -2,10 +2,10 @@ import axios from 'axios';
 import { BACKEND_BASE_URL } from '@/data/constants';
 import { loginSuccess, loginFailure, registerSuccess, registerFailure, verifySuccess, verifyFailure, logoutSuccess, logoutFailure } from './authSlice';
 import { LoginCredentails, LoginDispatchFunction, LogoutDispatchFunction, RegisterDispatchFunction, VerifyDispatchFunction } from '@/types/auth';
+import { useNavigate } from 'react-router-dom';
 
 
-
-export const login = (credentials: LoginCredentails) => async (dispatch: LoginDispatchFunction) => {
+export const login = (credentials: LoginCredentails, api: string, plan: string) => async (dispatch: LoginDispatchFunction) => {
     try {
         const response = await axios.post(`${BACKEND_BASE_URL}/authentication/login/`, credentials);
         dispatch(loginSuccess(response.data));
@@ -19,8 +19,11 @@ export const login = (credentials: LoginCredentails) => async (dispatch: LoginDi
         localStorage.setItem('last_name', last_name);
         localStorage.setItem('role', role);
         // redirect to the HomePage
-        if(role==="user"){
-        window.location.href = '/';}
+        if (role === "user" && api && plan) {
+            window.location.href = `/api/confirm/${api}/${plan}`;
+        }
+        else if(role==="user"){
+            window.location.href = '/';}
         else{
             window.location.href = '/my-apis';
         }

@@ -18,6 +18,7 @@ import { ValidAttributes } from '@/types/API';
 import { Api } from '@/types/API';
 import Navbar from '@/components/NavBar';
 import Footer from '@/components/Footer';
+import Loading from '@/components/ui/Loading';
 
 const MainPage: React.FC = () => {
     const dispatch = useAppDispatch();
@@ -144,7 +145,7 @@ const MainPage: React.FC = () => {
     const allLoading = categoriesLoading || functionalitiesLoading;
 
     if (allLoading) {
-        return <div>Loading...</div>; 
+        return <Loading/>; 
     }
   
 

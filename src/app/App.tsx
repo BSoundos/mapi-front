@@ -50,8 +50,11 @@ import ProviderSecuritySettings from '@/pages/UserSettings/ProviderSecuriteSetti
 import EndpointsApi from '@/pages/apis_management/EndpointsApi';
 import AddEndpointPage from '@/pages/apis_management/AddEndpointPage';
 import Revenue from '@/pages/apis_management/Revenue';
+import ConfirmInvitationPage from '@/pages/apis_management/ConfirmInvitationPage';
+
 
 import ProvidersTable from '@/pages/admin/ProvidersTable';
+import NotFoundPage from '@/pages/api_hub/NotFoundPage';
 const App = () => {
 
   useEffect(() => {
@@ -80,6 +83,10 @@ const App = () => {
           <Route path="payment/Plans/:id" element={<SubscriptionPlansPage/>} />
           <Route path="payment/Plans/:id/per-month/plan/:planId" element={<PlanDetailsPage />} />
           <Route path="payment/Plans/:id/per-use/plan/:planId" element={<PlanDetailsPerusePage  />} />
+          <Route
+            path="confirm/:id/:plan"
+            element={<ConfirmInvitationPage />}
+          />
         </Route>
         <Route path="/accesskey/:apiVersion/:planId/:typeplan" element={<GeneratingAccessKeyPage />} />
         <Route path="apis" element={<MainPage />} />
@@ -97,6 +104,7 @@ const App = () => {
 
         {/* Authentication */}
         <Route path="login" element={<Login />} />
+        <Route path="login/:api/:plan" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="verify/:username" element={<Verify />} />
         {/* Invoices */}
@@ -125,11 +133,11 @@ const App = () => {
         <Route path="/providerProfileSettings" element={<ProviderProfilSetting/>}/>
         <Route path="/providerSecuritySettings" element={<ProviderSecuritySettings/>}/>
         <Route path="/revenue" element={<Revenue />} />
-  
+       
         {/*Tracking users and providers*/}
         <Route path="/admin/users" element={<UsersTable />} />
         <Route path="/admin/providers" element={<ProvidersTable />} />
-
+        <Route path="*" element={<NotFoundPage />} />
 
       </Routes>
     </Router>

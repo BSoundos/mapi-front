@@ -26,6 +26,7 @@
     "@radix-ui/react-slot": "^1.0.2",
     "@reduxjs/toolkit": "^2.2.2",
     "@types/tailwindcss": "^3.1.0",
+    "antd": "^5.17.2",
     "axios": "^1.6.8",
     "chart.js": "^4.4.2",
     "class-variance-authority": "^0.7.0",

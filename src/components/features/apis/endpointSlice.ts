@@ -22,11 +22,47 @@ export const fetchEndpoints = createAsyncThunk(
     }
   }
 );
+export const fetchDataFormat = createAsyncThunk(
+  'endpoints/fetchDataFormat',
+  async (id, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const headers = {
+        Authorization: `Token ${token}`,
+      };
+      const response = await axios.get(`${BACKEND_BASE_URL}/apis_management/get-all-data-format/`, { headers });
+      return response.data;
+    } catch (error) {
+      // If the error is from the server, return the error response data
+      if (error.response) {
+        return rejectWithValue(error.response.data);
+      }
+      // If the error is from the client-side, return the error message
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addEndpoint = createAsyncThunk(
+  'endpoint/addEndpoint',
+  async ({ id, data }, { rejectWithValue }) => {
+    try {
+      const token = localStorage.getItem('token');
+      const headers = { Authorization: `Token ${token}` };
+      const response = await axios.post(`${BACKEND_BASE_URL}/apis_management/add-endpoint/${id}/`, data, { headers });
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error);
+    }
+  }
+);
 
 const endpointsSlice = createSlice({
   name: "endpoints",
   initialState: {
     endpoints: [],
+    dataFormat:[],
+    endpoint:{},
     loading: false,
     error: null,
   },
@@ -42,6 +78,30 @@ const endpointsSlice = createSlice({
         state.error = null; // Reset the error when the fetch is successful
       })
       .addCase(fetchEndpoints.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload; // Store the error payload
+      })
+      .addCase(addEndpoint.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(addEndpoint.fulfilled, (state, action) => {
+        state.loading = false;
+        state.endpoint = action.payload;
+        state.error = null; // Reset the error when the fetch is successful
+      })
+      .addCase(addEndpoint.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload; // Store the error payload
+      })
+      .addCase(fetchDataFormat.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchDataFormat.fulfilled, (state, action) => {
+        state.loading = false;
+        state.dataFormat = action.payload;
+        state.error = null; // Reset the error when the fetch is successful
+      })
+      .addCase(fetchDataFormat.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload; // Store the error payload
       });
