@@ -249,7 +249,8 @@ const MainPage: React.FC = () => {
 
                         {searchResults.length == 0 && (
                             <div className=' bg-[#] border border-opacity-30 border-[#7E89AC] rounded shadow-md w-[80%] ml-4 p-4' >
-                                <p className='font-semibold font-inter text-[#FFFFFF] pb-2 '>No APIs matched your search</p>
+                                <p className='font-semibold font-inter text-[#FFFFFF] pb-2 '></p>
+
                             </div>
                         )}
                         {searchResults.length > 0 && (
