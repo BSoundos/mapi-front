@@ -4,6 +4,8 @@ import { login } from '@/components/features/authentication/authActions';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEnvelope, faLock, faEye, faEyeSlash } from '@fortawesome/free-solid-svg-icons';
 import loginBGImg from '@/assets/loginBg.png';
+import { useParams } from 'react-router-dom';
+
 
 const Login = () => {
   const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -12,6 +14,8 @@ const Login = () => {
   const [loginError, setLoginError] = useState('');
   const dispatch = useAppDispatch();
 
+  const { api, plan } = useParams();
+
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setCredentials({ ...credentials, [e.target.name]: e.target.value });
     setLoginError('');
@@ -19,7 +23,7 @@ const Login = () => {
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const response = await dispatch(login(credentials));
+    const response = await dispatch(login(credentials,api,plan));
     if (response && response.error === 'Invalid email or password.') {
       setLoginError(response.error);
     }

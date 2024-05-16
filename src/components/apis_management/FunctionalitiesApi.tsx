@@ -86,9 +86,13 @@ const FunctionalitiesApi: React.FC<FunctionalitiesManagerProps> = ({ api, functi
        <div className="flex gap-2 flex-1">
          <select id="functionality" name="functionality" value={selectedFunctionality} onChange={handleFuncInputChange} className=" mt-1 update-api-input flex-1">
            <option value="">Select Functionality</option>
-           {allfunctionalities.map((func) => (
-             <option key={func.functionality_id} value={func.functionality_id}>{func.name}</option>
-           ))}
+           {allfunctionalities
+            .filter(func => !functionalities?.some(f => f.functionality_id === func.functionality_id))
+            .map(func => (
+              <option key={func.functionality_id} value={func.functionality_id}>
+                {func.name}
+              </option>
+            ))}
          </select>
          <button onClick={handleAddFunctionality} className="bg-[#2C5EAF] bg-opacity-15 border border-[#616161] text-[#99BDE6] text-opacity-85 py-1 px-4 rounded text-sm  font-semibold mt-1">+ Add </button>
        </div>
