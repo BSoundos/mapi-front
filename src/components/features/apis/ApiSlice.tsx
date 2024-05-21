@@ -17,11 +17,11 @@ export const fetchPopularAPIs = createAsyncThunk<
 >('api/fetchPopularAPIs', async (_, thunkAPI) => {
   const token = getToken();
   const headers = {
-    Authorization: `Token ${token}`, 
+    Authorization: `Token ${token}`,
   };
 
   const response = await axios.get(`${BACKEND_BASE_URL}/apis_exploitation/popular/`, { headers });
-  
+
   const data = response.data;
   const mappedData = data.map((api: any) => ({
     api_id: api.api_id,
@@ -91,7 +91,7 @@ export const searchAPIs = createAsyncThunk<
     popularity: api.popularity,
     latency: api.latency,
     service_level: api.service_level,
-    category_name: api.category.name // Assigner le nom de la catégorie
+    category_name: api.category // Assigner le nom de la catégorie
   }));
 
   return mappedData;
@@ -168,12 +168,13 @@ const api = createSlice({
   name: 'api',
   initialState: {
     popularAPIs: [],
-    api:null,
+    api: null,
     status: 'idle',
     error: null,
   } as API,
   reducers: {},
   extraReducers: (builder) => {
+    // popular APIs
     builder.addCase(fetchPopularAPIs.pending, (state) => {
       state.status = 'loading';
     });
@@ -184,7 +185,8 @@ const api = createSlice({
     builder.addCase(fetchPopularAPIs.rejected, (state) => {
       state.status = 'failed';
     })
-   builder.addCase(fetchAPIById.pending, (state) => {
+    // get API by id
+    builder.addCase(fetchAPIById.pending, (state) => {
       state.status = 'loading';
     });
     builder.addCase(fetchAPIById.fulfilled, (state, action) => {
@@ -194,6 +196,7 @@ const api = createSlice({
     builder.addCase(fetchAPIById.rejected, (state) => {
       state.status = 'failed';
     });
+
   },
 });
 
