@@ -6,6 +6,7 @@ import { useAppDispatch } from '@/app/store';
 import {updateTicketStatus,updateTicketPriority,deleteTicket} from '@/components/features/tickets/TicketSlice';
 import UpdateTicketForm from '@/components/Support_hub/UpdateTicketForm';
 import ConfirmationModal from '@/components/Support_hub/ConfirmationModal';
+import StatusIcon from '@/components/Support_hub/StatusIcon';
 import { STATUS_CHOICES, PRIORITY_CHOICES } from '@/types/choices';
 import { FaTrash } from 'react-icons/fa';
 
@@ -188,14 +189,15 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
                   className="absolute top-2.5 left-1/2 transform w-44 translate-x-2 h-2 border-t border-[#0AB161]"
                 ></div>
               )}
-              <div className="relative group">
+              {/* <div className="relative group">
                 <img src={checkIcon} alt="Check Icon" className="w-5 h-5" />
                 <div
                   className="absolute bottom-4 left-1/2 transform -translate-x-1/2 opacity-0 bg-gray-700 text-white text-sm rounded-md py-1 px-4 transition-opacity duration-300 group-hover:opacity-100 max-w-xs whitespace-nowrap overflow-hidden text-ellipsis"
                 >
                   {status.update_message}
                 </div>
-              </div>
+              </div> */}
+              <StatusIcon status={status} />
             </div>
           ))}
         </div>

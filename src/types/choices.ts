@@ -7,7 +7,6 @@ export interface Choice {
   export const STATUS_CHOICES: Choice[] = [
     { value: 'open', label: 'Open' },
     { value: 'solved', label: 'Solved' },
-    { value: 'closed', label: 'Closed' },
     { value: 'in_progress', label: 'In Progress' },
   ];
   
