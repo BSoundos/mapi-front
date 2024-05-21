@@ -12,12 +12,13 @@ import Footer from '@/components/Footer';
 
 const GeneratingAccessKeyPage: React.FC = () => {
     const dispatch = useDispatch<AppDispatch>();
-    const {typeplan , apiVersion, planId } = useParams(); // Extraire les paramètres dynamiques de l'URL
+    const {typeplan , apiVersion, planId , amount} = useParams(); // Extraire les paramètres dynamiques de l'URL
     const { accessKey, loading, error } = useSelector((state: RootState) => state.accesskey);
-
+    const amountNumber = parseFloat(amount); 
+    console.log("amountNumber ",amountNumber )
     useEffect(() => {
-        dispatch(generateAccessKey({ versionApiId: apiVersion || '', planId: planId || '' , typeplan : typeplan}));
-      }, [dispatch, apiVersion, planId]);  
+        dispatch(generateAccessKey({ versionApiId: apiVersion || '', planId: planId || '' , typeplan : typeplan , amount :  amountNumber }));
+      }, [dispatch, apiVersion, planId,typeplan,amount]);  
 
   
     return (
