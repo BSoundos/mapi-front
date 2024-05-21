@@ -54,6 +54,7 @@ import ConfirmInvitationPage from '@/pages/apis_management/ConfirmInvitationPage
 
 
 import ProvidersTable from '@/pages/admin/ProvidersTable';
+import DashboardAdmin from '@/pages/admin/DashboardAdmin';
 import NotFoundPage from '@/pages/api_hub/NotFoundPage';
 const App = () => {
 
@@ -137,6 +138,7 @@ const App = () => {
         {/*Tracking users and providers*/}
         <Route path="/admin/users" element={<UsersTable />} />
         <Route path="/admin/providers" element={<ProvidersTable />} />
+        <Route path="/admin/dashboard" element={<DashboardAdmin />} />
         <Route path="*" element={<NotFoundPage />} />
 
       </Routes>

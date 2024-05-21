@@ -23,7 +23,6 @@ const InvoiceHistoryPage = () => {
 
   useEffect(() => {
     dispatch(fetchInvoices(username));
-    console.log(invoices)
   }, [dispatch]);
 
   useEffect(() => {

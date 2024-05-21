@@ -33,7 +33,6 @@ export const fetchUsers = createAsyncThunk<User[]>(
           Authorization: `Token ${token}`
         }
       });
-      console.log(response.data);
       return response.data; 
     }
   );

@@ -260,11 +260,9 @@ const MainPage: React.FC = () => {
                         )} */}
                         {searchResults.length == 0 && (
                             <div className=' bg-[#] border border-opacity-30 border-[#7E89AC] rounded shadow-md w-[80%] ml-4 p-4' >
-                                <p className='font-semibold font-inter text-[#FFFFFF] pb-2 '>Popular APIs</p>
-                                <div className='flex flex-wrap'>
-                                    {popularAPIs.map(api => (
-                                        <Apidescription key={api.api_id} id={api.api_id} name={api.name} description={api.description} category_name={api.category_name} />
-                                    ))}
+                               
+                                <div className='flex flex-wrap w-full justify-center pt-6'>
+                                    <p className=' font-inter text-[#FFFFFF] pb-2 '>No API matching the search query has been found.</p>
                                 </div>
 
                             </div>

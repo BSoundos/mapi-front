@@ -23,7 +23,7 @@ const ParameterTable = ({ rows, setRows}) => {
       {
         name: '',
         description:'ss',
-        isRequired: false,
+        isRequired: true,
         dataType: '',
         default: '',
       },

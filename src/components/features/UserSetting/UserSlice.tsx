@@ -98,14 +98,11 @@ export const GetInformationUser = async (username: string): Promise<User> => {
 };
 export const GetInformationProvider = async (username: string): Promise<User> => {
   try {
-    console.log("user ;",username);
     
     const response = await axios.get(`${backendBaseUrl}/profile_management/providerInfo/${username}/`);
-    console.log(response);
     
     return response.data;
   } catch (error) {
-    console.log('ettttt. ',error);
     
     throw error;
   }
@@ -116,7 +113,6 @@ export const updateProviderSettings = createAsyncThunk<BasicInformation, Setting
   'userSettings/update',
   async ({ oldUsername, userData }, { rejectWithValue }) => {
     try {
-      console.log(userData)
       const response = await axios.patch(`${backendBaseUrl}/profile_management/update-provider/${oldUsername}/`, userData);
       return response.data;
     }  catch (error: any) {

@@ -24,8 +24,11 @@ export const login = (credentials: LoginCredentails, api: string, plan: string) 
         }
         else if(role==="user"){
             window.location.href = '/';}
-        else{
+        else if(role==="provider"){
             window.location.href = '/my-apis';
+        }
+        else{
+            window.location.href = '/admin/users';
         }
         return response.data;
     } catch (error) {
