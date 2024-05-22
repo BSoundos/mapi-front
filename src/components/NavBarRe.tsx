@@ -4,12 +4,11 @@ import { Link,useLocation } from 'react-router-dom';
 const NavBarRe = () => {
     const location = useLocation();
     const pathname = location.pathname;
+    
 
     const items = [
         {text: 'Analytics', path: '/Revenue' },
-        { text: 'Performance Tracking', path: '/Performance-Tracking' },
-    
-    
+        { text: 'Performance Tracking', path: '/PerformanceTracking' },
       ];
   return (
     <div>
@@ -21,7 +20,7 @@ const NavBarRe = () => {
                     key={index}
                     to={item.path}
                     className={`flex items-center   text-md p-3  rounded-lg font-semibold  ${
-                        pathname === item.path ? '  border-mapi-secondary-3 text-mapi-secondary-3 shadow-link  ' : 'text-mapi-neutral-4'
+                        pathname.includes(item.path)? '  border-mapi-secondary-3 text-mapi-secondary-3 shadow-link  ' : 'text-mapi-neutral-4'
                     }`}
                     
                     >

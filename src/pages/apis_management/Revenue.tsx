@@ -28,7 +28,7 @@ const Revenue = () => {
   return (
     <div>
       
-      <div className="bg-[#0B1739] pt-4   flex">
+      <div className="bg-[#0B1739]   flex">
             {/* c la place de SideBar */}
             <SideBarPro/>
             <div className=" flex-1 h-screen  border-l border-opacity-30 border-[#7E89AC] w-full">

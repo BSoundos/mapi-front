@@ -48,7 +48,8 @@ import UserSecuritySettings from '@/pages/UserSettings/UserSecuriteSettings';
 import ProviderProfilSetting from '@/pages/UserSettings/ProviderProfilSetting';
 import ProviderSecuritySettings from '@/pages/UserSettings/ProviderSecuriteSettings';
 import Revenue from '@/pages/apis_management/Revenue';
-
+import PerformanceTracking from '@/pages/apis_management/PerformanceTrack'; 
+import PerformanceTracking2 from '@/pages/apis_management/PerformanceTrack2';
 const App = () => {
 
   useEffect(() => {
@@ -120,7 +121,9 @@ const App = () => {
         <Route path="/providerProfileSettings" element={<ProviderProfilSetting/>}/>
         <Route path="/providerSecuritySettings" element={<ProviderSecuritySettings/>}/>
         <Route path="/revenue" element={<Revenue />} />
-  
+        <Route path="/PerformanceTracking" element={<PerformanceTracking />} />
+        <Route path="/PerformanceTracking/:id" element={<PerformanceTracking2 />} />
+
         <Route path="/admin/users" element={<UsersTable />} />
 
 
