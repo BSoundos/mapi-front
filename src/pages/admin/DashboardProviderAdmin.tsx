@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import AdminSidebar from '@/components/AdminSideBar';
+
 import store, { RootState } from '@/app/store';
 import { Doughnut } from 'react-chartjs-2';
-import { Link } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { ChartOptions } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
 import SideBarPro from '@/components/apis_management/SideBarPro';
@@ -13,12 +15,12 @@ import UserSubscriptionChart from '@/components/UserSubscriptionChart';
 
 export type AppDispatch = typeof store.dispatch
 
-const DashboardProvider: React.FC = () => {
+const DashboardProviderAdmin: React.FC = () => {
 
 
     
     
-    const provider_id = localStorage.getItem('user_id');
+    const { provider_id } = useParams<{ provider_id?: string }>();
     console.log(provider_id)
     
     const dispatch = useDispatch<AppDispatch>();
@@ -87,12 +89,15 @@ const DashboardProvider: React.FC = () => {
 
     return (
         <div className='flex'>
-            <SideBarPro/>
+            <AdminSidebar />
             <div className="flex flex-col px-10 bg-primary-darker w-full py-10 text-mapi-text">
                 <h1 className="text-3xl font-semibold text-white mb-0 mr-10">Provider Activity</h1>
                 <h4 className="text-base font-light text-white mb-0 mr-10">of <span className="text-base font-semibold text-mapi-secondary-3 underline mb-0 mr-10">{provider.first_name} {provider.last_name}</span></h4>
                 {/*for the 1st section of statistics */}
-                <div className="border border-gray-300 border-opacity-10 rounded-lg p-4 mt-8 ">
+                <Link to={`/admin/providers`} className=" text-[#99BDE6]  mt-6 text-xs">
+                    <span className="mr-1 ">&lt;</span> <span className='underline'>Back to all providers</span>
+                </Link>
+                <div className="border border-gray-300 border-opacity-10 rounded-lg p-4 mt-2 ">
                     <div className="grid grid-cols-5 gap-4">
                         <div className='text-center'>
                             <h3 className="text-xs text-[#DCDCDC] font-semibold mb-3 text-center pt-5">Profile Name</h3>
@@ -194,4 +199,4 @@ const DashboardProvider: React.FC = () => {
     );
 }
 
-export default DashboardProvider;
+export default DashboardProviderAdmin;

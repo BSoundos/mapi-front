@@ -197,7 +197,7 @@ const ProvidersTable: React.FC= () => {
                                             {provider.status ? 'Block' : 'Unblock'}
                                         </Button>
 
-                                        <Link to={`/dashboard-provider/${provider.id}`} className="inline-block bg-primary-dark text-white no-underline px-4 py-2 border border-gray-600 rounded-md ml-2">
+                                        <Link to={`/admin/dashboard-provider/${provider.id}`} className="inline-block bg-primary-dark text-white no-underline px-4 py-2 border border-gray-600 rounded-md ml-2">
                                             View Analytics
                                         </Link>
                                     </TableCell>
