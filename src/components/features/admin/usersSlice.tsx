@@ -1,18 +1,13 @@
 import { BACKEND_BASE_URL } from '@/data/constants';
+import { User } from '@/types/user';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 
-interface Invoice {
-  id: number;
-  apiName: string;
-  totalAmount: number;
-  planName: String;
-  createdAt: string;
-}
 
-interface InvoiceState {
-    invoices: Invoice[];
+
+interface UserState {
+    users: User[];
     loading: boolean;
     error: string | null;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -20,8 +15,8 @@ interface InvoiceState {
 }
 
   // Define initial state object with default values
-  const initialState: InvoiceState = {
-    invoices: [],
+  const initialState: UserState = {
+    users: [],
     loading: false,
     error: null,
     status: 'loading' 
@@ -29,11 +24,11 @@ interface InvoiceState {
   const getToken = () => {
     return localStorage.getItem('token'); // Retrieve token from localStorage
   };
-export const fetchInvoices = createAsyncThunk<Invoice[], string>(
-    'InvoiceHistory',
-    async (username: string) => {
+export const fetchUsers = createAsyncThunk<User[]>(
+    'usersList',
+    async () => {
       const token = getToken();
-      const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-history/${username}`,{
+      const response = await axios.get(`${BACKEND_BASE_URL}/accounts-management/user/`,{
         headers: {
           Authorization: `Token ${token}`
         }
@@ -43,8 +38,8 @@ export const fetchInvoices = createAsyncThunk<Invoice[], string>(
   );
   
  
-const invoiceSlice = createSlice({
-  name: 'invoice',
+const usersSlice = createSlice({
+  name: 'users',
   initialState,
   reducers: {
     // Reducer to handle loading state
@@ -56,20 +51,20 @@ const invoiceSlice = createSlice({
       state.error = action.payload;
     },
     // Reducer to handle adding invoices
-    addInvoices(state, action: PayloadAction<Invoice[]>) {
-      state.invoices = action.payload;
+    addUsers(state, action: PayloadAction<User[]>) {
+      state.users = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchInvoices.pending, (state) => {
+      .addCase(fetchUsers.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchInvoices.fulfilled, (state, action) => {
+      .addCase(fetchUsers.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.invoices = action.payload;
+        state.users = action.payload;
       })
-      .addCase(fetchInvoices.rejected, (state, action) => {
+      .addCase(fetchUsers.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || 'An error occurred';
       });
@@ -78,5 +73,5 @@ const invoiceSlice = createSlice({
 
 
 
-export const { setLoading, setError, addInvoices } = invoiceSlice.actions;
-export default invoiceSlice.reducer;
+export const { setLoading, setError, addUsers } = usersSlice.actions;
+export default usersSlice.reducer;

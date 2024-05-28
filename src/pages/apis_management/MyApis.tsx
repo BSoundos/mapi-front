@@ -16,7 +16,6 @@ const MyApis = () => {
   const [showModal, setShowModal] = useState(false);
   const dispatch = useAppDispatch();
   const api = useSelector((state: RootState) => state.apiProvider);
-  const categories = useSelector((state: RootState) => state.categories.categories);
 
   useEffect(() => {
     dispatch(fetchAllApis());
@@ -54,7 +53,6 @@ const MyApis = () => {
         <AddApiModal
         showModal={showModal}
         setShowModal={setShowModal}
-        categories={categories}
         />
       </div>
     </div>

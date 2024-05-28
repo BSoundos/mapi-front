@@ -26,13 +26,12 @@ const Revenue = () => {
 
 
   return (
-    <div>
-      
-      <div className="bg-[#0B1739]   flex">
-            {/* c la place de SideBar */}
-            <SideBarPro/>
-            <div className=" flex-1 h-screen  border-l border-opacity-30 border-[#7E89AC] w-full">
-                <NavBarRe/>
+
+    <div className="flex">
+      <SideBarPro/>
+      <div className="bg-mapi-neutral-2  flex-col flex-1">
+         <NavBarRe/>
+            <div className=" flex-1 overflow-y-auto max-h-[90vh] scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52] border border-[#343B4F] p-4 rounded  border-l border-opacity-30 border-[#7E89AC] w-full">
                 <div className="px-10 pb-2 ">                      
                         <h1 className="text-white py-4 text-2xl font-bold">Analytics</h1>
                         <div className="flex justify-between   text-white text-xs mb-4 p-4 border border-opacity-30 border-[#7E89AC]">

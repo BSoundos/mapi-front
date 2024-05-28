@@ -9,6 +9,7 @@ interface InvoiceDetail {
   clientName: String;
   apiName: string;
   description: string;
+  discount: number;
 }
 
 
@@ -28,7 +29,8 @@ interface InvoiceDetailState {
       payment_date: "",
       clientName: "",
       apiName: "",
-      description: ""
+      description: "",
+      discount: 0,
     },
     loading: false,
     error: null,

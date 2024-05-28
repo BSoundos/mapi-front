@@ -30,7 +30,7 @@ const Popup = ({ keyInfo, onClose }) => {
     return (
       <div className="fixed inset-0 flex justify-center items-center bg-gray-900 bg-opacity-90 z-50">
         <div className="bg-mapi-neutral-2 border-2 border-mapi-neutral-3 p-8 rounded-lg shadow-md">
-          <h2 className="text-xl font-semibold text-base text-left text-plus-jakarta-sans text-mapi-neutral-5 mb-1">API Key</h2>
+          <h2 className=" font-semibold text-base text-left text-plus-jakarta-sans text-mapi-neutral-5 mb-1">API Key</h2>
           <hr className="border-mapi-neutral-3 mb-9" />
           <p className="text-xl mb-6 text-left text-plus-jakarta-sans text-mapi-neutral-5">
             Key value: 
@@ -66,7 +66,7 @@ const Popup = ({ keyInfo, onClose }) => {
                 </div>
               ) : (
                 <div className="ml-16 text-base">
-                  <span className="inline-block px-4 py-0.25 border border-customRed text-customTextRed bg-customBackground text-plus-jakarta-sans text-mapi-neutral-5">Paused</span>
+                  <span className="inline-block px-4 py-0.25 border border-customRed  bg-customBackground text-plus-jakarta-sans text-mapi-neutral-5">Paused</span>
                   <button
                     className="text-sm ml-7 underline cursor-pointer text-plus-jakarta-sans text-mapi-neutral-5"
                     onClick={handleActivateKey}

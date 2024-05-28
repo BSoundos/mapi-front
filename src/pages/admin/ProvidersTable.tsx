@@ -14,8 +14,8 @@ import {
 import {CheckIcon, LockIcon, MapIcon, PhoneIcon, SearchIcon, User2Icon} from "lucide-react";
 import { useDispatch, useSelector } from 'react-redux';
 import store, { RootState } from '@/app/store';
-import { fetchUsers } from '@/components/features/admin/usersSlice';
-import { blockUserAccount, unblockUserAccount } from '@/components/features/admin/accounts_management';
+import { fetchProviders } from '@/components/features/admin/providersSlice';
+import { blockProviderAccount, unblockProviderAccount } from '@/components/features/admin/accounts_management';
 import { User } from '@/types/user';
 
 
@@ -24,7 +24,7 @@ import { User } from '@/types/user';
 export type AppDispatch = typeof store.dispatch
 
 
-const UsersTable: React.FC= () => {
+const ProvidersTable: React.FC= () => {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(5);
     const [searchText, setSearchText] = useState('');
@@ -34,22 +34,22 @@ const UsersTable: React.FC= () => {
 
 
     const dispatch = useDispatch<AppDispatch>();
-    const users = useSelector((state: RootState) => state.users.users);
-    const loading = useSelector((state: RootState) => state.users.loading);
-    const error = useSelector((state: RootState) => state.users.error);
+    const providers = useSelector((state: RootState) => state.providers.providers);
+    const loading = useSelector((state: RootState) => state.providers.loading);
+    const error = useSelector((state: RootState) => state.providers.error);
   
     useEffect(() => {
-      dispatch(fetchUsers());
+      dispatch(fetchProviders());
     }, [dispatch]);
 
 
-    const handleBlock = async (user: User) => {
-        if(user.status === 1){
-            dispatch(blockUserAccount(user.id));
+    const handleBlock = async (provider: User) => {
+        if(provider.status === 1){
+            dispatch(blockProviderAccount(provider.id));
         }else{
-            dispatch(unblockUserAccount(user.id));
+            dispatch(unblockProviderAccount(provider.id));
         }
-        await dispatch(fetchUsers());
+        await dispatch(fetchProviders());
       };
 
 
@@ -75,7 +75,7 @@ const UsersTable: React.FC= () => {
 
 */
 
-    const filteredUsers = users.filter(user =>
+    const filteredProviders = providers.filter(user =>
         user.first_name.toLowerCase().includes(searchText.toLowerCase()) ||
         user.last_name.toLowerCase().includes(searchText.toLowerCase()) ||
         user.username.toLowerCase().includes(searchText.toLowerCase()) ||
@@ -102,14 +102,14 @@ const UsersTable: React.FC= () => {
     return (
         <div className='flex '>
             <AdminSidebar/>
-            <div className="flex flex-col px-10 bg-[#081028] w-full py-4 ">
+            <div className="flex flex-col px-10 bg-[#081028] w-full py-4">
             <div className="flex items-center justify-between mb-10">
                 <div className="flex items-center">
-                    <h1 className="text-xl font-semibold text-white mb-0 mr-14">List of users</h1>
+                    <h1 className="text-xl font-semibold text-white mb-0 mr-14">List of providers</h1>
                     <div className="w-75">
                     <TextField
                         fullWidth
-                        label="Search for users"
+                        label="Search for providers"
                         variant="outlined"
                         value={searchText}
                         InputLabelProps={{ style: { color: '#BFBFBF', borderColor: 'white' } }}
@@ -159,7 +159,7 @@ const UsersTable: React.FC= () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {filteredUsers.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user, index) => (
+                            {filteredProviders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user, index) => (
                                 <TableRow key={user.id} style={{backgroundColor: '#081028'}}>
                                     <TableCell style={{
                                         color: 'rgba(255, 255, 255, 0.8)',
@@ -203,7 +203,7 @@ const UsersTable: React.FC= () => {
                     <TablePagination
                         rowsPerPageOptions={[5, 10, 25]}
                         component="div"
-                        count={filteredUsers.length}
+                        count={filteredProviders.length}
                         rowsPerPage={rowsPerPage}
                         page={page}
                         onPageChange={handleChangePage}
@@ -216,4 +216,4 @@ const UsersTable: React.FC= () => {
     );
 };
 
-export default UsersTable;
+export default ProvidersTable;

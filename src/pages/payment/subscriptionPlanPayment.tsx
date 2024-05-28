@@ -26,7 +26,6 @@ const PlanDetailsPage = () => {
   const handleConfirmPayment = (price: string) => {
     try {
       if (planDetails) {
-       
         dispatch(confirmPayment({
 
           amount: price,

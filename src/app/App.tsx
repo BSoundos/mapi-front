@@ -17,7 +17,7 @@ import MainPage from '@/pages/api_hub/mainpage';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from '@/pages/authentication/Login';
-import { useEffect } from 'react';
+import { useEffect,useState  } from 'react';
 import axios from 'axios';
 import Register from '@/pages/authentication/Register';
 import Verify from '@/pages/authentication/Verify';
@@ -47,18 +47,28 @@ import UserProfilSetting from '@/pages/UserSettings/UserProfilSetting';
 import UserSecuritySettings from '@/pages/UserSettings/UserSecuriteSettings';
 import ProviderProfilSetting from '@/pages/UserSettings/ProviderProfilSetting';
 import ProviderSecuritySettings from '@/pages/UserSettings/ProviderSecuriteSettings';
+import EndpointsApi from '@/pages/apis_management/EndpointsApi';
+import AddEndpointPage from '@/pages/apis_management/AddEndpointPage';
 import Revenue from '@/pages/apis_management/Revenue';
 import PerformanceTracking from '@/pages/apis_management/PerformanceTrack'; 
 import PerformanceTracking2 from '@/pages/apis_management/PerformanceTrack2';
+
+import ProvidersTable from '@/pages/admin/ProvidersTable';
+import DashboardAdmin from '@/pages/admin/DashboardAdmin';
+
+
+import ConfirmInvitationPage from '@/pages/apis_management/ConfirmInvitationPage';
+
 const App = () => {
+  
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Token ${token}`;
     }
+  
   }, []);
-
 
   return (
     <Router>
@@ -78,6 +88,10 @@ const App = () => {
           <Route path="payment/Plans/:id" element={<SubscriptionPlansPage/>} />
           <Route path="payment/Plans/:id/per-month/plan/:planId" element={<PlanDetailsPage />} />
           <Route path="payment/Plans/:id/per-use/plan/:planId" element={<PlanDetailsPerusePage  />} />
+          <Route
+            path="confirm/:id/:plan"
+            element={<ConfirmInvitationPage />}
+          />
         </Route>
         <Route path="/accesskey/:apiVersion/:planId/:typeplan" element={<GeneratingAccessKeyPage />} />
         <Route path="apis" element={<MainPage />} />
@@ -95,6 +109,7 @@ const App = () => {
 
         {/* Authentication */}
         <Route path="login" element={<Login />} />
+        <Route path="login/:api/:plan" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="verify/:username" element={<Verify />} />
         {/* Invoices */}
@@ -115,7 +130,9 @@ const App = () => {
          {/* Provider Pages  */}
         <Route path="/my-apis" element={<MyApis />} />
         <Route path="/version-api/:id" element={<VersionsApi/>}/>
+        <Route path="/endpoint-api/:id" element={<EndpointsApi/>}/>
         <Route path="/general-api/:id" element={<GeneralApi/>}/>
+        <Route path="/add-endpoint/:id" element={<AddEndpointPage/>}/>
         <Route path="/pricing-api/public/:id" element={<PricingPublicApi/>}/>
         <Route path="/pricing-api/private/:id" element={<PricingPrivateApi/>}/>
         <Route path="/providerProfileSettings" element={<ProviderProfilSetting/>}/>
@@ -124,7 +141,11 @@ const App = () => {
         <Route path="/PerformanceTracking" element={<PerformanceTracking />} />
         <Route path="/PerformanceTracking/:id" element={<PerformanceTracking2 />} />
 
+  
+        {/*Tracking users and providers*/}
         <Route path="/admin/users" element={<UsersTable />} />
+        <Route path="/admin/providers" element={<ProvidersTable />} />
+        <Route path="/admin/dashboard" element={<DashboardAdmin />} />
 
 
       </Routes>

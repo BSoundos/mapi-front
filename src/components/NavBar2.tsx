@@ -14,15 +14,15 @@ import { useSelector } from 'react-redux';
 
 
 interface NavBar2Props {
-    id:number,
+    id: number,
 }
 
-const NavBar2: React.FC<NavBar2Props> = ({ id}) => {
-    
+const NavBar2: React.FC<NavBar2Props> = ({ id }) => {
 
-    const api = useSelector((state:RootState)  => state.api.api);
-    const currentVersion=useSelector((state:RootState)=>state.versions.currentVersion?.id);
-    
+
+    const api = useSelector((state: RootState) => state.api.api);
+    const currentVersion = useSelector((state: RootState) => state.versions.currentVersion?.id);
+
 
 
     return (
@@ -49,7 +49,7 @@ const NavBar2: React.FC<NavBar2Props> = ({ id}) => {
                             <img src={popularityIcon} />
                             <p className=' text-white text-opacity-60 pl-2 text-base'> Popularity</p>
                         </div>
-                        {api && (<div className='text-white text-center text-lg'>{api?.popularity}</div>)}
+                        {api && (<div className='text-white text-center text-lg'>{api?.popularity} / 5</div>)}
                     </div>
                     <div className=' border-r-2 border-[#FFFFFF] border-opacity-5 px-10'>
                         <div className='flex mb-2 justify-center pb-2'>
@@ -85,9 +85,9 @@ const NavBar2: React.FC<NavBar2Props> = ({ id}) => {
             <div className='w-full border-b border-white border-opacity-5 bg-mapi-neutral-3 bg-opacity-[90%]'>
                 <nav className='flex items-center gap-4 w-[40%] font-inter font-normal text-sm text-[#007BFF] pl-16 h-full '>
                     <NavItem path={`about/${api?.api_id}`} text='About' />
-                    <NavItem path={`endpoint/${api?.api_id}`}  text='Endpoints' />
-                    <NavItem path={`documentation/${api?.api_id}`}  text='Documentation' />
-                    <NavItem path={`payment/Plans/${api?.api_id}`}  text='Pricing' />
+                    <NavItem path={`endpoint/${api?.api_id}`} text='Endpoints' />
+                    <NavItem path={`documentation/${api?.api_id}`} text='Documentation' />
+                    <NavItem path={`payment/Plans/${api?.api_id}`} text='Pricing' />
                     <NavItem path={`support/${api?.api_id}`} text='Support' />
                     <NavItem path={`Discussions/${api?.api_id}`} text='Discussions' />
                 </nav>

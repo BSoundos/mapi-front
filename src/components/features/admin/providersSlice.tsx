@@ -1,18 +1,13 @@
 import { BACKEND_BASE_URL } from '@/data/constants';
+import { User } from '@/types/user';
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 
-interface Invoice {
-  id: number;
-  apiName: string;
-  totalAmount: number;
-  planName: String;
-  createdAt: string;
-}
 
-interface InvoiceState {
-    invoices: Invoice[];
+
+interface ProviderState {
+    providers: User[];
     loading: boolean;
     error: string | null;
     status: 'idle' | 'loading' | 'succeeded' | 'failed';
@@ -20,8 +15,8 @@ interface InvoiceState {
 }
 
   // Define initial state object with default values
-  const initialState: InvoiceState = {
-    invoices: [],
+  const initialState: ProviderState = {
+    providers: [],
     loading: false,
     error: null,
     status: 'loading' 
@@ -29,11 +24,11 @@ interface InvoiceState {
   const getToken = () => {
     return localStorage.getItem('token'); // Retrieve token from localStorage
   };
-export const fetchInvoices = createAsyncThunk<Invoice[], string>(
-    'InvoiceHistory',
-    async (username: string) => {
+export const fetchProviders = createAsyncThunk<User[]>(
+    'providersList',
+    async () => {
       const token = getToken();
-      const response = await axios.get(`${BACKEND_BASE_URL}/payment/payment-history/${username}`,{
+      const response = await axios.get(`${BACKEND_BASE_URL}/accounts-management/provider/`,{
         headers: {
           Authorization: `Token ${token}`
         }
@@ -43,8 +38,8 @@ export const fetchInvoices = createAsyncThunk<Invoice[], string>(
   );
   
  
-const invoiceSlice = createSlice({
-  name: 'invoice',
+const providersSlice = createSlice({
+  name: 'providers',
   initialState,
   reducers: {
     // Reducer to handle loading state
@@ -56,20 +51,20 @@ const invoiceSlice = createSlice({
       state.error = action.payload;
     },
     // Reducer to handle adding invoices
-    addInvoices(state, action: PayloadAction<Invoice[]>) {
-      state.invoices = action.payload;
+    addProviders(state, action: PayloadAction<User[]>) {
+      state.providers = action.payload;
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchInvoices.pending, (state) => {
+      .addCase(fetchProviders.pending, (state) => {
         state.status = 'loading';
       })
-      .addCase(fetchInvoices.fulfilled, (state, action) => {
+      .addCase(fetchProviders.fulfilled, (state, action) => {
         state.status = 'succeeded';
-        state.invoices = action.payload;
+        state.providers = action.payload;
       })
-      .addCase(fetchInvoices.rejected, (state, action) => {
+      .addCase(fetchProviders.rejected, (state, action) => {
         state.status = 'failed';
         state.error = action.error.message || 'An error occurred';
       });
@@ -78,5 +73,5 @@ const invoiceSlice = createSlice({
 
 
 
-export const { setLoading, setError, addInvoices } = invoiceSlice.actions;
-export default invoiceSlice.reducer;
+export const { setLoading, setError, addProviders } = providersSlice.actions;
+export default providersSlice.reducer;
