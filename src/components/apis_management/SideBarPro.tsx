@@ -27,7 +27,7 @@ function SideBarPro() {
 
 
   return (
-    <div className="flex-1 max-w-[260px]  h-screen ">
+    <div className="flex-1 max-w-[260px]  h-screen">
       <div className="bg-mapi-neutral-2  border-solid border-r-[#343B4F] border-r h-screen overflow-hidden flex flex-col justify-between pb-3 text-sm">
         <div>
         <div className="logo flex justify-center items-center pt-4 pb-8">

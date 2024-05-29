@@ -50,6 +50,8 @@ import ProviderSecuritySettings from '@/pages/UserSettings/ProviderSecuriteSetti
 import EndpointsApi from '@/pages/apis_management/EndpointsApi';
 import AddEndpointPage from '@/pages/apis_management/AddEndpointPage';
 import Revenue from '@/pages/apis_management/Revenue';
+import PerformanceTracking from '@/pages/apis_management/PerformanceTrack'; 
+import PerformanceTracking2 from '@/pages/apis_management/PerformanceTrack2';
 
 import ProvidersTable from '@/pages/admin/ProvidersTable';
 import DashboardAdmin from '@/pages/admin/DashboardAdmin';
@@ -139,6 +141,9 @@ const App = () => {
         <Route path="/providerSecuritySettings" element={<ProviderSecuritySettings/>}/>
         <Route path="/revenue" element={<Revenue />} />
         <Route path="/dashboard-provider/" element={<DashboardProvider />} />
+
+        <Route path="/PerformanceTracking" element={<PerformanceTracking />} />
+        <Route path="/PerformanceTracking/:id" element={<PerformanceTracking2 />} />
 
   
         {/*Tracking users and providers*/}

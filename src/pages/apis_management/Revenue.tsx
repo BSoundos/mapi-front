@@ -26,6 +26,7 @@ const Revenue = () => {
 
 
   return (
+
     <div className="flex">
       <SideBarPro/>
       <div className="bg-mapi-neutral-2  flex-col flex-1">
