@@ -13,7 +13,7 @@ import store, { RootState } from '@/app/store';
 export type AppDispatch = typeof store.dispatch
 const SubscriptionPlansPage = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const {id} = useParams();
+  const { id,plan } = useParams();
   const subscriptionPlans = useSelector((state: RootState) => state.subscriptionPlans.monthlyplans);
   const userPlans = useSelector((state: RootState) => state.subscriptionPlans.userplans); 
   const status = useSelector((state: RootState) => state.subscriptionPlans.status);

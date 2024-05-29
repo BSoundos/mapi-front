@@ -17,7 +17,7 @@ import MainPage from '@/pages/api_hub/mainpage';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from '@/pages/authentication/Login';
-import { useEffect } from 'react';
+import { useEffect  } from 'react';
 import axios from 'axios';
 import Register from '@/pages/authentication/Register';
 import Verify from '@/pages/authentication/Verify';
@@ -56,15 +56,19 @@ import ConfirmInvitationPage from '@/pages/apis_management/ConfirmInvitationPage
 import ProvidersTable from '@/pages/admin/ProvidersTable';
 import DashboardAdmin from '@/pages/admin/DashboardAdmin';
 import NotFoundPage from '@/pages/api_hub/NotFoundPage';
+
+
+
 const App = () => {
+  
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Token ${token}`;
     }
+  
   }, []);
-
 
   return (
     <Router>

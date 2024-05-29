@@ -4,7 +4,6 @@ import { addTicket } from '@/components/features/tickets/TicketSlice';
 import { useNavigate,useParams } from 'react-router-dom';
 import Navbar from '@/components/NavBar';
 import Footer from '@/components/Footer';
-import NavBar2 from '@/components/NavBar2';
 
 
 const UserAddTicket = () => {

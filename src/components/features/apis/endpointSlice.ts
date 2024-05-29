@@ -56,6 +56,18 @@ export const addEndpoint = createAsyncThunk(
     }
   }
 );
+export const removeEndpoint = createAsyncThunk('endpoint/removeEndpoint', async (id) => {
+  try {
+    const token = localStorage.getItem('token');
+    const headers = {
+      Authorization: `Token ${token}`,
+    };
+    const response = await axios.delete(`${BACKEND_BASE_URL}/apis_management/delete-endpoint/${id}/`, { headers });
+    return response.data;
+  } catch (error) {
+    throw Error(error.response.data.message || 'Failed to delete endpoint');
+  }
+});
 
 const endpointsSlice = createSlice({
   name: "endpoints",
@@ -104,6 +116,18 @@ const endpointsSlice = createSlice({
       .addCase(fetchDataFormat.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload; // Store the error payload
+      })
+      .addCase(removeEndpoint.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(removeEndpoint.fulfilled, (state, action) => {
+        state.loading = false;
+        state.endpoint = action.payload;
+        state.error = null;
+      })
+      .addCase(removeEndpoint.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload; 
       });
   },
 });

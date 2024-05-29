@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import { RootState, useAppDispatch } from "@/app/store";
 import { useSelector } from "react-redux";
-import { AddObjectProps } from "@/types/AddObjectProps";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SideBarPro from "@/components/apis_management/SideBarPro";
 import Navbar from "@/components/NavbarProvider";
 
@@ -18,6 +17,7 @@ const AddEndpointPage = () => {
     const [formData, setFormData] = useState({
         name: '',
         description: '',
+        isRequired:'',
         httpMethod: '',
         path: '',
         headerParams: [],
@@ -31,13 +31,18 @@ const AddEndpointPage = () => {
     const [headers, setHeaders] = useState([{ name: '', value: '' }]);
     const [bodyContent, setBodyContent] = useState('');
     const [responseExamples, setResponseExamples] = useState([]);
+    const navigate=useNavigate();
 
     const toggleAddEndpointModal = () => {
         setFormData({
-            name: '/',
+            name: '',
             description: '',
-            recommended: false,
-            endpoints: [],
+            isRequired:'',
+            httpMethod: '',
+            path: '',
+            headerParams: [],
+            queryParams: [],
+            responseExamples: [],
         });
     };
     const handleAddResponseExample = () => {
@@ -64,16 +69,16 @@ const AddEndpointPage = () => {
 
     const dataFormat = useSelector((state: RootState) => state.endpoints.dataFormat);
 
-    const handleAddEndpoint = (e) => {
+    const handleAddEndpoint = async (e) => {
         e.preventDefault();
         const requestBody = {
             ...formData,
             responseExamples: responseExamples
         };
-    
-       
-        console.log(requestBody);
-        dispatch(addEndpoint({ id: id, data: requestBody }));
+        const response = await dispatch(addEndpoint({ id: id, data: requestBody }));
+        if (addEndpoint.fulfilled.match(response)) {
+          navigate(`/endpoint-api/${response.payload.api.api_id}`);
+        }
     };
  
     const [options, setOptions] = useState<Option[]>([]);  
@@ -360,281 +365,7 @@ const AddEndpointPage = () => {
       </div>
     </div>
 
-                                                            {/* {activeSection === 'query' && (
-                                <div>
-                                 <div className="mb-1 flex flex-col gap-6 items-center">
-    <div className="flex bg-mapi-neutral-2 border-b border-b-[#7E89AC] bg-opacity-30 px-20 pt-2 pb-3 w-full justify-between text-sm">
-        <div className="text-[#9ABAE5]">Name</div>
-        <div className="text-[#9ABAE5] pl-3">Type</div>
-        <div className="text-[#9ABAE5]">Example Value</div>
-        <div className="text-[#9ABAE5]">Required</div>
-    </div>
-    {tableRows.map((row, index) => (
-        <div
-            key={index}
-            className="flex justify-between w-full pl-4 pr-16"
-        >
-            <input
-                type="text"
-                value={row.name}
-                onChange={(e) => {
-                    const updatedRows = [...tableRows];
-                    updatedRows[index].name = e.target.value;
-                    setTableRows(updatedRows);
-                }}
-                className="border border-[#404040] py-1 pl-1 outline-none bg-[#081028] text-[#BFBFBF] w-44"
-                placeholder="Insert parameter name"
-            />
-            <select
-                value={row.type}
-                onChange={(e) => {
-                    const updatedRows = [...tableRows];
-                    updatedRows[index].type = e.target.value;
-                    setTableRows(updatedRows);
-                }}
-                className="w-36 border border-[#7E89AC] border-opacity-30 py-1 text-sm outline-none bg-[#081028] text-[#BFBFBF]"
-            >
-                {DATA_TYPE_CHOICES.map(([value, label]) => (
-                    <option key={value} value={value} className="text-sm">
-                        {label}
-                    </option>
-                ))}
-            </select>
-            <input
-                type="text"
-                value={row.exampleValue}
-                onChange={(e) => {
-                    const updatedRows = [...tableRows];
-                    updatedRows[index].exampleValue = e.target.value;
-                    setTableRows(updatedRows);
-                }}
-                className="border border-[#404040] p-1 outline-none bg-[#081028] text-[#BFBFBF] w-44"
-                placeholder="Insert example value"
-            />
-            <div className="flex gap-2 w-20 ml-8">
-                <input
-                    id={`recommended-${index}`}
-                    className="hidden"
-                    type="checkbox"
-                    checked={row.required}
-                    onChange={(e) => {
-                        const updatedRows = [...tableRows];
-                        updatedRows[index].required = e.target.checked;
-                        setTableRows(updatedRows);
-                    }}
-                />
-                <div
-                    className={`w-5 h-5 rounded border border-[#7E89AC] flex justify-center items-center cursor-pointer ${
-                        row.required ? 'bg-primary-dark border-primary-dark' : ''
-                    }`}
-                    onClick={() => {
-                        const updatedRows = [...tableRows];
-                        updatedRows[index].required = !row.required;
-                        setTableRows(updatedRows);
-                    }}
-                >
-                    {row.required && <CheckedBox />}
-                </div>
-                <div className="text-mapi-text text-sm">Required</div>
-            </div>
-        </div>
-    ))}
-    <div className="flex justify-end w-full">
-    <button
-        onClick={(e)=>{e.preventDefault();handleAddRow(); console.log(tableRows)}}
-        className="bg-primary-dark border border-[#616161] font-semibold text-sm py-1 px-4 rounded-md text-white"
-    >
-        Add a parameter
-    </button>
-    </div>
-</div>
 
-   <div className="flex flex-col bg-mapi-neutral-2 rounded mt-4 border border-[#404040] px-4 pt-6 pb-3 w-full justify-center gap-3 text-sm">
-      <div className="flex items-center gap-5  ">
-        <div className="text-[#9ABAE5] font-bold">Response</div>
-        <div className="text-[#9ABAE5] bg-mapi-neutral-1 border border-[#9ABAE5] py-1 px-2">Example Value</div>
-      </div>
-      <div className="flex gap-3 mt-4">
-       
-      <div >
-      {!showInput && (
-    <select
-        onChange={handleSelectChange}
-        value={selectedOption || ''}
-        className="border border-[#404040] py-1 pl-1 outline-none bg-[#081028] text-[#BFBFBF]"
-    >
-        <option value="">Add parameter</option>
-        {options.map((option, index) => (
-            <option key={index} value={option.value}>
-                {option.label}
-            </option>
-        ))}
-        <option value="add-new">Select code response</option>
-    </select>
-)}
-                                            {showInput && (
-                                                <div className="flex gap-3 items-center">
-                                                     <label htmlFor="description" className="text-sm font-semibold text-mapi-text w-10">
-                                                        Code<span className="text-red-500 -mt-3">*</span>
-                                                    </label>
-                                                    <input
-                                                        type="text"
-                                                        placeholder="XXX"
-                                                        value={newParameterValue}
-                                                        onChange={handleInputChange}
-                                                        className="border border-[#404040] p-1 outline-none bg-[#081028] text-[#BFBFBF]"
-                                                    />
-                                                    <button onClick={handleAddParameter}  disabled={!isValidStatusCode(newParameterValue)} className={`bg-primary-dark border border-[#616161] font-semibold text-sm  py-1 px-4 rounded-md text-white ${!isValidStatusCode(newParameterValue) ? `cursor-not-allowed` : `cursor-pointer`}`} >
-                                                        Add Response code
-                                                    </button>
-                                                </div>
-                                            )}
-                            {isCodeValid && (
-                                <div className="flex flex-col mt-4">
-                                    <div className="mb-2 flex gap-6 items-center">
-                                        <label htmlFor="mediaTypes" className="text-sm font-semibold text-mapi-text w-24">
-                                            Media Types
-                                        </label>
-                                        <select
-                                            id="mediaTypes"
-                                            name="mediaTypes"
-                                            multiple
-                                            value={selectedMediaTypes}
-                                            onChange={(e) =>
-                                                setSelectedMediaTypes(Array.from(e.target.selectedOptions, (option) => option.value))
-                                            }
-                                            className="add-plan w-60 h-20"
-                                        >
-                                            <option value="application/json">application/json</option>
-                                            <option value="application/xml">application/xml</option>
-                                        </select>
-                                    </div>
-                                    <div className="mb-2 flex gap-6 items-center">
-                                        <label htmlFor="payloadAction" className="text-sm font-semibold text-mapi-text w-24">
-                                            Payload Action
-                                        </label>
-                                        <textarea
-                                            id="payloadAction"
-                                            name="payloadAction"
-                                            placeholder="Payload Description"
-                                            value={payloadAction}
-                                            onChange={(e) => setPayloadAction(e.target.value)}
-                                            className="add-plan w-60 h-20"
-                                        />
-                                    </div>
-                                    <div className="flex flex-col gap-2 items-start mt-2">
-    <label htmlFor="headers" className="text-sm font-semibold text-mapi-text w-24">
-        Headers
-    </label>
-    <div className="flex flex-wrap gap-3  ">
-        {headers.map((header, index) => (
-            <div key={index} className="flex gap-6 items-center   pl-[116px]">
-                <input
-                    type="text"
-                    placeholder="Name"
-                    value={header.name}
-                    onChange={(e) => {
-                        const updatedHeaders = [...headers];
-                        updatedHeaders[index].name = e.target.value;
-                        setHeaders(updatedHeaders);
-                    }}
-                    className="add-plan w-30"
-                />
-                <input
-                    type="text"
-                    placeholder="Value"
-                    value={header.value}
-                    onChange={(e) => {
-                        const updatedHeaders = [...headers];
-                        updatedHeaders[index].value = e.target.value;
-                        setHeaders(updatedHeaders);
-                    }}
-                    className="add-plan w-30"
-                />
-            </div>
-        ))}
-        <button
-            onClick={(e) => {e.preventDefault(); setHeaders([...headers, { name: '', value: '' }])}}
-            className="bg-primary-dark border border-[#616161] font-semibold text-sm py-1 px-4 rounded-md text-white"
-        >
-            Add Header
-        </button>
-    </div>
-</div>
-                                    <div className="mb-1 mt-3 flex gap-6 items-center">
-                                        <label htmlFor="bodyContent" className="text-sm font-semibold text-mapi-text w-24">
-                                            Body <span className="text-red-500 -mt-3">*</span>  </label>
-                                        <textarea
-                                            id="bodyContent"
-                                            className="add-plan w-1/2 h-24 "
-                                            placeholder="Enter body content here..."
-                                            value={bodyContent}
-                                            onChange={(e) => setBodyContent(e.target.value)}
-                                        ></textarea>
-                                    </div>
-                                </div>
-                            )}
-    </div>
-      </div>
-    </div>
-                                </div>
-                            )}
-                            {activeSection === 'headers' && (
-  <div>
-    <div className="mb-1 flex flex-col gap-6 items-center">
-      <div className="flex bg-mapi-neutral-2 border-b border-b-[#7E89AC] bg-opacity-30 px-20 pt-2 pb-3 w-full justify-between text-sm">
-        <div className="text-[#9ABAE5]">Name</div>
-        <div className="text-[#9ABAE5]">Value</div>
-      </div>
-      {headerRows.map((row, index) => (
-        <div key={index} className="flex justify-between w-full pl-4 pr-16">
-          <input
-            type="text"
-            value={row.name}
-            onChange={(e) => {
-              const updatedRows = [...headerRows];
-              updatedRows[index].name = e.target.value;
-              setHeaderRows(updatedRows);
-            }}
-            className="border border-[#404040] py-1 pl-1 outline-none bg-[#081028] text-[#BFBFBF] w-44"
-            placeholder="Insert header name"
-          />
-          <input
-            type="text"
-            value={row.value}
-            onChange={(e) => {
-              const updatedRows = [...headerRows];
-              updatedRows[index].value = e.target.value;
-              setHeaderRows(updatedRows);
-            }}
-            className="border border-[#404040] py-1 pl-1 outline-none bg-[#081028] text-[#BFBF BF] w-44"
-            placeholder="Insert header value"
-          />
-        </div>
-      ))}
-      <div className="flex justify-end w-full">
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            handleAddHeaderRow();
-          }}
-          className="bg-primary-dark border border-[#616161] font-semibold text-sm py-1 px-4 rounded-md text-white"
-        >
-          Add a header
-        </button>
-      </div>
-    </div>
-  </div>
-)} */}
-                            {/* {activeSection === 'body' && (
-                                <div>
-                                  
-                                    <div className="mb-1 flex gap-6 items-center">
-                                        <textarea
-                                            id="bodyContent" className="add-plan w-full h-40" placeholder="Enter body content here..."></textarea>
-</div>
-</div>
-)} */}
 <div className="flex gap-2 justify-end mt-5">
 <button
                                     onClick={toggleAddEndpointModal}
@@ -657,3 +388,4 @@ Save
 );
 };
 export default AddEndpointPage;
+

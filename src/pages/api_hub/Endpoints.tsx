@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import AccordionMenu from '@/components/AccordionMenu'
 import EndpointListItem from '@/components/EndpointListItem'
 import NavItem from '@/components/NavItem'
@@ -6,17 +6,63 @@ import Parameters from '@/components/Parameters'
 import SelectVersion from '@/components/SelectVersion'
 import { faSearch } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-
-
+import { useParams } from 'react-router-dom'
+import { RootState, useAppDispatch } from '@/app/store'
+import { useSelector } from 'react-redux'
+import { fetchEndpoints } from '@/components/features/apis/endpointSlice'
+import { getAllVersions } from '@/components/features/apis_management/versionSlice'
+import { Loader, Loader2 } from 'lucide-react'
 
 
 
 const Endpoints = () => {
+
+    const { id } = useParams();
+    const dispatch = useAppDispatch();
+    const endpoints = useSelector((state: RootState) => state.endpoints.endpoints);
+    const isVersionsLoading = useSelector((state: RootState) => state.versions.isLoading);
+    const currentVersion = useSelector((state: RootState) => state.versions.currentVersion);
+    const activeVersions = useSelector((state: RootState) => state.versions.activeVersions);
+    // user selected endpoint
+    const [selectedEndpoint, setSelectedEndpoint] = useState(null);
+    // user selected version
+    const [selectedVersion, setSelectedVersion] = useState(null);
+
+    useEffect(() => {
+        const apiId = parseInt(id, 10);
+        if (isNaN(apiId)) {
+            console.error('Invalid API ID:', apiId);
+            return;
+        }
+        // get current version + active versions
+        dispatch(getAllVersions(apiId));
+        setSelectedVersion(currentVersion);
+        // get version endpoints
+        if (selectedVersion) {
+            dispatch(fetchEndpoints(selectedVersion.api_version_id));
+        }
+    }, [])
+
+
+
+
+
+
     return (
         <section className='text-white text-sm font-inter'>
             {/* Api Version dropdown menu */}
             <header className='bg-mapi-neutral-2 px-4 py-2 w-full border-b border-white border-opacity-5'>
-                <SelectVersion />
+                {
+                    !isVersionsLoading
+                        ? <SelectVersion
+                            currentVersion={currentVersion}
+                            activeVersions={activeVersions}
+                            selectedVersion={selectedVersion}
+                            setSelectedVersion={setSelectedVersion}
+                        />
+                        : <Loader2></Loader2>
+                }
+
             </header>
             {/* Endpoints details section*/}
             <section className='flex w-full h-max'>
@@ -35,12 +81,17 @@ const Endpoints = () => {
                     </header>
                     {/* Endpoints List */}
                     <ul className='bg-mapi-neutral-2'>
+                        {
+                            endpoints.map(
+                                (endpoint) => <EndpointListItem key={endpoint.endpoint_id} httpMethod={endpoint.http_method} endpointName={endpoint.title} />
+                            )
+                        }
+                        {/* <EndpointListItem httpMethod={"GET"} endpointName={"Search"} />
                         <EndpointListItem httpMethod={"GET"} endpointName={"Search"} />
                         <EndpointListItem httpMethod={"GET"} endpointName={"Search"} />
                         <EndpointListItem httpMethod={"GET"} endpointName={"Search"} />
                         <EndpointListItem httpMethod={"GET"} endpointName={"Search"} />
-                        <EndpointListItem httpMethod={"GET"} endpointName={"Search"} />
-                        <EndpointListItem httpMethod={"GET"} endpointName={"Search"} />
+                        <EndpointListItem httpMethod={"GET"} endpointName={"Search"} /> */}
                     </ul>
                 </aside>
                 <aside className='w-[40%] border-r border-white border-opacity-5 '>
