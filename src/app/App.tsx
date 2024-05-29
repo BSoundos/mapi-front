@@ -58,6 +58,8 @@ import DashboardAdmin from '@/pages/admin/DashboardAdmin';
 
 
 import ConfirmInvitationPage from '@/pages/apis_management/ConfirmInvitationPage';
+import DashboardProvider from '@/pages/apis_management/DashboardProvider';
+import DashboardProviderAdmin from '@/pages/admin/DashboardProviderAdmin';
 
 const App = () => {
   
@@ -138,6 +140,8 @@ const App = () => {
         <Route path="/providerProfileSettings" element={<ProviderProfilSetting/>}/>
         <Route path="/providerSecuritySettings" element={<ProviderSecuritySettings/>}/>
         <Route path="/revenue" element={<Revenue />} />
+        <Route path="/dashboard-provider/" element={<DashboardProvider />} />
+
         <Route path="/PerformanceTracking" element={<PerformanceTracking />} />
         <Route path="/PerformanceTracking/:id" element={<PerformanceTracking2 />} />
 
@@ -146,6 +150,7 @@ const App = () => {
         <Route path="/admin/users" element={<UsersTable />} />
         <Route path="/admin/providers" element={<ProvidersTable />} />
         <Route path="/admin/dashboard" element={<DashboardAdmin />} />
+        <Route path="/admin/dashboard-provider/:provider_id" element={<DashboardProviderAdmin />} />
 
 
       </Routes>

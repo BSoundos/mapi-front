@@ -14,7 +14,7 @@ function SideBarPro() {
  
 
   const items = [
-    { icon:<BiSolidDashboard size={24} />,text: 'Dashboard', path: '/dashboard' },
+    { icon:<BiSolidDashboard size={24} />,text: 'Dashboard', path: '/dashboard-provider' },
     { icon:<IoBag size={24} /> ,text: 'My APIs', path: '/my-apis' },
     {icon:<BiDollar size={24} />, text: 'Billing & Incomes', path: '/Revenue' },
     { icon: <BiSupport size={24} />, text: 'Ticket System', path: '/Tickets' },
