@@ -175,7 +175,7 @@ export default function PricingPublicApi() {
 ))}
 {showAddObjectModal && <AddObjectModal showModal={showAddObjectModal} setShowModal={setShowAddObjectModal} versionId={fetchVersionId}/>}
 </div>
-<button onClick={()=>setShowAddObjectModal(true)} className="bg-[#2C5EAF] bg-opacity-15 border border-[#616161] text-[#99BDE6] text-opacity-85 py-1 px-3 rounded text-sm  font-semibold mb-4 w-32">+ Add Object </button>
+<button onClick={()=>setShowAddObjectModal(true)} className="bg-[#2C5EAF] bg-opacity-15 border border-[#616161] text-[#99BDE6] text-opacity-85 py-1 px-3 rounded text-sm  font-semibold mb-4 w-32">+ Add Service </button>
 <div className="flex flex-col mt-4">
             <div className="title border-b border-b-[#404040] w-full text-center text-white font-bold text-base pb-2 ">Features</div>
             {feature.features.map((feature) => (

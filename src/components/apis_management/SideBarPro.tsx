@@ -14,7 +14,7 @@ function SideBarPro() {
  
 
   const items = [
-    { icon:<BiSolidDashboard size={24} />,text: 'Dashboard', path: '/dashboard' },
+    { icon:<BiSolidDashboard size={24} />,text: 'Dashboard', path: '/dashboard-provider' },
     { icon:<IoBag size={24} /> ,text: 'My APIs', path: '/my-apis' },
     {icon:<BiDollar size={24} />, text: 'Billing & Incomes', path: '/Revenue' },
     { icon: <BiSupport size={24} />, text: 'Ticket System', path: '/Tickets' },
@@ -27,7 +27,7 @@ function SideBarPro() {
 
 
   return (
-    <div className="flex-1 max-w-[260px]  h-screen ">
+    <div className="flex-1 max-w-[260px]  h-screen">
       <div className="bg-mapi-neutral-2  border-solid border-r-[#343B4F] border-r h-screen overflow-hidden flex flex-col justify-between pb-3 text-sm">
         <div>
         <Link to='/apis'>

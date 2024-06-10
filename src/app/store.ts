@@ -43,10 +43,14 @@ import endpointReducer from '@/components/features/apis/endpointSlice';
 import reviewsReducer from '@/components/features/apis/ReviewSlice';
 import promotionReducer from '@/components/features/apis_management/promotionSlice';
 import statsReducer from '@/components/features/apis_management/statisticsSlice';
+import providerActivityReducer from '@/components/features/apis_management/dashboardProviderSlice';
+
 
 import usersListReducer from '@/components/features/admin/usersSlice'
 import providersListReducer from '@/components/features/admin/providersSlice'
 import adminDashReducer from '@/components/features/admin/dashboardAdminSlice'
+
+
 
 const store = configureStore({
   reducer: {
@@ -91,6 +95,7 @@ const store = configureStore({
     users: usersListReducer,
     providers: providersListReducer,
     admin : adminDashReducer ,
+    providerActivity: providerActivityReducer,
 
     // other reducers...
   },

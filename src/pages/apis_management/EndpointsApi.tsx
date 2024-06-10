@@ -4,7 +4,7 @@ import { fetchEndpoints } from "@/components/features/apis/endpointSlice";
 import { removeEndpoint } from '@/components/features/apis/endpointSlice';
 
 import Navbar from "@/components/NavbarProvider";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 import SideBarPro from "@/components/apis_management/SideBarPro";
 import { useEffect,useState } from "react";
@@ -18,8 +18,12 @@ export default function EndpointsApi() {
   const { id } = useParams<{ id: string }>();
   const dispatch = useDispatch();
   const [selectedRows, setSelectedRows] = useState([]);
+  const navigate=useNavigate();
 
   const endpoints = useSelector((state: RootState) => state.endpoints.endpoints);
+  const currentVersion=useSelector((state:RootState)=>state.versions.currentVersion);
+  const versionId = new URLSearchParams(window.location.search).get('versionId');
+  const fetchVersionId = versionId ? parseInt(versionId) : currentVersion?.api_version_id;
 
   const columns = [
     {
@@ -37,8 +41,8 @@ export default function EndpointsApi() {
     },
     {
       name: 'Action',
-      cell: (row) => <button className="underline text-[#9ABAE5]">Edit</button>,
-      ignoreRowClick: true,
+      cell: (row) => <button onClick={()=>{navigate(`/endpoint-api/${id}/detailsEndpoint/${row.endpoint_id}`)}} className="underline text-[#9ABAE5]">Edit</button>,
+      ignoreRowClick: false,
       allowOverflow: true,
       button: true,
     },
@@ -50,8 +54,8 @@ export default function EndpointsApi() {
     }
 
     selectedRows.forEach((row) => {
-     dispatch(removeEndpoint(row.endpoint_id));
-     console.log(row)
+     dispatch(removeEndpoint({versionId:fetchVersionId,endpintId:row.endpoint_id}));
+     console.log(row.endpoint_id)
      console.log(selectedRows)
     });
 

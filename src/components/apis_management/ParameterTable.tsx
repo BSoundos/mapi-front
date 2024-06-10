@@ -1,14 +1,17 @@
 import React from 'react';
 import CheckedBox from '@/components/ui/CheckedBox';
 
-const ParameterTable = ({ rows, setRows}) => {
+const ParameterTable = ({ rows, setRows }) => {
   const handleRowChange = (index, field, value) => {
-    const updatedRows = [...rows];
-    updatedRows[index][field] = value;
+    const updatedRows = rows.map((row, idx) =>
+      idx === index ? { ...row, [field]: value } : row
+    );
     setRows(updatedRows);
+    console.log(updatedRows);
   };
+
   const DATA_TYPE_CHOICES = [
-    ['STRING','STRING'],
+    ['STRING', 'STRING'],
     ['ENUM', 'ENUM'],
     ['NUMBER', 'NUMBER'],
     ['BOOLEAN', 'BOOLEAN'],
@@ -16,14 +19,16 @@ const ParameterTable = ({ rows, setRows}) => {
     ['TIME(24H-HH:MM)', 'TIME(24H-HH:MM)'],
     ['OBJECT', 'OBJECT'],
     ['ARRAY', 'ARRAY'],
-];
+  ];
+
   const handleAddRow = () => {
     setRows([
       ...rows,
       {
+        id: Date.now(), // Generate a unique id for the new row
         name: '',
-        description:'ss',
-        isRequired: true,
+        description: '',
+        isRequired: false,
         dataType: '',
         default: '',
       },
@@ -38,8 +43,8 @@ const ParameterTable = ({ rows, setRows}) => {
         <div className="text-[#9ABAE5]">Example Value</div>
         <div className="text-[#9ABAE5]">Required</div>
       </div>
-      {rows.map((row, index) => (
-        <div key={index} className="flex justify-between w-full pl-4 pr-16">
+      {rows && rows.map((row, index) => (
+        <div key={row.id} className="flex justify-between w-full pl-4 pr-16">
           <input
             type="text"
             value={row.name}
@@ -48,13 +53,12 @@ const ParameterTable = ({ rows, setRows}) => {
             placeholder="Insert parameter name"
           />
           <select
-            value={row.type}
+            value={row.dataType}
             onChange={(e) => handleRowChange(index, 'dataType', e.target.value)}
             className="w-36 border border-[#7E89AC] border-opacity-30 py-1 text-sm outline-none bg-[#081028] text-[#BFBFBF]"
           >
-            <option>Type</option>
+            <option value="">Type</option>
             {DATA_TYPE_CHOICES.map(([value, label]) => (
-              
               <option key={value} value={value} className="text-sm">
                 {label}
               </option>
@@ -62,7 +66,7 @@ const ParameterTable = ({ rows, setRows}) => {
           </select>
           <input
             type="text"
-            value={row.exampleValue}
+            value={row.default}
             onChange={(e) => handleRowChange(index, 'default', e.target.value)}
             className="border border-[#404040] p-1 outline-none bg-[#081028] text-[#BFBFBF] w-44"
             placeholder="Insert example value"
@@ -72,16 +76,16 @@ const ParameterTable = ({ rows, setRows}) => {
               id={`recommended-${index}`}
               className="hidden"
               type="checkbox"
-              checked={row.required}
+              checked={row.isRequired}
               onChange={(e) => handleRowChange(index, 'isRequired', e.target.checked)}
             />
             <div
               className={`w-5 h-5 rounded border border-[#7E89AC] flex justify-center items-center cursor-pointer ${
-                row.required ? 'bg-primary-dark border-primary-dark' : ''
+                row.isRequired ? 'bg-primary-dark border-primary-dark' : ''
               }`}
-              onClick={() => handleRowChange(index, 'isRequired', !row.required)}
+              onClick={() => handleRowChange(index, 'isRequired', !row.isRequired)}
             >
-              {row.required && <CheckedBox />}
+              {row.isRequired && <CheckedBox />}
             </div>
             <div className="text-mapi-text text-sm">Required</div>
           </div>

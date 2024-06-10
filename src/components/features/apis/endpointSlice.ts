@@ -56,13 +56,37 @@ export const addEndpoint = createAsyncThunk(
     }
   }
 );
-export const removeEndpoint = createAsyncThunk('endpoint/removeEndpoint', async (id) => {
+export const removeEndpoint = createAsyncThunk('endpoint/removeEndpoint', async ({versionId,endpintId}) => {
   try {
     const token = localStorage.getItem('token');
     const headers = {
       Authorization: `Token ${token}`,
     };
-    const response = await axios.delete(`${BACKEND_BASE_URL}/apis_management/delete-endpoint/${id}/`, { headers });
+    const response = await axios.delete(`${BACKEND_BASE_URL}/apis_management/delete-endpoint/${versionId}/${endpintId}/`, { headers });
+    return response.data;
+  } catch (error) {
+    throw Error(error.response.data.message || 'Failed to delete endpoint');
+  }
+});
+export const getEndpoint = createAsyncThunk('endpoint/getEndpoint', async ({versionId,endpointId}) => {
+  try {
+    const token = localStorage.getItem('token');
+    const headers = {
+      Authorization: `Token ${token}`,
+    };
+    const response = await axios.get(`${BACKEND_BASE_URL}/apis_management/api-endpoint/${versionId}/${endpointId}/`, { headers });
+    return response.data;
+  } catch (error) {
+    throw Error(error.response.data.message || 'Failed to delete endpoint');
+  }
+});
+export const updateEndpoint = createAsyncThunk('endpoint/updateEndpoint', async ({versionId,endpointId,data}) => {
+  try {
+    const token = localStorage.getItem('token');
+    const headers = {
+      Authorization: `Token ${token}`,
+    };
+    const response = await axios.put(`${BACKEND_BASE_URL}/apis_management/update-api-endpoint/${versionId}/${endpointId}/`,data, { headers });
     return response.data;
   } catch (error) {
     throw Error(error.response.data.message || 'Failed to delete endpoint');
@@ -115,14 +139,38 @@ const endpointsSlice = createSlice({
       })
       .addCase(fetchDataFormat.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload; // Store the error payload
+        state.error = action.payload;
+      })
+      .addCase(getEndpoint.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(getEndpoint.fulfilled, (state, action) => {
+        state.loading = false;
+        state.endpoint = action.payload;
+        state.error = null; 
+      })
+      .addCase(getEndpoint.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload; 
+      })
+      .addCase(updateEndpoint.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(updateEndpoint.fulfilled, (state, action) => {
+        state.loading = false;
+        state.endpoint = action.payload;
+        state.error = null; 
+      })
+      .addCase(updateEndpoint.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload; 
       })
       .addCase(removeEndpoint.pending, (state) => {
         state.loading = true;
       })
       .addCase(removeEndpoint.fulfilled, (state, action) => {
         state.loading = false;
-        state.endpoint = action.payload;
+        state.endpoints = state.endpoints.filter((end) => end.endpoint_id !== action.meta.arg);
         state.error = null;
       })
       .addCase(removeEndpoint.rejected, (state, action) => {
