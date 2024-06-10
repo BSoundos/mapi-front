@@ -12,6 +12,7 @@ import { updateProviderSettings, GetInformationProvider } from '@/components/fea
 import { useAppDispatch,RootState } from '@/app/store'; 
 import {User} from '@/types/user'
 import SideBarPro from '@/components/apis_management/SideBarPro';
+import SideBarProvider from '@/components/apis_management/SideBarProvider';
 
 const ProviderProfilSetting:React.FC  = () => {
     const username1 = localStorage.getItem('username');
@@ -98,7 +99,7 @@ const ProviderProfilSetting:React.FC  = () => {
   <div className='bg-[#0B1739] '>
        <Navbar />
        <div className='flex mt-4'>
-       <SideBarPro />
+       <SideBarProvider />
        <div className='mb-20 pb-20 pt-4 pl-8 ml-2 mr-8 border border-opacity-30 border-[#7E89AC] w-[75%] rounded'> 
             <p className='text-white font-semibold'>Basic Informations</p>
             {verificationEmailSent && <p className="text-[#25E130]">Changes to the fields have been successfully applied.</p>}

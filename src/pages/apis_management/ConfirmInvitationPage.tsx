@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { Modal, Button } from 'antd';
 import { useParams, useNavigate } from 'react-router-dom';
 import { acceptInvitationUserPlan } from '@/components/features/apis_management/privatePlanSlice';
-import { useAppDispatch,RootState } from '@/app/store'; 
+import { useAppDispatch } from '@/app/store'; 
 
 const ConfirmInvitationPage = () => {
   const { id, plan } = useParams();

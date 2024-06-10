@@ -2,7 +2,6 @@ import axios from 'axios';
 import { BACKEND_BASE_URL } from '@/data/constants';
 import { loginSuccess, loginFailure, registerSuccess, registerFailure, verifySuccess, verifyFailure, logoutSuccess, logoutFailure } from './authSlice';
 import { LoginCredentails, LoginDispatchFunction, LogoutDispatchFunction, RegisterDispatchFunction, VerifyDispatchFunction } from '@/types/auth';
-import { useNavigate } from 'react-router-dom';
 
 
 export const login = (credentials: LoginCredentails, api: string, plan: string) => async (dispatch: LoginDispatchFunction) => {

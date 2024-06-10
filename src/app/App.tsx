@@ -17,7 +17,7 @@ import MainPage from '@/pages/api_hub/mainpage';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from '@/pages/authentication/Login';
-import { useEffect,useState  } from 'react';
+import { useEffect  } from 'react';
 import axios from 'axios';
 import Register from '@/pages/authentication/Register';
 import Verify from '@/pages/authentication/Verify';
@@ -52,12 +52,14 @@ import AddEndpointPage from '@/pages/apis_management/AddEndpointPage';
 import Revenue from '@/pages/apis_management/Revenue';
 import PerformanceTracking from '@/pages/apis_management/PerformanceTrack'; 
 import PerformanceTracking2 from '@/pages/apis_management/PerformanceTrack2';
+import ConfirmInvitationPage from '@/pages/apis_management/ConfirmInvitationPage';
+
 
 import ProvidersTable from '@/pages/admin/ProvidersTable';
 import DashboardAdmin from '@/pages/admin/DashboardAdmin';
+import NotFoundPage from '@/pages/api_hub/NotFoundPage';
+import DetailsEndpoint from '@/pages/apis_management/DetailsEndpoint';
 
-
-import ConfirmInvitationPage from '@/pages/apis_management/ConfirmInvitationPage';
 import DashboardProvider from '@/pages/apis_management/DashboardProvider';
 import DashboardProviderAdmin from '@/pages/admin/DashboardProviderAdmin';
 
@@ -133,6 +135,7 @@ const App = () => {
         <Route path="/my-apis" element={<MyApis />} />
         <Route path="/version-api/:id" element={<VersionsApi/>}/>
         <Route path="/endpoint-api/:id" element={<EndpointsApi/>}/>
+        <Route path="/endpoint-api/:id/detailsEndpoint/:idEndpoint" element={<DetailsEndpoint/>}/>
         <Route path="/general-api/:id" element={<GeneralApi/>}/>
         <Route path="/add-endpoint/:id" element={<AddEndpointPage/>}/>
         <Route path="/pricing-api/public/:id" element={<PricingPublicApi/>}/>
@@ -151,7 +154,7 @@ const App = () => {
         <Route path="/admin/providers" element={<ProvidersTable />} />
         <Route path="/admin/dashboard" element={<DashboardAdmin />} />
         <Route path="/admin/dashboard-provider/:provider_id" element={<DashboardProviderAdmin />} />
-
+        <Route path="*" element={<NotFoundPage />} />
 
       </Routes>
     </Router>

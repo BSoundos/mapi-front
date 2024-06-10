@@ -97,7 +97,7 @@ const DashboardAdmin: React.FC = () => {
     return (
         <div className='flex'>
             <AdminSidebar />
-            <div className="flex flex-col px-10 bg-[#081028] w-full py-10 text-mapi-text">
+            <div className="flex flex-col px-10 bg-[#081028] w-full py-10 text-mapi-text overflow-y-auto max-h-screen scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52]">
                 <h1 className="text-3xl font-semibold text-mapi-secondary-1 mb-0 mr-10">Dashboard</h1>
                 <div className="border border-gray-300 border-opacity-10 rounded-lg p-4 mt-8 ">
                     <div className="grid grid-cols-5 gap-4">

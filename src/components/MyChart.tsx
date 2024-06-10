@@ -112,10 +112,14 @@ const MyChart = () => {
             }],
           },
           options: {
+
             scales: {
               y: {
                 beginAtZero: true,
                 ticks: {
+                  color: '#BFBFBF',
+                },
+                grid: {
                   color: '#BFBFBF',
                 },
               },
@@ -123,10 +127,13 @@ const MyChart = () => {
                 ticks: {
                   color: '#BFBFBF',
                 },
+                grid: {
+                  color: '#BFBFBF', 
+                },
               },
             },
-        
           },
+          
         });
       }
     }

@@ -14,17 +14,15 @@ import { fetchCategories } from '@/components/features/apis/categoriesSlice';
 import { fetchFunctionalities } from '@/components/features/apis/functionalitiesSlice';
 import { functionality } from '@/types/functionality';
 import { categorie } from '@/types/categorie';
-import { ValidAttributes } from '@/types/API';
 import { Api } from '@/types/API';
 import Navbar from '@/components/NavBar';
 import Footer from '@/components/Footer';
+import Loading from '@/components/ui/Loading';
 
 const MainPage: React.FC = () => {
     const dispatch = useAppDispatch();
     const popularAPIs = useSelector((state: RootState) => state.api.popularAPIs);
-    const status = useSelector((state: RootState) => state.api.status);
-    const error = useSelector((state: RootState) => state.api.error);
-
+   
 
     const [searchTerm, setSearchTerm] = useState('');
     const [categorieItem, setcategorieItem] = useState('');
@@ -144,7 +142,7 @@ const MainPage: React.FC = () => {
     const allLoading = categoriesLoading || functionalitiesLoading;
 
     if (allLoading) {
-        return <div>Loading...</div>;
+        return <Loading/>; 
     }
 
 
@@ -246,10 +244,23 @@ const MainPage: React.FC = () => {
                                 )}
                             </div>
                         </div>
+                        {/* {searchResults.length < 0 && (
+                            <div className=' bg-[#] border border-opacity-30 border-[#7E89AC] rounded shadow-md w-[80%] ml-4 p-4' >
+                                <p className='font-semibold font-inter text-[#FFFFFF] pb-2 '>Popular APIs</p>
+                                <div className='flex flex-wrap'>
+                                    {popularAPIs.map(api => (
+                                        <Apidescription key={api.api_id} id={api.api_id} name={api.name} description={api.description} category_name={api.category_name} />
+                                    ))}
+                                </div>
 
+                            </div>
+                        )} */}
                         {searchResults.length == 0 && (
                             <div className=' bg-[#] border border-opacity-30 border-[#7E89AC] rounded shadow-md w-[80%] ml-4 p-4' >
-                                <p className='font-semibold font-inter text-[#FFFFFF] pb-2 '></p>
+                               
+                                <div className='flex flex-wrap w-full justify-center pt-6'>
+                                    <p className=' font-inter text-[#FFFFFF] pb-2 '>No API matching the search query has been found.</p>
+                                </div>
 
                             </div>
                         )}

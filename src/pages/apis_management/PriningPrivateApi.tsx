@@ -170,7 +170,7 @@ export default function PricingPrivateApi() {
                   {object.objects.map((obj) => (
                       <PrivatePlanObject key={obj.id} object={obj} selectedPlan={selectedPlan}/>
                       ))}
-                <button onClick={()=>setShowAddObjectModal(true)} className="bg-[#2C5EAF] bg-opacity-15 border border-[#616161] text-[#99BDE6] text-opacity-85 py-1 px-3 rounded text-sm  font-semibold mb-4 w-full">+ Add Object </button>
+                <button onClick={()=>setShowAddObjectModal(true)} className="bg-[#2C5EAF] bg-opacity-15 border border-[#616161] text-[#99BDE6] text-opacity-85 py-1 px-3 rounded text-sm  font-semibold mb-4 w-full">+ Add Service </button>
                 {showAddObjectModal && <AddObjectModal showModal={showAddObjectModal} setShowModal={setShowAddObjectModal} versionId={fetchVersionId}/>}
                 <div className="text-mapi-text  font-medium border-b border-b-[#7E89AC] border-opacity-30 px-2 py-2.5">Features</div>
                 <div className="px-2 flex flex-col ">
