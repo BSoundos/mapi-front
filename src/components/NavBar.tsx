@@ -12,6 +12,8 @@ const Navbar = () => {
   const onLogout = () => {
     dispatch(logout());
     localStorage.removeItem('token');
+    localStorage.removeItem('role');
+
   };
   const location = useLocation();
   const pathname = location.pathname;

@@ -63,7 +63,11 @@ export const verify = (credentials) => async (dispatch: VerifyDispatchFunction) 
 
 export const logout = () => async (dispatch: LogoutDispatchFunction) => {
     try {
-        await axios.post(`${BACKEND_BASE_URL}/authentication/logout/`);
+        const token = localStorage.getItem('token');
+        const headers = {
+            Authorization: `Token ${token}`,
+          };
+        await axios.post(`${BACKEND_BASE_URL}/authentication/logout/`,{ headers });
         dispatch(logoutSuccess());
         localStorage.clear();
         window.location.href = '/';

@@ -1,5 +1,5 @@
 import logo from "@/assets/logo.png";
-import { Link,useLocation } from 'react-router-dom';
+import { Link,useNavigate,useLocation } from 'react-router-dom';
 import { BiSolidDashboard ,BiDollar ,BiSupport} from "react-icons/bi";
 import { IoBag } from "react-icons/io5";
 import { logout } from "@/components/features/authentication/authActions";
@@ -7,6 +7,8 @@ import { useAppDispatch } from "@/app/store";
 
 function SideBarPro() {
   const location = useLocation();
+  const navigate=useNavigate();
+
   const pathname = location.pathname;
   const first_name = localStorage.getItem('first_name');
   const last_name = localStorage.getItem('last_name');
@@ -22,7 +24,10 @@ function SideBarPro() {
   const dispatch=useAppDispatch();
   const handleLogout = () => {
     dispatch(logout());
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
+    localStorage.removeItem('role');
+    navigate('/');
+
   };
 
 

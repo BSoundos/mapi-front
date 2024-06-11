@@ -169,7 +169,7 @@ export default function PricingPublicApi() {
     ))}
         </div>
         <div className="flex flex-col mt-8">
-  <div className="title border-b border-b-[#404040] w-full text-center text-white font-bold text-base pb-2">Objects</div>
+  <div className="title border-b border-b-[#404040] w-full text-center text-white font-bold text-base pb-2">Services</div>
   {object.objects.map((obj) => (
    <Object key={obj.id} object={obj}/>
 ))}

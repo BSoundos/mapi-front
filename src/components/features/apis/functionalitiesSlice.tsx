@@ -21,6 +21,23 @@ export const fetchFunctionalities = createAsyncThunk(
     }
   }
 );
+export const searchFunctionalities = createAsyncThunk(
+  "functionalities/searchFunctionalities",
+  async (query) => {
+    try {
+      const token = localStorage.getItem('token');
+      const headers = {
+        Authorization: `Token ${token}`,
+      };
+      const response = await axios.get(`${BACKEND_BASE_URL}/apis_management/search-functions/`, {headers,
+        params: { q: query }
+      });
+      return response.data;
+    } catch (error) {
+      throw Error(error.response?.data?.message || 'Failed to search functionalities');
+    }
+  }
+);
 
 export const deleteFunctionality = createAsyncThunk(
   'functionalities/deleteFunctionality',
@@ -71,6 +88,7 @@ const functionalitiesSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      
       .addCase(deleteFunctionality.fulfilled, (state, action) => {
         const { apiPk, functionalityPk } = action.payload;
         state.functionalities = state.functionalities.filter(
