@@ -66,7 +66,7 @@ const AdminUserDetails: React.FC = () => {
             <AdminSidebar/>
             <div className="flex flex-col px-10 bg-[#081028] w-full py-10">
                 <h1 className="text-3xl font-bold text-white mb-10">User Details</h1>
-                <a href="#" className="text-blue-300 mb-4">&lt; Back to all users</a>
+                <a href="/admin/users" className="text-blue-300 mb-4">&lt; Back to all users</a>
 
                 {user && (
                     <div className="mb-10">
