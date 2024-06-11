@@ -1,109 +1,104 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
+import {useDispatch, useSelector} from 'react-redux';
 import AdminSidebar from '@/components/AdminSideBar';
 import TransactionsTable from '@/components/TransactionsTable';
-import {
-    Table,
-    TableHead,
-    TableBody,
-    TableRow,
-    TableCell,
-    Button,
-} from '@mui/material';
-import APIsTable from "@/components/APIsTable.tsx";
+import APIsTable from "@/components/APIsTable";
+import {Table, TableHead, TableBody, TableRow, TableCell, Button} from '@mui/material';
+import {fetchInvoices} from '@/components/features/invoices/invoiceSlice';
+import store, {RootState} from '@/app/store';
+import {useParams} from "react-router-dom";
+import {GetInformationUser} from "@/components/features/UserSetting/UserSlice.tsx";
 
-const sampleUser = {
-    id: 1,
-    firstname: 'John',
-    lastname: 'Doe',
-    email: 'john.doe@example.com',
-    status: 'ACTIVE',
-    blocked: false,
-    apiSubscriptions: 5,
-    dispensesThisMonth: 10,
-    totalApiCalls: 50,
-};
+export type AppDispatch = typeof store.dispatch;
 
-const sampleTransactions = [
-    {id: 1, apiName: 'API 1', totalAmount: 100, planName: 'Plan A', createdAt: '2024-05-01'},
-    {id: 2, apiName: 'API 2', totalAmount: 200, planName: 'Plan B', createdAt: '2024-05-02'},
-    {id: 3, apiName: 'API 3', totalAmount: 150, planName: 'Plan C', createdAt: '2024-05-03'},
-    // Add more sample transactions as needed
-];
-const sampleSubscriptions = [
-    {
-        subscription_id: 1,
-        api_name: 'API 1',
-        subscription_plan: {name: 'Plan A'},
-        user_plan: {name: 'Free Plan'},
-        subscription_date: '2024-05-15',
-        access_key: {status: 1}
-    },
-    {
-        subscription_id: 2,
-        api_name: 'API 2',
-        subscription_plan: {name: 'Plan B'},
-        user_plan: {name: 'Pro Plan'},
-        subscription_date: '2024-05-20',
-        access_key: {status: 0}
-    },
-    {
-        subscription_id: 3,
-        api_name: 'API 3',
-        subscription_plan: null,
-        user_plan: {name: 'Free Plan'},
-        subscription_date: '2024-05-10',
-        access_key: {status: 1}
-    }
-];
+const AdminUserDetails: React.FC = () => {
+    const {username} = useParams<{ username: string }>(); // Change userId to username
+    const dispatch = useDispatch<AppDispatch>();
+    const invoices = useSelector((state: RootState) => state.invoiceHistory.invoices);
+    const subscriptions = useSelector((state: RootState) => state.subscriptions.subscriptions);
+    const loadingInvoices = useSelector((state: RootState) => state.invoiceHistory.loading);
+    const loadingSubscriptions = useSelector((state: RootState) => state.subscriptions.loading);
+    const errorInvoices = useSelector((state: RootState) => state.invoiceHistory.error);
+    const errorSubscriptions = useSelector((state: RootState) => state.subscriptions.error);
+    const [user, setUser] = useState<any>(null); // State to store user information
+
+    useEffect(() => {
+        const fetchUser = async () => {
+            try {
+                // Fetch user info based on username
+                const userInfo = await GetInformationUser(username);
+                setUser(userInfo);
+                dispatch(fetchInvoices(userInfo.username)); // Fetch invoices based on userId
+                // dispatch(fetchSubscriptions(userInfo.id)); // Fetch subscriptions based on userId
+            } catch (error) {
+                console.error('Error fetching user info:', error);
+            }
+        };
+
+        fetchUser();
+    }, [dispatch, username]);
 
 
-const AdminUserDetails: React.FC<{ user: typeof sampleUser }> = ({user}) => {
+    useEffect(() => {
+    }, [invoices]);
+
     const handleBlockToggle = () => {
         console.log(user.blocked ? 'Unblocking user' : 'Blocking user');
     };
+
+    if (loadingInvoices || loadingSubscriptions) {
+        return <div>Loading...</div>;
+    }
+
+    if (errorInvoices || errorSubscriptions) {
+        return <div>Error: {errorInvoices || errorSubscriptions}</div>;
+    }
+
+    // Transform invoices to ensure planName is treated as a string
+    const transactions = invoices.map(invoice => ({
+        ...invoice,
+        planName: String(invoice.planName)
+    }));
+
 
     return (
         <div className='flex'>
             <AdminSidebar/>
             <div className="flex flex-col px-10 bg-[#081028] w-full py-10">
                 <h1 className="text-3xl font-bold text-white mb-10">User Details</h1>
-
-
-                {/* Clickable text to go back to all users */}
                 <a href="#" className="text-blue-300 mb-4">&lt; Back to all users</a>
 
-                <div className="mb-10">
-                    <h2 className="text-2xl font-bold text-white mb-4">Basic Information</h2>
-
-                    <div className="grid grid-cols-2 gap-6">
-                        <div>
-                            <div className="mb-4">
-                                <p className="text-white"><span
-                                    className="font-bold">First Name:</span> {user.firstname}</p>
-                                <p className="text-white"><span className="font-bold">Last Name:</span> {user.lastname}
-                                </p>
+                {user && (
+                    <div className="mb-10">
+                        <h2 className="text-2xl font-bold text-white mb-4">Basic Information</h2>
+                        <div className="grid grid-cols-2 gap-6">
+                            <div>
+                                <div className="mb-4">
+                                    <p className="text-white"><span
+                                        className="font-bold">First Name:</span> {user.first_name}</p>
+                                    <p className="text-white"><span
+                                        className="font-bold">Last Name:</span> {user.last_name}</p>
+                                </div>
+                            </div>
+                            <div>
+                                <div className="mb-4">
+                                    <p className="text-white"><span className="font-bold">Email:</span> {user.email}</p>
+                                    <p className="text-white"><span className="font-bold">Status:</span> {user.status}
+                                    </p>
+                                </div>
                             </div>
                         </div>
-
                         <div>
-                            <div className="mb-4">
-                                <p className="text-white"><span className="font-bold">Email:</span> {user.email}</p>
-                                <p className="text-white"><span className="font-bold">Status:</span> {user.status}</p>
-                            </div>
+                            <Button
+                                variant="contained"
+                                onClick={handleBlockToggle}
+                                style={{backgroundColor: 'red'}}
+                            >
+                                {user.blocked ? 'Unblock User' : 'Block User'}
+                            </Button>
                         </div>
                     </div>
-
-                    <div>
-                        <Button
-                            variant="contained"
-                            onClick={handleBlockToggle}
-                            style={{backgroundColor: 'red'}}
-                        >
-                            {user.blocked ? 'Unblock User' : 'Block User'}
-                        </Button>
-                    </div>
-                </div>
-
+                )}
 
                 <div className="mb-10">
                     <h2 className="text-2xl font-bold text-white mb-4">Summary</h2>
@@ -127,19 +122,19 @@ const AdminUserDetails: React.FC<{ user: typeof sampleUser }> = ({user}) => {
                                     color: 'rgba(255, 255, 255, 0.8)',
                                     border: '2px solid rgba(126,137,172,0.3)'
                                 }}>
-                                    {user.apiSubscriptions}
+                                    {/*{user.apiSubscriptions}*/}
                                 </TableCell>
                                 <TableCell style={{
                                     color: 'rgba(255, 255, 255, 0.8)',
                                     border: '2px solid rgba(126,137,172,0.3)'
                                 }}>
-                                    {user.dispensesThisMonth}
+                                    {/*{user.dispensesThisMonth}*/}
                                 </TableCell>
                                 <TableCell style={{
                                     color: 'rgba(255, 255, 255, 0.8)',
                                     border: '2px solid rgba(126,137,172,0.3)'
                                 }}>
-                                    {user.totalApiCalls}
+                                    {/*{user.totalApiCalls}*/}
                                 </TableCell>
                             </TableRow>
                         </TableBody>
@@ -148,16 +143,16 @@ const AdminUserDetails: React.FC<{ user: typeof sampleUser }> = ({user}) => {
 
                 <div className="mb-10">
                     <h2 className="text-2xl font-bold text-white mb-4">Transaction History</h2>
-                    <TransactionsTable transactions={sampleTransactions}/>
+                    <TransactionsTable transactions={transactions}/>
                 </div>
 
                 <div className="mb-10">
                     <h2 className="text-2xl font-bold text-white mb-4">API Subscription</h2>
-                    <APIsTable subscriptions={sampleSubscriptions}/>
+                    <APIsTable subscriptions={subscriptions}/>
                 </div>
             </div>
         </div>
     );
 };
 
-export default () => <AdminUserDetails user={sampleUser}/>;
+export default AdminUserDetails;

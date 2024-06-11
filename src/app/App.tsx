@@ -62,6 +62,8 @@ import DetailsEndpoint from '@/pages/apis_management/DetailsEndpoint';
 
 import DashboardProvider from '@/pages/apis_management/DashboardProvider';
 import DashboardProviderAdmin from '@/pages/admin/DashboardProviderAdmin';
+import UserDetails from "@/pages/admin/UserDetails.tsx";
+import ProviderDetails from "@/pages/admin/ProviderDetails.tsx";
 
 const App = () => {
   
@@ -154,6 +156,9 @@ const App = () => {
         <Route path="/admin/providers" element={<ProvidersTable />} />
         <Route path="/admin/dashboard" element={<DashboardAdmin />} />
         <Route path="/admin/dashboard-provider/:provider_id" element={<DashboardProviderAdmin />} />
+        <Route path="/admin/users/details/:username" element={<UserDetails />} />
+        <Route path="/admin/providers/details/:providerId" element={<ProviderDetails />} />
+
         <Route path="*" element={<NotFoundPage />} />
 
       </Routes>
