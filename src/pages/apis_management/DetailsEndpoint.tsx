@@ -6,14 +6,27 @@ import SideBarPro from "@/components/apis_management/SideBarPro";
 import Navbar from "@/components/NavbarProvider";
 
 import ParameterTable from "@/components/apis_management/ParameterTable";
-import { addEndpoint, fetchDataFormat } from "@/components/features/apis/endpointSlice";
+import { getEndpoint, fetchDataFormat, updateEndpoint } from "@/components/features/apis/endpointSlice";
 
-const AddEndpointPage = () => {
+const DetailsEndpoint = () => {
     const dispatch = useAppDispatch();
-    const { id } = useParams<{ id: string }>();
-    useEffect(()=>{
-      dispatch(fetchDataFormat());
-    },[dispatch])
+    const { idEndpoint } = useParams<{ idEndpoint: string }>();
+    const { id} = useParams<{ id: string }>();
+  
+    const endpoint = useSelector((state: RootState) => state.endpoints.endpoint);
+    const endpointContainer=endpoint?.endpoint;
+    const [activeSection, setActiveSection] = useState('query');
+    const [isCodeValid, setIsCodeValid] = useState(false);
+    const [selectedMediaTypes, setSelectedMediaTypes] = useState([]);
+    const [payloadAction, setPayloadAction] = useState('');
+    const [headers, setHeaders] = useState([{ name: '', value: '' }]);
+    const [bodyContent, setBodyContent] = useState('');
+    const [responseExamples, setResponseExamples] = useState([]);
+    const navigate = useNavigate();
+    const currentVersion=useSelector((state:RootState)=>state.versions.currentVersion);
+    const versionId = new URLSearchParams(window.location.search).get('versionId');
+    const fetchVersionId = versionId ? parseInt(versionId) : currentVersion?.api_version_id;
+
     const [formData, setFormData] = useState({
         name: '',
         description: '',
@@ -24,17 +37,35 @@ const AddEndpointPage = () => {
         queryParams: [],
         responseExamples: [],
       });
-    const [activeSection, setActiveSection] = useState('query');
-    const [isCodeValid, setIsCodeValid] = useState(false);
-    const [selectedMediaTypes, setSelectedMediaTypes] = useState([]);
-    const [payloadAction, setPayloadAction] = useState('');
-    const [headers, setHeaders] = useState([{ name: '', value: '' }]);
-    const [bodyContent, setBodyContent] = useState('');
-    const [responseExamples, setResponseExamples] = useState([]);
-    const navigate=useNavigate();
-    const currentVersion=useSelector((state:RootState)=>state.versions.currentVersion);
-    const versionId = new URLSearchParams(window.location.search).get('versionId');
-    const fetchVersionId = versionId ? parseInt(versionId) : currentVersion?.api_version_id;
+      useEffect(()=>{
+        dispatch(fetchDataFormat());
+        dispatch(getEndpoint({versionId:fetchVersionId,endpointId:idEndpoint}));
+      },[dispatch,idEndpoint])
+
+      useEffect(() => {
+        setFormData(prevFormData => ({
+          ...prevFormData,
+          name: endpointContainer?.endpoint.name,
+          description:endpointContainer?.endpoint.description,
+          isRequired:endpointContainer?.endpoint.isRequired,
+          httpMethod: endpointContainer?.endpoint.httpMethod,
+          path: endpointContainer?.endpoint.path,
+          headerParams: endpointContainer?.headerParams || [],
+          queryParams: endpointContainer?.queryParams || [],
+          responseExamples:endpointContainer?.responseExamples,
+         
+        }));
+        const newOptions: Option[] = endpointContainer?.responseExamples.map(
+            (example) => ({
+              value: example.statusCode.toString(),
+              label: example.statusCode.toString(),
+            })
+          ) || [];
+      
+          setOptions(newOptions);
+        
+      }, [dispatch,endpoint]);
+  
 
     const toggleAddEndpointModal = () => {
         setFormData({
@@ -78,10 +109,7 @@ const AddEndpointPage = () => {
             ...formData,
             responseExamples: responseExamples
         };
-        const response = await dispatch(addEndpoint({ id: fetchVersionId, data: requestBody }));
-        if (addEndpoint.fulfilled.match(response)) {
-          navigate(`/endpoint-api/${id}`);
-        }
+        
     };
  
     const [options, setOptions] = useState<Option[]>([]);  
@@ -91,14 +119,46 @@ const AddEndpointPage = () => {
     const handleSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const selectedValue = e.target.value;
         setIsCodeValid(false);
+    
         if (selectedValue === 'add-new') {
             setShowInput(true);
             setSelectedOption('');
             setIsCodeValid(false);
+            // Reset the states
+            setSelectedMediaTypes([]);
+            setPayloadAction('');
+            setHeaders([{ name: '', value: '' }]);
+            setBodyContent('');
         } else {
             setShowInput(false);
             setSelectedOption(selectedValue);
             setIsCodeValid(true);
+    
+            // Check if the selected option exists in responseExamples
+            const selectedResponseExample = endpointContainer?.responseExamples.find(
+                (example) => example.statusCode.toString() === selectedValue
+            );
+    
+            if (selectedResponseExample) {
+                // Set the corresponding states
+                setSelectedMediaTypes(selectedResponseExample.mediaTypes || []);
+                setPayloadAction(selectedResponseExample.payloadDescription || '');
+                setHeaders(
+                    selectedResponseExample.headers.map((header) => ({
+                        name: header.name,
+                        value: header.default || '',
+                    })) || [{ name: '', value: '' }]
+                );
+                setBodyContent(
+                    JSON.stringify(selectedResponseExample.responseBody, null, 2) || ''
+                );
+            } else {
+                // Reset the states if the selected option doesn't exist in responseExamples
+                setSelectedMediaTypes([]);
+                setPayloadAction('');
+                setHeaders([{ name: '', value: '' }]);
+                setBodyContent('');
+            }
         }
     };
 
@@ -136,13 +196,26 @@ const AddEndpointPage = () => {
         }
     };
     
+    const handleUpdateEndpoint = async (e) => {
+        e.preventDefault();
+        const requestBody = {
+            ...formData,
+            responseExamples: responseExamples
+        };
+        const response = await dispatch(updateEndpoint({ versionId: fetchVersionId,endpointId:idEndpoint, data: requestBody }));
+        if (updateEndpoint.fulfilled.match(response)) {
+          //navigate(`/endpoint-api/${id}`);
+          console.log("done");
+        }
+    };
+    
     return (
         <div className="flex ">
             <SideBarPro />
             <div className="bg-mapi-neutral-1 flex-1 ">
                 <Navbar id={id} />
                 <div className="container px-5 flex-1 mt-8 pl-14 ">
-                    <h2 className="text-white text-xl font-bold">Add Endpoint</h2>
+                    <h2 className="text-white text-xl font-bold">Edit Endpoint</h2>
                     <form className=" mt-6 flex-1 overflow-y-auto max-h-[70vh] scrollbar-thin scrollbar-thumb-rounded-full scrollbar-thumb-secondary-blue scrollbar-track-[#3E3C52] border border-[#343B4F] p-4 rounded">
                         <div className="flex flex-col gap-2 px-3 ">
                             <div className="mb-1 flex gap-6 items-center">
@@ -242,7 +315,7 @@ const AddEndpointPage = () => {
         className="border border-[#404040] py-1 pl-1 outline-none bg-[#081028] text-[#BFBFBF]"
     >
         <option value="">Add parameter</option>
-        {options.map((option, index) => (
+        {options && options.map((option, index) => (
             <option key={index} value={option.value}>
                 {option.label}
             </option>
@@ -269,7 +342,7 @@ const AddEndpointPage = () => {
                                             )}
                             {isCodeValid && (
                                 <div className="flex flex-col mt-4">
-                                    <div className="mb-2 flex gap-6 items-center">
+                                    {/* <div className="mb-2 flex gap-6 items-center">
                                         <label htmlFor="mediaTypes" className="text-sm font-semibold text-mapi-text w-24">
                                             Media Types
                                         </label>
@@ -283,13 +356,13 @@ const AddEndpointPage = () => {
                                             }
                                             className="add-plan w-60 h-20"
                                         >
-                                              {dataFormat.map((format) => (
+                                              {dataFormat && dataFormat.map((format) => (
                                                 <option key={format.id} value={format.format_type} className="text-sm">
                                                     {format.format_type}
                                                 </option>
                                                 ))}
                                         </select>
-                                    </div>
+                                    </div> */}
                                     <div className="mb-2 flex gap-6 items-center">
                                         <label htmlFor="payloadAction" className="text-sm font-semibold text-mapi-text w-24">
                                             Payload Action
@@ -308,7 +381,7 @@ const AddEndpointPage = () => {
         Headers
     </label>
     <div className="flex flex-wrap gap-3  ">
-        {headers.map((header, index) => (
+        {headers && headers.map((header, index) => (
             <div key={index} className="flex gap-6 items-center   pl-[116px]">
                 <input
                     type="text"
@@ -377,12 +450,12 @@ const AddEndpointPage = () => {
 Cancel
 </button>
 <button
-                                    onClick={handleAddEndpoint}
+                                    onClick={handleUpdateEndpoint}
                                     className="bg-primary-dark border border-[#616161] font-bold text-base py-2 px-16 rounded-md text-white "
                                 >
 Save
 </button>
-</div>
+</div> 
 </div>
 </form>
 </div>
@@ -390,5 +463,5 @@ Save
 </div>
 );
 };
-export default AddEndpointPage;
+export default DetailsEndpoint;
 

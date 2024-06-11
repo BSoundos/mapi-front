@@ -44,7 +44,11 @@ const MyApis = () => {
       <ApiCard api={api} />
       ))}
         </div>
-        ) : api.loading ? (  
+        ) :api.apis.length === 0 ?
+          
+          <div className='bg-mapi-neutral-2 w-full h-[70vh] flex justify-center items-center text-mapi-text'><div>No apis Found</div></div>
+        
+         : api.loading ? (  
             <Loading/>
         ) : api.error ? (
             <ErrorLoading/>
