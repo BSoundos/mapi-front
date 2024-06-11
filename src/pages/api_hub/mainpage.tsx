@@ -25,12 +25,12 @@ const MainPage: React.FC = () => {
     const status = useSelector((state: RootState) => state.api.status);
     const error = useSelector((state: RootState) => state.api.error);
 
-   
+
     const [searchTerm, setSearchTerm] = useState('');
     const [categorieItem, setcategorieItem] = useState('');
     const [searchResults, setSearchResults] = useState<Api[]>([]);
 
-   
+
     const allCategories = useSelector((state: RootState) => state.categories.categories);
     const allFunctionalities = useSelector((state: RootState) => state.functionalities.functionalities);
     const categoriesLoading = useSelector((state: RootState) => state.categories.loading);
@@ -40,23 +40,23 @@ const MainPage: React.FC = () => {
     const [Categories, setCategories] = useState<categorie[]>(allCategories);
     const [Fonctionnalities, setFonctionnalities] = useState<functionality[]>(allFunctionalities);
     const [showAllCategories, setShowAllCategories] = useState(false);
-    
+
 
     const filteredCategories = showAllCategories ? Categories : Categories.slice(0, 4);
 
-   
-      
+
+
     useEffect(() => {
-        dispatch(fetchPopularAPIs()); 
+        dispatch(fetchPopularAPIs());
         dispatch(fetchCategories());
         dispatch(fetchFunctionalities());
-        
+
     }, [dispatch]);
 
     useEffect(() => {
         setCategories(allCategories);
         setFonctionnalities(allFunctionalities);
-      }, [allCategories, allFunctionalities]);
+    }, [allCategories, allFunctionalities]);
 
     useEffect(() => {
         setSearchResults(popularAPIs);
@@ -67,7 +67,7 @@ const MainPage: React.FC = () => {
         const actionResult = await dispatch(searchAPIs(searchTerm));
         if (searchAPIs.fulfilled.match(actionResult)) {
             setSearchResults(actionResult.payload);
-            
+
         }
     };
 
@@ -88,47 +88,47 @@ const MainPage: React.FC = () => {
     const handleSort = (attribute: keyof Api) => {
 
         if (!searchResults || searchResults.length === 0) {
-          console.warn("searchResults is empty or not initialized.");
-          return;
+            console.warn("searchResults is empty or not initialized.");
+            return;
         }
-      
+
         const sortedResults = [...searchResults];
         const firstResult = sortedResults[0];
-      
+
         if (!firstResult) {
-          console.warn("First element in sortedResults is undefined.");
-          return;
+            console.warn("First element in sortedResults is undefined.");
+            return;
         }
-      
+
 
         if (!(attribute in firstResult)) {
-          console.warn(`Attribute "${attribute}" does not exist in the first element.`);
-          return; 
+            console.warn(`Attribute "${attribute}" does not exist in the first element.`);
+            return;
         }
-      
+
         sortedResults.sort((a, b) => {
-          const valA = a[attribute];
-          const valB = b[attribute];
-      
-          if (valA == null) {
-            return valB == null ? 0 : 1; 
-          }
-          if (valB == null) {
-            return -1;
-          }
-      
-          
-          if (typeof valA === 'string' && typeof valB === 'string') {
-            return -valA.localeCompare(valB); 
-          } else if (typeof valA === 'number' && typeof valB === 'number') {
-            return valB - valA; 
-          }
-      
-          return 0; 
+            const valA = a[attribute];
+            const valB = b[attribute];
+
+            if (valA == null) {
+                return valB == null ? 0 : 1;
+            }
+            if (valB == null) {
+                return -1;
+            }
+
+
+            if (typeof valA === 'string' && typeof valB === 'string') {
+                return -valA.localeCompare(valB);
+            } else if (typeof valA === 'number' && typeof valB === 'number') {
+                return valB - valA;
+            }
+
+            return 0;
         });
-      
+
         setSearchResults(sortedResults);
-      };
+    };
 
 
 
@@ -144,11 +144,11 @@ const MainPage: React.FC = () => {
     const allLoading = categoriesLoading || functionalitiesLoading;
 
     if (allLoading) {
-        return <div>Loading...</div>; 
+        return <div>Loading...</div>;
     }
-  
 
- 
+
+
     return (
         <main>
             <Navbar />
@@ -246,37 +246,18 @@ const MainPage: React.FC = () => {
                                 )}
                             </div>
                         </div>
-                        {/* {searchResults.length < 0 && (
-                            <div className=' bg-[#] border border-opacity-30 border-[#7E89AC] rounded shadow-md w-[80%] ml-4 p-4' >
-                                <p className='font-semibold font-inter text-[#FFFFFF] pb-2 '>Popular APIs</p>
-                                <div className='flex flex-wrap'>
-                                    {popularAPIs.map(api => (
-                                        <Apidescription key={api.api_id} id={api.api_id} name={api.name} description={api.description} category_name={api.category_name} />
-                                    ))}
-                                </div>
 
-                            </div>
-                        )} */}
                         {searchResults.length == 0 && (
                             <div className=' bg-[#] border border-opacity-30 border-[#7E89AC] rounded shadow-md w-[80%] ml-4 p-4' >
-                                <p className='font-semibold font-inter text-[#FFFFFF] pb-2 '>Popular APIs</p>
-                                <div className='flex flex-wrap'>
-                                    {popularAPIs.map(api => (
-                                        <Apidescription key={api.api_id} id={api.api_id} name={api.name} description={api.description} category_name={api.category_name} />
-                                    ))}
-                                </div>
+                                <p className='font-semibold font-inter text-[#FFFFFF] pb-2 '></p>
 
                             </div>
                         )}
                         {searchResults.length > 0 && (
-
                             <div className=' bg-[#] border border-opacity-30 border-[#7E89AC] rounded shadow-md w-[80%] ml-4 p-4' >
                                 <div className='flex flex-wrap'>
                                     {searchResults.map(api => (
-  
-
                                         <Apidescription key={api.api_id} id={api.api_id} name={api.name} description={api.description} category_name={api.category_name} />
-
                                     ))}
                                 </div>
 

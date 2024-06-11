@@ -17,7 +17,7 @@ import MainPage from '@/pages/api_hub/mainpage';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from '@/pages/authentication/Login';
-import { useEffect } from 'react';
+import { useEffect,useState  } from 'react';
 import axios from 'axios';
 import Register from '@/pages/authentication/Register';
 import Verify from '@/pages/authentication/Verify';
@@ -53,15 +53,20 @@ import Revenue from '@/pages/apis_management/Revenue';
 
 import ProvidersTable from '@/pages/admin/ProvidersTable';
 import DashboardAdmin from '@/pages/admin/DashboardAdmin';
+
+
+import ConfirmInvitationPage from '@/pages/apis_management/ConfirmInvitationPage';
+
 const App = () => {
+  
 
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
       axios.defaults.headers.common['Authorization'] = `Token ${token}`;
     }
+  
   }, []);
-
 
   return (
     <Router>
@@ -81,6 +86,10 @@ const App = () => {
           <Route path="payment/Plans/:id" element={<SubscriptionPlansPage/>} />
           <Route path="payment/Plans/:id/per-month/plan/:planId" element={<PlanDetailsPage />} />
           <Route path="payment/Plans/:id/per-use/plan/:planId" element={<PlanDetailsPerusePage  />} />
+          <Route
+            path="confirm/:id/:plan"
+            element={<ConfirmInvitationPage />}
+          />
         </Route>
         <Route path="/accesskey/:apiVersion/:planId/:typeplan" element={<GeneratingAccessKeyPage />} />
         <Route path="apis" element={<MainPage />} />
@@ -98,6 +107,7 @@ const App = () => {
 
         {/* Authentication */}
         <Route path="login" element={<Login />} />
+        <Route path="login/:api/:plan" element={<Login />} />
         <Route path="register" element={<Register />} />
         <Route path="verify/:username" element={<Verify />} />
         {/* Invoices */}
