@@ -36,23 +36,7 @@ export const FetchTicketReplies = createAsyncThunk<TicketReply[], number>(
   }
 );
 
-// Add a new ticket reply
-// export const AddTicketReply = createAsyncThunk<TicketReply, { ticketId: number; content: string }>(
-//   'TicketReplies/AddTicketReply',
-//   async ({ ticketId, content }) => {
-//     const token = getToken();
-//     const response = await axios.post(
-//       `${BACKEND_BASE_URL}/support_hub/add_ticket_reply/${ticketId}/`,
-//       { content },
-//       {
-//         headers: {
-//           Authorization: `Token ${token}`,
-//         },
-//       }
-//     );
-//     return response.data; // Return the new reply
-//   }
-// );
+
 
 export const AddTicketReply = createAsyncThunk(
   'tickets/addReply',
