@@ -7,7 +7,7 @@ import {updateTicketStatus,updateTicketPriority,deleteTicket} from '@/components
 import UpdateTicketForm from '@/components/Support_hub/UpdateTicketForm';
 import ConfirmationModal from '@/components/Support_hub/ConfirmationModal';
 import StatusIcon from '@/components/Support_hub/StatusIcon';
-import { STATUS_CHOICES, PRIORITY_CHOICES } from '@/types/choices';
+import { STATUS_CHOICES, PRIORITY_CHOICES,USER_STATUS_CHOICES } from '@/types/choices';
 import { FaTrash } from 'react-icons/fa';
 
 
@@ -112,7 +112,7 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
         isOpen={isModalOpen}
         name="status"
         title="Status"
-        choices={STATUS_CHOICES}
+        choices={forUser ? USER_STATUS_CHOICES : STATUS_CHOICES}
         selectedChoice={selectedStatus}
         setSelectedChoice={setSelectedStatus}
         updateMessage={updateMessage}
@@ -135,8 +135,8 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
 
       {/* Main Content */}
       
-        {!forUser && (
-          <div className="flex justify-between text-sm ">
+       
+            <div className="flex justify-between text-sm ">
             <div className="flex gap-4">
               <p className={`${priorityDetails.bgcolor} rounded-md px-2 py-1 cursor-pointer ${priorityDetails.color}`} onClick={handlePriorityClick}>
                 {priorityDetails.text}
@@ -147,8 +147,8 @@ const TicketDescription = ({ id, title, content, postDate, currentStatus, priori
             </div>
             <p className="text-white mt-1">Posted on {formatDate(postDate)}</p>
           </div>
-          )
-        }
+
+   
        <div className="pb-2 mt-3 text-sm">
        <div className="flex justify-between items-center pb-2">
             <div>

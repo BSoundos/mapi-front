@@ -18,11 +18,7 @@ const UserAddTicket = () => {
         e.preventDefault(); // Prevent default form submission behavior
         const apiPk = parseInt(pk);
 
-        if (isNaN(apiPk)) {
-          // Handle the case when pk is not a valid number
-          console.error('Invalid API ID :',apiPk);
-          return;
-        }
+        
       
         await dispatch(addTicket({ apiPk, title, content }));
       
