@@ -115,13 +115,6 @@ const TicketPage = () => {
     setCurrentPage(1);
   };
 
-  const handleFilterByNewest = async () => {
-    const actionResult = await dispatch(fetchTicketsByNewest());
-    if (fetchTicketsByNewest.fulfilled.match(actionResult)) {
-      setSearchResults(actionResult.payload);
-    } 
-    setCurrentPage(1);
-  };
 
   if (loading) {
     return <Loading/>;
@@ -155,8 +148,7 @@ const TicketPage = () => {
             onChange={handleFilterByStatus}
             defaultFirstOption="By Status" // Customizable default option
           />
-          <button className="bg-mapi-neutral-1 rounded-md px-4 py-2 hover:border hover:border-mapi-secondary-3"
-          onClick={handleFilterByNewest} >Newest</button>
+          
         </div>
   
       <div className='mt-4 flex justify-end'> 

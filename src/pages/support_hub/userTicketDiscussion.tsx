@@ -52,9 +52,7 @@ const UserTicketDiscussionPage = () => {
                   >
                     Go back to all tickets
                   </Link>
-                </div>
-                
-              
+                </div>              
 
                 <div className="bg-mapi-neutral-3 p-2 border border-opacity-50 border-[#343B4F] rounded-md flex ">
                 <div className="w-full h-80 " > 

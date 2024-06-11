@@ -3,6 +3,27 @@ import axios from 'axios';
 import { RootState } from '@/app/store';
 import { BACKEND_BASE_URL } from '@/data/constants';
 
+
+interface ProviderEarnings {
+  provider_id: number;
+  provider_name: string;
+  total_amount: number;
+}
+interface TopSellingAPI {
+  api_name: string;
+  category: string;
+  total_earnings: number;
+}
+interface MonthlySubscriptionData {
+  month: number; // Numéro du mois (1 pour janvier, 2 pour février, etc.)
+  totalAmount: number; // Montant total des abonnements pour le mois
+}
+
+interface YearlyData {
+  year: number; // Année des données
+  monthlyData: MonthlySubscriptionData[]; // Données mensuelles des abonnements
+}
+
 // Interface pour spécifier la forme de l'état initial
 interface AdminState {
   providerCount: number;
@@ -13,8 +34,13 @@ interface AdminState {
   loading: boolean;
   categoryPercentages: { [key: string]: number }; 
   topApis: { id: number; name: string; votes: number }[]; 
+  yearlyData?: YearlyData; // Ajouter la propriété yearlyData
   error: string | null; 
+  topPayingProviders: ProviderEarnings[];
+  topSellingApi : TopSellingAPI[];
+
 }
+
 
 const initialState: AdminState = {
   providerCount: 0,
@@ -24,15 +50,36 @@ const initialState: AdminState = {
   totalEarningsPerMonth : 0,
   categoryPercentages: {}, 
   topApis: [],
+  topPayingProviders: [],
+  topSellingApi : [],
   loading: false,
   error: null,
 };
+// Définir le type pour les données renvoyées par l'API
+interface TopSellingAPI {
+  api_name: string;
+  category: string;
+  total_earnings: number;
+}
+
 
 // Fonction utilitaire pour obtenir le token depuis le localStorage
 const getToken = () => {
   return localStorage.getItem('token');
 };
 
+// Créer un thunk asynchrone pour récupérer les 3 meilleures API du mois
+export const fetchTopSellingAPIs = createAsyncThunk<TopSellingAPI[], void>(
+  'admin/fetchTopSellingAPIs',
+  async () => {
+    try {
+      const response = await axios.get<TopSellingAPI[]>(`${BACKEND_BASE_URL}/ATPA/top-selling-apis/`);
+      return response.data;
+    } catch (error) {
+      throw error;
+    }
+  }
+);
 export const ProviderCount = createAsyncThunk(
   'admin/providerCount',
   async () => {
@@ -200,6 +247,29 @@ export const FetchTopApis = createAsyncThunk(
   }
 );
 
+export const fetchYearlyData = createAsyncThunk<any, number>('admin/fetchYearlyData', async (selectedYear) => {
+  const token = getToken();
+  try {
+    const response = await axios.get(`${BACKEND_BASE_URL}/ATPA/user_subscriptions_yearly/${selectedYear}/`, {
+      headers: {
+        Authorization: `Token ${token}`,
+      },
+    });
+    console.log("response.data",response.data);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+});
+
+export const fetchTopPayingProviders = createAsyncThunk('admin/fetchTopPayingProviders', async () => {
+  const token = getToken();
+  const response = await axios.get(`${BACKEND_BASE_URL}/ATPA/top_paying_providers_this_month/`, {
+    headers: { Authorization: `Token ${token}` }
+  });
+  return response.data;
+});
+
 const adminSlice = createSlice({
   name: 'admin',
   initialState,
@@ -282,7 +352,44 @@ const adminSlice = createSlice({
       .addCase(FetchTopApis.rejected, (state, action) => {
         state.loading = false;
         state.error = action.error.message;
+      })
+      .addCase(fetchYearlyData.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchYearlyData.fulfilled, (state, action) => {
+        state.yearlyData = action.payload; 
+        console.log("state.yearlyData",state.yearlyData);
+
+        state.loading = false;
+      })
+      .addCase(fetchYearlyData.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
+      })
+      .addCase(fetchTopPayingProviders.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(fetchTopPayingProviders.fulfilled, (state, action: PayloadAction<ProviderEarnings[]>) => {
+        state.topPayingProviders = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchTopPayingProviders.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch top paying providers';
+      })
+      .addCase(fetchTopSellingAPIs.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchTopSellingAPIs.fulfilled, (state, action) => {
+        state.topSellingApi  = action.payload;
+        state.loading = false;
+      })
+      .addCase(fetchTopSellingAPIs.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message;
       });
+ 
 
   },
 });

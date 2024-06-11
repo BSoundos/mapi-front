@@ -4,4 +4,5 @@ export interface TicketReply {
     content: string;
     reply_date: string; 
     author_object_id: number; 
+    attachment?: string | null;
 }

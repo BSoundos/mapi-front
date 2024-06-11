@@ -5,11 +5,15 @@ export interface Choice {
   }
   
   export const STATUS_CHOICES: Choice[] = [
-    { value: 'open', label: 'Open' },
-    { value: 'solved', label: 'Solved' },
+    { value: 'responded', label: 'Responded' },
     { value: 'in_progress', label: 'In Progress' },
   ];
   
+
+  export const USER_STATUS_CHOICES: Choice[] = [
+    { value: 'solved', label: 'Solved' },
+  ];
+
   export const PRIORITY_CHOICES: Choice[] = [
     { value: 1, label: 'High' },
     { value: 2, label: 'Medium' },

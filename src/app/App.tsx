@@ -49,8 +49,8 @@ import ProviderSecuritySettings from '@/pages/UserSettings/ProviderSecuriteSetti
 import EndpointsApi from '@/pages/apis_management/EndpointsApi';
 import AddEndpointPage from '@/pages/apis_management/AddEndpointPage';
 import Revenue from '@/pages/apis_management/Revenue';
-import PerformanceTracking from '@/pages/apis_management/PerformanceTrack'; 
-import PerformanceTracking2 from '@/pages/apis_management/PerformanceTrack2';
+// import PerformanceTracking from '@/pages/apis_management/PerformanceTrack'; 
+// import PerformanceTracking2 from '@/pages/apis_management/PerformanceTrack2';
 import ConfirmInvitationPage from '@/pages/apis_management/ConfirmInvitationPage';
 
 import PrivateRoute from './PrivateRoutes';
@@ -63,8 +63,11 @@ import DetailsEndpoint from '@/pages/apis_management/DetailsEndpoint';
 
 import DashboardProvider from '@/pages/apis_management/DashboardProvider';
 import DashboardProviderAdmin from '@/pages/admin/DashboardProviderAdmin';
+import UserDetails from "@/pages/admin/UserDetails.tsx";
+import ProviderDetails from "@/pages/admin/ProviderDetails.tsx";
+/*
 
-// const App = () => {
+const App = () => {
   
 
 //   useEffect(() => {
@@ -80,7 +83,7 @@ import DashboardProviderAdmin from '@/pages/admin/DashboardProviderAdmin';
 //       <Routes>
 //         <Route index element={<Home />} />
 //         <Route path='home' element={<Home />} />
-//         {/* Api Hub */}
+//         {/* Api Hub 
 //         <Route path='api' element={<Api/>} >
 //           <Route index element={<ApiAbout />} />
 //           <Route path='about/:id' element={<ApiAbout />} />
@@ -104,7 +107,7 @@ import DashboardProviderAdmin from '@/pages/admin/DashboardProviderAdmin';
         // <Route path="/userSecuritySettings" element={<UserSecuritySettings/>}/>
        
 
-//         {/* Pricing & Payment */}
+//         {/* Pricing & Payment 
 //         <Route path="plan" element={<SubscriptionPlansPage />} />
 //         <Route path="payment-per-use/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPerusePage />} />
 //         <Route path="payment-per-use/subscriptionPlans/:apiVersion" element={<SubscriptionPlansPerUsePage />} />
@@ -112,18 +115,18 @@ import DashboardProviderAdmin from '@/pages/admin/DashboardProviderAdmin';
 //         <Route path="accesskey/:apiVersion/:planId" element={<GeneratingAccessKeyPage />} />
 //         <Route path="/SubscriptionsList" element={<SubscriptionListPage />} />
 
-//         {/* Authentication */}
+//         {/* Authentication 
 //         <Route path="login" element={<Login />} />
 //         <Route path="login/:api/:plan" element={<Login />} />
 //         <Route path="register" element={<Register />} />
 //         <Route path="verify/:username" element={<Verify />} />
-//         {/* Invoices */}
+//         {/* Invoices 
 //         <Route path="/Transaction-History" element={<InvoiceHistoryPage />} />
 //         <Route path="/Transaction_details/:id" element={<InvoiceDetails />} />
 //         <Route path="/Discussions/:apiId" element={<Discussions />} />
 //         <Route path="/DiscussionDetails/:discussionId" element={<DiscussionDetailsPage />} />
 
-//         {/* Ticket system */}
+//         {/* Ticket system 
 //         <Route path="/Tickets" element={<Ticket />} />
 //         <Route path="/Discussions" element={<Discussion />} />
 //         <Route path="/TicketsDiscussions/:ticketId" element={<Discussion />} />
@@ -132,7 +135,7 @@ import DashboardProviderAdmin from '@/pages/admin/DashboardProviderAdmin';
 //         <Route path="/userDiscussions/:ticketId" element={<UserTicketDiscussionPage />} />
 
 
-//          {/* Provider Pages  */}
+//          {/* Provider Pages  
 //         <Route path="/my-apis" element={<MyApis />} />
 //         <Route path="/version-api/:id" element={<VersionsApi/>}/>
 //         <Route path="/endpoint-api/:id" element={<EndpointsApi/>}/>
@@ -150,7 +153,7 @@ import DashboardProviderAdmin from '@/pages/admin/DashboardProviderAdmin';
 //         <Route path="/PerformanceTracking/:id" element={<PerformanceTracking2 />} />
 
   
-//         {/*Tracking users and providers*/}
+//         {/*Tracking users and providers
 //         <Route path="/admin/users" element={<UsersTable />} />
 //         <Route path="/admin/providers" element={<ProvidersTable />} />
 //         <Route path="/admin/dashboard" element={<DashboardAdmin />} />
@@ -164,7 +167,7 @@ import DashboardProviderAdmin from '@/pages/admin/DashboardProviderAdmin';
 
 
 // export default App;
-
+*/
 
 const App = () => {
   return (
@@ -246,6 +249,8 @@ const App = () => {
          <Route path="/admin/providers" element={<ProvidersTable />} />
          <Route path="/admin/dashboard" element={<DashboardAdmin />} />
          <Route path="/admin/dashboard-provider/:provider_id" element={<DashboardProviderAdmin />} />
+         <Route path="/admin/users/details/:username" element={<UserDetails />} />
+        <Route path="/admin/providers/details/:providerId" element={<ProviderDetails />} />
         </Route>
         <Route path="/unauthorized" element={<Unauthorized />} />
 
