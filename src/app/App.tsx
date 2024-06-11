@@ -17,7 +17,8 @@ import MainPage from '@/pages/api_hub/mainpage';
 
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from '@/pages/authentication/Login';
-
+import { useEffect } from 'react';
+import axios from 'axios';
 import Register from '@/pages/authentication/Register';
 import Verify from '@/pages/authentication/Verify';
 import Home from '@/pages/home/Home';
@@ -169,7 +170,15 @@ const App = () => {
 // export default App;
 */
 
+
 const App = () => {
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (token) {
+      axios.defaults.headers.common['Authorization'] = `Token ${token}`;
+    }
+  
+  }, []);
   return (
     <Router>
       <Routes>
@@ -244,7 +253,7 @@ const App = () => {
       </Route>
 
         {/* Private routes for admins */}
-        <Route element={<PrivateRoute allowedRoles={['administator']} />}>
+        <Route element={<PrivateRoute allowedRoles={['administrator']} />}>
         <Route path="/admin/users" element={<UsersTable />} />
          <Route path="/admin/providers" element={<ProvidersTable />} />
          <Route path="/admin/dashboard" element={<DashboardAdmin />} />

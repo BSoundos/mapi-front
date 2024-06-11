@@ -65,7 +65,6 @@ const MainPage: React.FC = () => {
         const actionResult = await dispatch(searchAPIs(searchTerm));
         if (searchAPIs.fulfilled.match(actionResult)) {
             setSearchResults(actionResult.payload);
-
         }
     };
 
@@ -160,7 +159,7 @@ const MainPage: React.FC = () => {
                                 <img src={search} height="24" width="24" />
                             </div>
                             <input type="text" value={searchTerm}
-                                onChange={(e) => setSearchTerm(e.target.value)}
+                                onChange={(e) => {setSearchTerm(e.target.value),setSearchResults(popularAPIs)}}
                                 onKeyDown={(e) => {
                                     if (e.key === 'Enter') {
                                         handleSearch();
@@ -176,6 +175,7 @@ const MainPage: React.FC = () => {
                                 <p className='mt-2 text-sm pr-2 '>Category:</p>
                                 <select id="select1"
                                     onChange={(e) => {
+                                        setSearchTerm("");
                                         const selectedCategory = e.target.value;
                                         handleFilterCategorie(selectedCategory);
                                     }}
@@ -192,6 +192,7 @@ const MainPage: React.FC = () => {
                                 <p className='mt-2 text-sm pr-2 '>Functionality:</p>
                                 <select id="select2"
                                     onChange={(e) => {
+                                        setSearchTerm("");
                                         const selectedFonctionnaliter = e.target.value;
                                         handleFilterFonctionnalite(selectedFonctionnaliter);
                                     }}
@@ -208,6 +209,7 @@ const MainPage: React.FC = () => {
                                 <p className='mt-2 text-sm pr-2 '>Sort By:</p>
                                 <select id="select3"
                                     onChange={(e) => {
+                                        setSearchTerm("");
                                         const selectedFonctionnaliter = e.target.value as keyof Api;
                                         handleSort(selectedFonctionnaliter);
                                     }}
