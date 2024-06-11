@@ -18,17 +18,18 @@ const getToken = () => {
   return localStorage.getItem('token'); // Retrieve token from localStorage
 };
 //générer une clé d'accées 
-export const generateAccessKey = createAsyncThunk<string , {typeplan :string ,versionApiId: string, planId : string}>(
+export const generateAccessKey = createAsyncThunk<string , {typeplan :string ,versionApiId: string, planId : string , amount : number}>(
     'accessKey/generateAccessKey',
-    async ({typeplan ,versionApiId , planId}) => {
+    async ({typeplan ,versionApiId , planId , amount}) => {
       try {
-
+        console.log("amount ")
         const token = getToken();
-        const response = await axios.post(`${BACKEND_BASE_URL}/payment/generate-accesskey/${typeplan}/${versionApiId}/${planId}/`,{
+        const response = await axios.post(`${BACKEND_BASE_URL}/payment/generate-accesskey/${typeplan}/${versionApiId}/${planId}/${amount}/`,{
           headers: {
             Authorization: `Token ${token}`
           }
         });
+        
         return response.data.access_key;
       } catch (error) {
         throw new Error('Failed to generate access key');

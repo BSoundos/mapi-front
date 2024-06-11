@@ -1,3 +1,4 @@
+import React, { useState, useEffect } from 'react';
 import logo from '@/assets/logo.png';
 import { Link, useLocation } from 'react-router-dom';
 import { BiSolidDashboard, BiUser } from "react-icons/bi";
@@ -5,12 +6,9 @@ import avatarImg from '@/assets/customer.png';
 import { useAppDispatch } from '@/app/store';
 import { logout } from './features/authentication/authActions';
 
-
 function AdminSideBar() {
+  const dispatch = useAppDispatch();
 
-  const dispatch = useAppDispatch()
-
-  
   const location = useLocation();
   const pathname = location.pathname;
 
@@ -24,14 +22,15 @@ function AdminSideBar() {
     { icon: <BiUser size={24} />, text: 'Providers', path: '/admin/providers' },
   ];
 
-
   const onLogout = () => {
     dispatch(logout());
     localStorage.removeItem('token');
   };
 
+ 
+
   return (
-    <div className="flex-1 max-w-[260px] min-w-[260px] overflow-auto">
+    <div className="flex-1 max-w-[260px] min-w-[260px] overflow-auto" >
       <div className="bg-mapi-neutral-2 border-solid border-r-[#343B4F] border-r h-screen overflow-hidden flex flex-col justify-between pb-3 text-sm">
         <div>
           <div className="logo flex justify-center items-center pt-6 pb-8">
@@ -63,25 +62,19 @@ function AdminSideBar() {
             <div>
               <p className="text-white font-bold">{first_name}  {last_name}</p>
               <p className="text-white text-xs opacity-75">{email}</p>
-          
             </div>
-          
           </div>
-          
-            <button className="w-41 py-2 rounded-lg border border-gray-400 border-opacity-50 text-white font-bold hover:bg-gray-400 hover:text-white mb-2 mx-3">
-                Settings
-            </button>
-            
-
-            <Link
-              to='/'
-              onClick={onLogout}
-              className="w-41 py-2 rounded-lg border border-gray-400 border-opacity-50 text-white font-bold hover:bg-gray-400 hover:text-white mx-3"
-              style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
-            >
-              <span style={{ margin: 'auto' }}>Logout</span>
-            </Link>
-          
+          <button className="w-41 py-2 rounded-lg border border-gray-400 border-opacity-50 text-white font-bold hover:bg-gray-400 hover:text-white mb-2 mx-3">
+            Settings
+          </button>
+          <Link
+            to='/'
+            onClick={onLogout}
+            className="w-41 py-2 rounded-lg border border-gray-400 border-opacity-50 text-white font-bold hover:bg-gray-400 hover:text-white mx-3"
+            style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}
+          >
+            <span style={{ margin: 'auto' }}>Logout</span>
+          </Link>
         </div>
       </div>
     </div>

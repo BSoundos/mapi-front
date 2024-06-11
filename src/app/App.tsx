@@ -108,7 +108,7 @@ const App = () => {
         <Route path="payment-per-use/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPerusePage />} />
         <Route path="payment-per-use/subscriptionPlans/:apiVersion" element={<SubscriptionPlansPerUsePage />} />
         <Route path="payment-per-month/subscriptionPlans/:apiVersion/plan/:planId" element={<PlanDetailsPage />} />
-        <Route path="accesskey/:apiVersion/:planId" element={<GeneratingAccessKeyPage />} />
+        <Route path="/accesskey/:apiVersion/:planId/:typeplan/:amount" element={<GeneratingAccessKeyPage />} />
         <Route path="/SubscriptionsList" element={<SubscriptionListPage />} />
 
         {/* Authentication */}
