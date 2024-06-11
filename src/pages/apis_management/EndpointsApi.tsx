@@ -48,19 +48,24 @@ export default function EndpointsApi() {
     },
   ];
 
-  const handleDeleteEndpoints = () => {
+  const handleDeleteEndpoints = async () => {
     if (selectedRows.length === 0) {
       return;
     }
-
-    selectedRows.forEach((row) => {
-     dispatch(removeEndpoint({versionId:fetchVersionId,endpintId:row.endpoint_id}));
-     console.log(row.endpoint_id)
-     console.log(selectedRows)
-    });
-
+  
+    // Await the completion of all delete operations
+    await Promise.all(
+      selectedRows.map((row) => 
+        dispatch(removeEndpoint({ versionId: fetchVersionId, endpintId: row.endpoint_id }))
+      )
+    );
+  
+    // Fetch the updated list of endpoints
+    dispatch(fetchEndpoints(id));
+  
     setSelectedRows([]);
   };
+  
 
   const onSelectedRowsChange = ({ selectedRows }) => {
     setSelectedRows(selectedRows);

@@ -57,6 +57,13 @@ const Verify = () => {
           window.location.href = '/login';
         }, 2000);
       }
+      else if(response && response.msg === 'provider is verified! '){
+        setVerificationSuccess('The code is correct!');
+        setTimeout(() => {
+          localStorage.removeItem("verificationNeeded")
+          window.location.href = '/login';
+        }, 2000);
+      }
       if (response && response.msg === 'Verification code does not match') {
         setVerificationError(response.msg);
       }

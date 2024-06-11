@@ -66,11 +66,12 @@ export default function GeneralApi() {
   };
 
   const handleIsVisibleInputChange = () => {
+    if(accept){
     setFormData(prevFormData => ({
       ...prevFormData,
       is_visible: !prevFormData.is_visible, // Toggle the value
     }));
-
+  }
   };
 
   const handleCancel = () => {

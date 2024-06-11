@@ -20,7 +20,7 @@ const SearchResultsDropdown: React.FC<SearchResultsDropdownProps> = ({
         dropdownRef.current &&
         !dropdownRef.current.contains(event.target as Node)
       ) {
-        // Click outside the dropdown, handle accordingly (e.g., close the dropdown)
+        console.log("");
       }
     };
 
