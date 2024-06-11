@@ -8,6 +8,7 @@ import {fetchApiById} from '@/components/features/apis/AboutSlice';
 import {fetchReviewsByApiId} from '@/components/features/apis/ReviewSlice';
 import AddReviewModal from '@/components/AddReviewModal';
 
+
 const ApiAbout = () => {
 
     const dispatch = useAppDispatch();
@@ -24,6 +25,7 @@ const ApiAbout = () => {
 
 
     const { id } = useParams(); // Get the API ID from the URL
+    const apiId = parseInt(id, 10);
      
     const totalReviews = localReviews.length;
     const reviewsPerPage = 3; // le nmb de review par page 
@@ -99,7 +101,7 @@ const ApiAbout = () => {
                 
             </div>
             <AddReviewModal
-                apiId={parseInt(id, 10)}
+                apiId={apiId}
                 isOpen={isFormVisible}
                 onClose={() => setIsFormVisible(false)} 
             />

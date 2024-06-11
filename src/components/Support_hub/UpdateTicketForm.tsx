@@ -50,7 +50,7 @@ const UpdateTicketForm = ({
             </div>
             </div>
 
-            {
+            {/* {
               hasMessage &&
               ( <div className="mb-4 flex gap-6 items-center">
               <label htmlFor="quota-type" className="text-sm font-semibold text-mapi-text w-36">
@@ -63,7 +63,7 @@ const UpdateTicketForm = ({
                   className="add-plan w-60 h-20"
                 />
               </div>)
-            }
+            } */}
             
 
             <div className="flex justify-end gap-4">

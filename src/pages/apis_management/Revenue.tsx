@@ -4,7 +4,7 @@ import SideBarPro from "@/components/apis_management/SideBarPro";
 import NavBarRe from "@/components/NavBarRe";
 
 import { useSelector } from 'react-redux';
-import { useEffect,useState } from 'react';
+import { useEffect } from 'react';
 import {  fetchEarningsStatistics } from '@/components/features/apis_management/statisticsSlice';
 import { useAppDispatch,RootState } from '@/app/store'; 
 
@@ -13,8 +13,6 @@ const Revenue = () => {
     const dispatch = useAppDispatch();
    
     const earnings = useSelector((state: RootState) => state.statistics.earnings);
-    const loading = useSelector((state: RootState) => state.statistics.loading);
-    const error = useSelector((state: RootState) => state.statistics.error);
 
     useEffect(() => {
         
@@ -26,6 +24,7 @@ const Revenue = () => {
 
 
   return (
+
     <div className="flex">
       <SideBarPro/>
       <div className="bg-mapi-neutral-2  flex-col flex-1">

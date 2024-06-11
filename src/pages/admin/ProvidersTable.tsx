@@ -17,6 +17,7 @@ import store, { RootState } from '@/app/store';
 import { fetchProviders } from '@/components/features/admin/providersSlice';
 import { blockProviderAccount, unblockProviderAccount } from '@/components/features/admin/accounts_management';
 import { User } from '@/types/user';
+import { Link } from 'react-router-dom';
 
 
 
@@ -54,6 +55,7 @@ const ProvidersTable: React.FC= () => {
 
 
 
+
     const handleChangePage = (_event: unknown, newPage: number) => {
         setPage(newPage);
     };
@@ -75,11 +77,11 @@ const ProvidersTable: React.FC= () => {
 
 */
 
-    const filteredProviders = providers.filter(user =>
-        user.first_name.toLowerCase().includes(searchText.toLowerCase()) ||
-        user.last_name.toLowerCase().includes(searchText.toLowerCase()) ||
-        user.username.toLowerCase().includes(searchText.toLowerCase()) ||
-        user.contact_info.toLowerCase().includes(searchText.toLowerCase())
+    const filteredProviders = providers.filter(provider =>
+        provider.first_name.toLowerCase().includes(searchText.toLowerCase()) ||
+        provider.last_name.toLowerCase().includes(searchText.toLowerCase()) ||
+        provider.username.toLowerCase().includes(searchText.toLowerCase()) ||
+        provider.contact_info.toLowerCase().includes(searchText.toLowerCase())
     );
 
 
@@ -159,14 +161,14 @@ const ProvidersTable: React.FC= () => {
                             </TableRow>
                         </TableHead>
                         <TableBody>
-                            {filteredProviders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((user, index) => (
-                                <TableRow key={user.id} style={{backgroundColor: '#081028'}}>
+                            {filteredProviders.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((provider, index) => (
+                                <TableRow key={provider.id} style={{backgroundColor: '#081028'}}>
                                     <TableCell style={{
                                         color: 'rgba(255, 255, 255, 0.8)',
                                         border: '2px solid rgba(126,137,172,0.3)'
-                                    }}>{user.first_name} {user.last_name}
+                                    }}>{provider.first_name} {provider.last_name}
                                     <div>
-                                    {user.email}
+                                    {provider.email}
                                     </div>
                                     </TableCell>
                                     
@@ -175,9 +177,9 @@ const ProvidersTable: React.FC= () => {
                                     <TableCell style={{
                                         color: 'rgba(255, 255, 255, 0.8)',
                                         border: '2px solid rgba(126,137,172,0.3)'
-                                    }}>{user.contact_info}</TableCell>
+                                    }}>{provider.contact_info}</TableCell>
                                     <TableCell >
-                                    {user.status === 1 ? (
+                                    {provider.status === 1 ? (
                                         <span className="inline-block px-4 py-0.25 border border-customGreen text-customTextGreen bg-customBackground">Online</span>
                                         ) : (
                                         <span className="inline-block px-4 py-0.25 border border-customRed text-customTextRed bg-customBackground">Offline</span>
@@ -189,11 +191,15 @@ const ProvidersTable: React.FC= () => {
                                     }}>
                                         <Button
                                             variant="contained"
-                                            onClick={() => handleBlock(user)}
+                                            onClick={() => handleBlock(provider)}
                                             style={{backgroundColor: 'red'}} // Change button color to red
                                         >
-                                            {user.status ? 'Block' : 'Unblock'}
+                                            {provider.status ? 'Block' : 'Unblock'}
                                         </Button>
+
+                                        <Link to={`/admin/dashboard-provider/${provider.id}`} className="inline-block bg-primary-dark text-white no-underline px-4 py-2 border border-gray-600 rounded-md ml-2">
+                                            View Analytics
+                                        </Link>
                                     </TableCell>
 
                                 </TableRow>
