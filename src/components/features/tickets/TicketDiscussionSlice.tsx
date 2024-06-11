@@ -37,23 +37,44 @@ export const FetchTicketReplies = createAsyncThunk<TicketReply[], number>(
 );
 
 // Add a new ticket reply
-export const AddTicketReply = createAsyncThunk<TicketReply, { ticketId: number; content: string }>(
-  'TicketReplies/AddTicketReply',
-  async ({ ticketId, content }) => {
+// export const AddTicketReply = createAsyncThunk<TicketReply, { ticketId: number; content: string }>(
+//   'TicketReplies/AddTicketReply',
+//   async ({ ticketId, content }) => {
+//     const token = getToken();
+//     const response = await axios.post(
+//       `${BACKEND_BASE_URL}/support_hub/add_ticket_reply/${ticketId}/`,
+//       { content },
+//       {
+//         headers: {
+//           Authorization: `Token ${token}`,
+//         },
+//       }
+//     );
+//     return response.data; // Return the new reply
+//   }
+// );
+
+export const AddTicketReply = createAsyncThunk(
+  'tickets/addReply',
+  async ({ formData, ticketId }, { rejectWithValue }) => {
     const token = getToken();
-    const response = await axios.post(
-      `${BACKEND_BASE_URL}/support_hub/add_ticket_reply/${ticketId}/`,
-      { content },
-      {
-        headers: {
-          Authorization: `Token ${token}`,
-        },
-      }
-    );
-    return response.data; // Return the new reply
+    try {
+      const response = await axios.post(
+        `${BACKEND_BASE_URL}/support_hub/add_ticket_reply/${ticketId}/`, 
+        formData, 
+        {
+          headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'multipart/form-data',
+          },
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
   }
 );
-
 
 // Redux slice for ticket discussions
 const TicketDiscussionSlice = createSlice({

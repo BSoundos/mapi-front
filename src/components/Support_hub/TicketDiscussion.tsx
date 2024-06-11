@@ -4,11 +4,13 @@ import { useSelector } from 'react-redux';
 import { FetchTicketReplies, AddTicketReply } from '@/components/features/tickets/TicketDiscussionSlice';
 import {updateTicketStatus,updateTicketPriority} from '@/components/features/tickets/TicketSlice';
 import sendIcon from '@/assets/icons/send.svg';
+import attachmentIcon from '@/assets/icons/attachement.png';
 import { RootState,useAppDispatch } from '@/app/store';
 import UpdateTicketForm from '@/components/Support_hub/UpdateTicketForm';
 import { useNavigate } from 'react-router-dom';
 import { STATUS_CHOICES, PRIORITY_CHOICES } from '@/types/choices';
-
+import { BACKEND_BASE_URL } from '@/data/constants';
+import { FaFile } from 'react-icons/fa';
 
 // Priority Mapping 
 const priorityMapping = {
@@ -60,12 +62,41 @@ const TicketDiscussion: React.FC<TicketDiscussionProps> = ({
     dispatch(FetchTicketReplies(id)); // Fetch replies when component mounts or id changes
   }, [id, dispatch]); // Re-run when id changes
 
-  const handleSendReply = async () => {
-    if (replyContent.trim()) {
-      await dispatch(AddTicketReply({ ticketId: id, content: replyContent })); // Add new reply
-      setReplyContent(''); // Clear the input
+  // const handleSendReply = async () => {
+  //   if (replyContent.trim()) {
+  //     await dispatch(AddTicketReply({ ticketId: id, content: replyContent })); // Add new reply
+  //     setReplyContent(''); // Clear the input
+  //   }
+  // };
+
+  const [attachment, setAttachment] = useState(null);
+  const [attachmentName, setAttachmentName] = useState(''); // State to hold the attachment file name
+
+  const handleAttachmentChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setAttachment(file);
+      setAttachmentName(file.name); // Set the file name in state
+      // You can also add code here to preview the file or handle the upload
     }
   };
+
+  const handleSendReply = async () => {
+    if (replyContent.trim() || attachment) {
+      const formData = new FormData();
+      formData.append('ticketId', id);
+      formData.append('content', replyContent);
+      if (attachment) {
+        formData.append('attachment', attachment);
+      }
+  
+      await dispatch(AddTicketReply({ formData, ticketId: id })); // Pass an object with formData and ticketId
+      setReplyContent(''); // Clear the input
+      setAttachment(null); // Clear the attachment
+      setAttachmentName('');
+    }
+  };
+
 
   const handleStatusClick = () => {
     setIsModalOpen(true); // Open the modal
@@ -125,6 +156,16 @@ const TicketDiscussion: React.FC<TicketDiscussionProps> = ({
     }
 
     return `${styleClass}`;
+  };
+
+  const isImage = (fileName: string) => {
+    return /\.(jpg|jpeg|png|gif)$/.test(fileName);
+  };
+
+  const getFileNameFromPath = (filePath) => {
+    if (!filePath) return '';
+    const parts = filePath.split('/');
+    return parts[parts.length - 1];
   };
 
   return (
@@ -217,27 +258,61 @@ const TicketDiscussion: React.FC<TicketDiscussionProps> = ({
                 className={`flex flex-col ${getReplyStyle(reply)}`}
               >
                 <p className="text-white">{reply.content}</p>
+                {reply.attachment && (
+                  <div className="mt-2">
+                    
+                      <div className="flex items-center">
+                      <FaFile className="h-5 w-5 text-gray-500" />
+                        <span className="ml-2 text-white">
+                          <a href={`${BACKEND_BASE_URL}/media/ticket_attachments/${getFileNameFromPath(reply.attachment)}/`}>
+                          {getFileNameFromPath(reply.attachment)}</a>
+                        </span>
+                      </div>
+                    
+                  </div>
+                )}
               </div>
             </div>
           ))}
         </div>
-        <div className="pt-4 flex justify-between">
+        <div className="pt-4 flex flex-col">
+        {/* Display the selected file name */}
+        {attachmentName != '' && (
+          <div className="px-4 py-2 rounded bg-mapi-neutral-1 text-white mb-2">
+            {attachmentName}
+          </div>
+        )}
+  
+        <div className="flex justify-between">
         <input
           type="text"
           placeholder="Add a reply..."
           value={replyContent}
-            onChange={(e) => setReplyContent(e.target.value)}
-            onKeyDown={(e) => {
+          onChange={(e) => setReplyContent(e.target.value)}
+          onKeyDown={(e) => {
             if (e.key === 'Enter') {
-                handleSendReply(); 
+              handleSendReply();
             }
-            }}
-          className="w-full px-4 py-2 rounded bg-mapi-neutral-1 text-white"
+          }}
+          className="flex-1 px-4 py-2 rounded bg-mapi-neutral-1 text-white"
         />
-        <button className="ml-2 px-2 py-2 bg-secondary-blue rounded" onClick={handleSendReply} >
-            <img src={sendIcon} alt="Send" className="h-5 w-5" />
+        <label htmlFor="attachment" className="mr-2 cursor-pointer ml-2 px-2 py-2 bg-secondary-blue rounded">
+          <img src={attachmentIcon} alt="Attach file" className="h-5 w-5" />
+        </label>
+        <input
+          type="file"
+          id="attachment"
+          className="hidden"
+          onChange={handleAttachmentChange}
+        />
+        <button className="ml-2 px-2 py-2 bg-secondary-blue rounded" onClick={handleSendReply}>
+          <img src={sendIcon} alt="Send" className="h-5 w-5" />
         </button>
       </div>
+    </div>
+
+      
+        
 
 
     </div>
