@@ -1,6 +1,6 @@
 # API Marketplace — Frontend
 
-React-based web client for an API Marketplace developed during the Software Engineering (SIL) project at ESI.
+React-based web client for an API Marketplace developed during the Software Engineering (SIL) project at the National Higher School of Computer Science (ESI Algiers, Algeria).
 
 ## Overview
 
